@@ -1,5 +1,7 @@
 # BASE_ (pronounced "Base Score")
 
+_IN DEVELOPMENT, IGNORE FOR NOW_
+
 A central base for your development environment. Manage and 
 
 ## Installation
