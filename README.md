@@ -7,7 +7,7 @@ A central base for your development environment. Manage and
 ## Installation
 
 1. Install with `pnpm i base_`.
-2. Create a `base-score` folder.
+2. Create a `base-score` or `_base` folder.
 3. Create a `config.ts` inside, and configure it to your environment.
 4. Run `base_ base-score/config.ts`.
 
