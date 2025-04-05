@@ -1,0 +1,9 @@
+{
+  "name": "base_mono",
+  "private": true,
+  "scripts": {
+    "build": "cd packages/base_ && pnpm run build",
+    "dev": "cd packages/base_ && pnpm run dev",
+    "start": "cd packages/base_ && pnpm run start"
+  }
+}
