@@ -23,7 +23,7 @@ importers:
         specifier: ^6.2.0
         version: 6.2.4(@types/node@22.14.0)(jiti@2.4.2)(terser@5.39.0)(yaml@2.7.1)
 
-  packages/base_:
+  packages/base_cli:
     dependencies:
       base_shared:
         specifier: link:..\base_shared
