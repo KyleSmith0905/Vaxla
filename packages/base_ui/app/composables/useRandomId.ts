@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid"
 
-export default () => {
+export const useRandomId = () => {
   const id = ref(nanoid());
 
   return {id};

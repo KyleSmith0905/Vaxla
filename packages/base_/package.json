@@ -1,9 +1,25 @@
 {
   "name": "base_",
-  "description": "The CLI behind the BASE_ developer tools.",
-  "private": false,
+  "description": "CLI for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
+  "version": "1.0.0",
+  "keywords": [
+    "developer-tools",
+    "devops",
+    "workflow",
+    "cli",
+    "productivity"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "email": "bugs@yskkyle.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KyleSmith0905/base_.git",
+    "directory": "packages/base_"
+  },
   "type": "module",
-  "version": "1.0.12",
   "exports": {
     ".": "./dist/index.mjs",
     "./cli": "./bin/base_.mjs"
@@ -19,10 +35,16 @@
     "build": "unbuild"
   },
   "dependencies": {
+    "base_shared": "link:..\\base_shared",
     "base_ui": "link:..\\base_ui",
     "citty": "^0.1.6",
     "jiti": "^2.4.2",
     "nuxi": "^3.24.1",
+    "prettier-eslint": "^16.3.0",
+    "tailwindcss": "^3.4.13",
     "unbuild": "^3.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0"
   }
 }

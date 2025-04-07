@@ -1,8 +1,15 @@
+import { portToPid } from 'pid-port';
 import fkill from 'fkill';
 
 export default defineEventHandler(async (event) => {
-  const processId = parseInt(getQuery<{process: string}>(event).process);
-  const signal = getQuery<{signal: "SIGKILL" | "SIGTERM"}>(event).signal;
+	const query = getQuery<{ process: string } | { port: string }>(event);
+	const isPort = 'port' in query;
 
-  return fkill(processId, {force: signal === 'SIGKILL', tree: true});
-})
+	const signal = getQuery<{ signal: 'SIGKILL' | 'SIGTERM' }>(event).signal;
+
+	const processId = isPort ? ((await portToPid(Number(query.port))) ?? `:${query.port}`) : query.process;
+
+	return fkill(processId, { force: signal === 'SIGKILL', tree: true }).catch((e: AggregateError) => {
+		throw new Error(e.message.split('\n')[1].trim());
+	});
+});

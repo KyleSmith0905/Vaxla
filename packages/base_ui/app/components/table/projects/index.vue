@@ -1,18 +1,12 @@
 <script lang="ts" setup>
-const appConfig = useAppConfig();
+const appConfig = useBaseScoreConfig();
 </script>
 <template>
-  <div class="rounded-b-lg overflow-hidden">
-    <UtilityGridCollection
-      :items="Object.keys(appConfig.packagesInfo).length"
-      variant="card"
-    >
-      <UtilityGridCollectionItem
-        v-for="(server, serverId) in appConfig.packagesInfo"
-        class="flex flex-col gap-2 py-2 bg-card"
-      >
-        <TableProjectsItem :package="server" :package-id="serverId" />
-      </UtilityGridCollectionItem>
-    </UtilityGridCollection>
-  </div>
+	<div class="overflow-hidden rounded-b-lg">
+		<UtilityGridCollection :items="Object.keys(appConfig.packages ?? {}).length" variant="card">
+			<UtilityGridCollectionItem v-for="(server, serverId) in appConfig.packages" class="flex flex-col gap-2 bg-card py-2">
+				<TableProjectsItem :package="server" :package-id="serverId" />
+			</UtilityGridCollectionItem>
+		</UtilityGridCollection>
+	</div>
 </template>

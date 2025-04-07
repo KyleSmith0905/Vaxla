@@ -1,6 +1,5 @@
+export const useLocalIp = () => {
+	const { data: localIp, error } = useFetch('/api/local-ip');
 
-export default () => {
-  const { data: localIp, error } = useFetch('/api/local-ip');
-
-  return {localIp, error};
-}
+	return { localIp, error };
+};

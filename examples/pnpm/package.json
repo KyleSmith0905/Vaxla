@@ -1,14 +1,23 @@
 {
-  "name": "base_example_capacitor",
+  "name": "base_example-pnpm",
+  "description": "PNPM monorepo example for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
   "version": "1.0.0",
-  "description": "Example Capacitor project using BASE_",
+  "keywords": ["developer-tools", "devops", "workflow", "cli", "productivity"],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "email": "bugs@yskkyle.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KyleSmith0905/base_.git",
+    "directory": "examples/pnpm"
+  },
+  "private": true,
   "main": "index.js",
   "scripts": {
     "dev": "base_ dev"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "base_": "link:..\\..\\packages\\base_"
   }

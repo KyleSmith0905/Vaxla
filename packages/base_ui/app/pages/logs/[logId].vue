@@ -1,15 +1,18 @@
 <script setup lang="ts">
-const route = useRoute();
+import { getCommandShellScript } from 'base_shared/command';
 
-const {getScript} = useScripts();
+const route = useRoute();
+const config = useBaseScoreConfig();
+
+const { getScript } = useScripts();
 const script = computed(() => getScript(route.params.logId as string));
 
 definePageMeta({
-  layout: false,
+	layout: false,
 });
 </script>
 <template>
-  <NuxtLayout name="default" :path="['Logs', script?.command]">
-    <CardsTerminal :id="script?.id" />
-  </NuxtLayout>
+	<NuxtLayout name="default" :path="['Logs', getCommandShellScript({ dynamic: script?.command }, config.packages[script?.packageId ?? '']?.path ?? '')]">
+		<CardsTerminal :id="script?.id" />
+	</NuxtLayout>
 </template>
