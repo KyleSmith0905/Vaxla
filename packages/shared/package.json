@@ -1,0 +1,39 @@
+{
+  "name": "@base_/shared",
+  "description": "Shared files and types for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
+  "version": "1.0.2",
+  "keywords": [
+    "developer-tools",
+    "devops",
+    "workflow",
+    "cli",
+    "productivity"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "email": "bugs@yskkyle.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KyleSmith0905/base_.git",
+    "directory": "packages/shared"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./command": "./dist/command.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild"
+  },
+  "devDependencies": {
+    "unbuild": "^3.5.0"
+  },
+  "dependencies": {
+    "jiti": "^2.4.2"
+  }
+}

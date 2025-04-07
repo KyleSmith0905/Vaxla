@@ -1,4 +1,4 @@
-import { defineBaseScoreConfig, colors } from 'base_';
+import { defineBaseScoreConfig, colors } from '@base_/cli';
 import { rmdirSync } from 'node:fs';
 import { join } from 'node:path';
 

@@ -14,11 +14,11 @@
   },
   "private": true,
   "scripts": {
-    "build:base_": "cd packages/base_ && pnpm run build",
-    "build:base_shared": "cd packages/base_shared && pnpm run build",
-    "build": "pnpm run build:base_shared && pnpm run build:base_",
-    "dev": "cd packages/base_ && pnpm run dev",
-    "start": "cd packages/base_ && pnpm run start",
+    "build:cli": "cd packages/cli && pnpm run build",
+    "build:shared": "cd packages/shared && pnpm run build",
+    "build": "pnpm run build:shared && pnpm run build:cli",
+    "dev": "cd packages/cli && pnpm run dev",
+    "start": "cd packages/cli && pnpm run start",
     "example:pnpm": "cd examples/pnpm && pnpm run dev"
   }
 }
