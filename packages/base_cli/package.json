@@ -1,5 +1,5 @@
 {
-  "name": "base_",
+  "name": "@base_/cli",
   "description": "CLI for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
   "version": "1.0.0",
   "keywords": [

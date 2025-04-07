@@ -1,5 +1,5 @@
 {
-  "name": "base_mono",
+  "name": "base_",
   "description": "Development tool to easily manage multiple dev environments and run commands.",
   "version": "1.0.0",
   "keywords": ["developer-tools", "devops", "workflow", "cli", "productivity"],

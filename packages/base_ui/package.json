@@ -1,5 +1,5 @@
 {
-  "name": "base_ui",
+  "name": "@base_/ui",
   "description": "UI for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
   "version": "1.0.0",
   "keywords": [
