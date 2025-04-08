@@ -2,10 +2,10 @@
 import { ScriptStatus, type ActiveScript } from '~/utils/packages/types';
 import { getCommandShellScript, getCommandDisplayName } from '@base_/shared/command';
 
-const appConfig = useBaseScoreConfig();
+const appConfig = await useBaseScoreConfig();
 
 const props = defineProps<{
-	package: (typeof appConfig.packages)[string];
+	package: (typeof appConfig.value.packages)[string];
 	packageId: string;
 }>();
 

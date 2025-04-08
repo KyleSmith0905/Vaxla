@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ScriptStatus } from '~/utils/packages/types';
 import { getCommandShellScript } from '@base_/shared/command';
+import { useLocalStorage } from '@vueuse/core';
 
 const props = defineProps<{ id?: string }>();
 const { getScript, killScript } = useScripts();

@@ -2,12 +2,13 @@ import type { BaseScoreConfig } from '@base_/shared';
 
 const config = ref<BaseScoreConfig | null>(null);
 
-const hydrateConfig = async () => {
-	config.value = await $fetch('/api/config');
-};
+export const useBaseScoreConfig = async () => {
+	const hydrateConfig = async () => {
+		if (config.value) return;
+		config.value = await $fetch('/api/config').then((e) => e.config as BaseScoreConfig);
+	};
 
-hydrateConfig();
+	await hydrateConfig();
 
-export const useBaseScoreConfig = () => {
-	return config.value as BaseScoreConfig;
+	return config as Ref<BaseScoreConfig>;
 };

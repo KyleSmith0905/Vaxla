@@ -63,12 +63,12 @@ if (import.meta.client) {
 }
 
 export const useScripts = () => {
-	const config = useBaseScoreConfig();
-
 	const runScript = async (options: { id?: string } & ({ command: BaseScoreCommand } | { commandIndex: number; packageId?: string })) => {
+		const config = await useBaseScoreConfig();
+
 		options.id ??= nanoid();
 
-		const command = 'command' in options ? options.command : config.packages[options.packageId ?? '']?.scripts[options.commandIndex];
+		const command = 'command' in options ? options.command : config.value.packages[options.packageId ?? '']?.scripts[options.commandIndex];
 		if (!command) return;
 
 		scripts.value = scripts.value

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const appConfig = useBaseScoreConfig();
+const appConfig = await useBaseScoreConfig();
 </script>
 <template>
 	<div class="overflow-hidden rounded-b-lg">

@@ -27,7 +27,6 @@ export default defineNuxtConfig({
 		'@nuxt/content',
 		'@nuxt/icon',
 		'dayjs-nuxt',
-		'@vueuse/nuxt',
 		'nuxt-qrcode',
 	],
 
@@ -39,8 +38,8 @@ export default defineNuxtConfig({
 				pixel: 'rounded',
 			},
 			radius: 1,
-			blackColor: 'currentColor', // 'var(--ui-text-highlighted)' if you are using `@nuxt/ui` v3
-			whiteColor: 'transparent', // 'var(--ui-bg)'
+			blackColor: 'currentColor',
+			whiteColor: 'transparent',
 		},
 	},
 

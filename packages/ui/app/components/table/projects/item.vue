@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import colors from 'tailwindcss/colors';
 
-const appConfig = useBaseScoreConfig();
+const appConfig = await useBaseScoreConfig();
 
 const props = defineProps<{
-	package: (typeof appConfig.packages)[string];
+	package: (typeof appConfig.value.packages)[string];
 	packageId: string;
 }>();
 

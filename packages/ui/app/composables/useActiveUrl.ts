@@ -1,3 +1,5 @@
+import { useDocumentVisibility, useIntervalFn } from '@vueuse/core';
+
 const sites = ref<Record<string, { sites: Record<string, boolean> }>>({});
 
 const documentVisibility = useDocumentVisibility();

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const appConfig = useBaseScoreConfig();
+const appConfig = await useBaseScoreConfig();
 
 const packagesInfo = computed(() => {
-	return Object.entries(appConfig.packages ?? {});
+	return Object.entries(appConfig.value.packages ?? {});
 });
 
 definePageMeta({

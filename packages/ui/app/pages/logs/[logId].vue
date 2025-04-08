@@ -2,7 +2,7 @@
 import { getCommandShellScript } from '@base_/shared/command';
 
 const route = useRoute();
-const config = useBaseScoreConfig();
+const config = await useBaseScoreConfig();
 
 const { getScript } = useScripts();
 const script = computed(() => getScript(route.params.logId as string));
