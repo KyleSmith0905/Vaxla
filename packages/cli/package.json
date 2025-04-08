@@ -1,7 +1,7 @@
 {
   "name": "@base_/cli",
   "description": "CLI for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "keywords": [
     "developer-tools",
     "devops",
