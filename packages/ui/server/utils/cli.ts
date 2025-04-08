@@ -27,6 +27,21 @@ export const execCommand = async (
 		abortController?: AbortController;
 	}
 ) => {
+	console.log('process.cwd()', process.cwd());
+	console.log('import.meta.dirname', import.meta.dirname);
+	console.log('process.env.BASE_SCORE_CONFIG', process.env.BASE_SCORE_CONFIG);
+
+	const getRootPackageJson = () => {
+		const configPath = process.env.BASE_SCORE_CONFIG;
+		if (typeof configPath === 'string') {
+			const configDir = join(process.cwd(), configPath);
+			const rootDir = join(configDir, '..');
+			return join(rootDir, 'package.json');
+		}
+		return join(process.cwd(), 'package.json');
+	};
+	console.log('getRootPackageJson()', getRootPackageJson());
+
 	let absolutePath = process.cwd();
 	if (absolutePath.endsWith('welcome')) absolutePath = join(absolutePath, '..');
 	if (absolutePath.endsWith('welcome\\.output')) absolutePath = join(absolutePath, '../..');

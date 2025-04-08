@@ -18,7 +18,7 @@ const activeScript = computed(() => {
 	const map: Record<string, ActiveScript> = {};
 
 	for (const script of scripts.value) {
-		if (script.commandIndex === undefined) continue;
+		if (script.commandIndex === undefined || script.packageId !== props.packageId) continue;
 
 		const currentCreatedAt = map[script.commandIndex]?.createdAt;
 		if (currentCreatedAt && currentCreatedAt > script.createdAt) continue;

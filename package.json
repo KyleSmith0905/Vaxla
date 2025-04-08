@@ -1,8 +1,14 @@
 {
   "name": "base_",
   "description": "Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.0",
-  "keywords": ["developer-tools", "devops", "workflow", "cli", "productivity"],
+  "version": "1.0.8",
+  "keywords": [
+    "developer-tools",
+    "devops",
+    "workflow",
+    "cli",
+    "productivity"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/KyleSmith0905/base_/issues",
@@ -17,9 +23,13 @@
     "build:cli": "cd packages/cli && pnpm run build",
     "build:shared": "cd packages/shared && pnpm run build",
     "build": "pnpm run build:shared && pnpm run build:cli",
+    "prepack": "pnpm run build && tsx ./scripts/prepack.ts",
     "dev": "cd packages/cli && pnpm run dev",
     "start": "cd packages/cli && pnpm run start",
     "example:pnpm:dev": "cd examples/pnpm && pnpm run dev",
     "example:pnpm:start": "cd examples/pnpm && pnpm run start"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.3"
   }
 }
