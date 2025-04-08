@@ -1,7 +1,7 @@
 import { runCommand } from 'nuxi';
 import { defineCommand } from 'citty';
 import { getBaseScoreConfig } from '../utilities/config';
-import path, { dirname, resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);

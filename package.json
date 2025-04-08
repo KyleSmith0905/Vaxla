@@ -19,6 +19,7 @@
     "build": "pnpm run build:shared && pnpm run build:cli",
     "dev": "cd packages/cli && pnpm run dev",
     "start": "cd packages/cli && pnpm run start",
-    "example:pnpm": "cd examples/pnpm && pnpm run dev"
+    "example:pnpm:dev": "cd examples/pnpm && pnpm run dev",
+    "example:pnpm:start": "cd examples/pnpm && pnpm run start"
   }
 }

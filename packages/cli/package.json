@@ -1,7 +1,7 @@
 {
   "name": "@base_/cli",
   "description": "CLI for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "developer-tools",
     "devops",
@@ -38,6 +38,7 @@
     "@base_/shared": "workspace:*",
     "@base_/ui": "workspace:*",
     "citty": "^0.1.6",
+    "consola": "^3.4.2",
     "jiti": "^2.4.2",
     "nuxi": "^3.24.1",
     "prettier-eslint": "^16.3.0",

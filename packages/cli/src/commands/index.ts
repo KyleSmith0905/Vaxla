@@ -6,4 +6,5 @@ const getDefault = (command: any) => {
 
 export const commands = {
 	dev: () => import('./dev').then(getDefault),
+	start: () => import('./start').then(getDefault),
 };
