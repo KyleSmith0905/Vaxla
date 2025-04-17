@@ -1,0 +1,37 @@
+{
+  "name": "@base_/shared",
+  "description": "Shared files and types for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
+  "version": "1.0.15",
+  "keywords": [
+    "developer-tools",
+    "devops",
+    "workflow",
+    "cli",
+    "productivity"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "email": "bugs@yskkyle.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KyleSmith0905/base_.git",
+    "directory": "packages/shared"
+  },
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^3.16.0",
+    "shadcn-docs-nuxt": "^0.8.21",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  }
+}
