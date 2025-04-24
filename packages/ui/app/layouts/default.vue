@@ -12,6 +12,7 @@ const navigation = [
 			{ title: 'Home', link: '/', icon: 'lucide:home' },
 			{ title: 'Logs', link: '/logs', icon: 'lucide:receipt-text' },
 			{ title: 'Terminal', link: '/terminal', icon: 'lucide:square-terminal' },
+			{ title: 'Articles', link: '/articles', icon: 'lucide:newspaper' },
 		],
 	},
 	{

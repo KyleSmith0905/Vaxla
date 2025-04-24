@@ -1,3 +1,6 @@
+import { getUserRootDirectory } from '@base_/shared';
+import tailwindcss from "@tailwindcss/vite";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	compatibilityDate: '2024-11-01',
@@ -5,22 +8,33 @@ export default defineNuxtConfig({
 	future: {
 		compatibilityVersion: 4,
 	},
-	telemetry: true,
-
-	postcss: {
-		plugins: {
-			tailwindcss: {},
-			autoprefixer: {},
-		},
+	telemetry: {
+		enabled: true,
 	},
 
 	alias: {
 		'tailwindcss/colors': 'tailwindcss/colors.js',
+		'dayjs/locale/en': 'dayjs/locale/en',
+		'dayjs/plugin/utc': 'dayjs/plugin/utc',
+		'dayjs/plugin/localizedFormat': 'dayjs/plugin/localizedFormat',
+		'dayjs/plugin/relativeTime': 'dayjs/plugin/relativeTime',
+		'dayjs/plugin/updateLocale': 'dayjs/plugin/updateLocale',
+		'ansi-to-html': 'ansi-to-html',
 	},
 
+	vite: {
+		server: {
+			fs: {
+				allow: [getUserRootDirectory()],
+			},
+		},
+		plugins: [
+			tailwindcss(),
+		],
+	},
+	css: ['./assets/css/tailwind.css'],
 	modules: [
 		'@brycesteve/nuxt-sse',
-		'@nuxtjs/tailwindcss',
 		'@nuxtjs/color-mode',
 		'shadcn-nuxt',
 		'@nuxt/fonts',
@@ -43,22 +57,9 @@ export default defineNuxtConfig({
 		},
 	},
 
-	tailwindcss: { cssPath: '~/assets/css/tailwind.css' },
-
 	shadcn: {
 		prefix: 'Ui',
 		componentDir: './app/components/ui',
-	},
-
-	content: {
-		contentHead: true,
-		defaultLocale: 'en-US',
-		navigation: {
-			fields: ['description', 'author', 'publishedAt'],
-		},
-		markdown: {
-			anchorLinks: false,
-		},
 	},
 
 	dayjs: {
@@ -82,8 +83,13 @@ export default defineNuxtConfig({
 				class: 'h-full',
 			},
 			bodyAttrs: {
-				class: 'dark font-body h-full',
+				class: 'font-body h-full',
 			},
+			link: [{
+				rel: 'icon',
+				type: 'image/x-icon',
+				href: '/base_/favicon.ico',
+			}]
 		},
 		rootAttrs: {
 			class: 'h-full',

@@ -2,10 +2,9 @@
 const route = useRoute();
 const dayjs = useDayjs();
 
-const splitPath = computed(() => route.path.split('/').slice(1) as ['blogs', ...string[]])
-
-const { data } = await useAsyncData('blog', () => queryContent(...splitPath.value).findOne())
-
+const { data } = await useAsyncData('article', () => {
+  return queryCollection('articles').path(route.path).select('author', 'description', 'title', 'body', 'path').first()
+})
 
 definePageMeta({
   layout: false,
@@ -13,9 +12,9 @@ definePageMeta({
 </script>
 
 <template>
-  <NuxtLayout name="default" :path="['Blogs', ...splitPath.slice(1)]">
+  <NuxtLayout name="default" :path="['Articles', data?.title ?? '']">
     <UiButton variant='outline' as-child class='w-fit'>
-      <NuxtLink to="/blogs">
+      <NuxtLink to="/articles">
         <Icon name='lucide:move-left'/>
         Back
       </NuxtLink>
@@ -26,7 +25,7 @@ definePageMeta({
         <UiCardDescription v-if="data?.description">{{ data.description }}</UiCardDescription>
         <div class='flex gap-1'>
           <UiBadge v-if="data?.author" class='flex gap-2'><Icon name="lucide:user-round"/>{{ data.author }}</UiBadge>
-          <UiBadge v-if="data?.author" class='flex gap-2'><Icon name="lucide:calendar"/>{{ dayjs(data.publishedAt).format('LLLL') }}</UiBadge>
+          <UtilityDateBadge :articlePath="data?.path ?? ''" />
         </div>
       </UiCardHeader>
       <UiSeparator/>

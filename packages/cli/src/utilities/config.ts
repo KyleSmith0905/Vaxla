@@ -1,25 +1,26 @@
 import { createJiti } from 'jiti';
-import { dirname, resolve } from 'path';
 import type { BaseScoreConfig } from '@base_/shared';
 import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
 export const defineBaseScoreConfig = (config: BaseScoreConfig) => {
 	return config;
 };
 
-export const getBaseScoreConfig = async (dir: string): Promise<{ config: BaseScoreConfig; path: string }> => {
+export const getBaseScoreConfig = async (configPath: string): Promise<{ config: BaseScoreConfig; path: string }> => {
 	const jiti = createJiti(import.meta.url);
 
-	const configPath = resolve(dir, 'config.ts');
-	const config = await jiti.import(configPath, { default: true });
+	const path = resolve(configPath, 'config.ts');
 
-	return { config: config as BaseScoreConfig, path: configPath };
+	const config = await jiti.import(path, { default: true });
+
+	return { config: config as BaseScoreConfig, path };
 };
 
 export const getBaseScoreVersion = async (): Promise<string> => {
 	return (await import('../../package.json')).version;
 };
 
-export const getBaseScoreConfigRaw = async (dir: string): Promise<string> => {
-	return readFileSync(resolve(dir, 'config.ts'), 'utf-8').trim();
+export const getBaseScoreConfigRaw = async (configPath: string): Promise<string> => {
+	return readFileSync(configPath, 'utf-8').trim();
 };

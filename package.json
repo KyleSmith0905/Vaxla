@@ -1,7 +1,7 @@
 {
   "name": "base_",
   "description": "Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.8",
+  "version": "1.0.15",
   "keywords": [
     "developer-tools",
     "devops",
@@ -20,16 +20,28 @@
   },
   "private": true,
   "scripts": {
-    "build:cli": "cd packages/cli && pnpm run build",
-    "build:shared": "cd packages/shared && pnpm run build",
-    "build": "pnpm run build:shared && pnpm run build:cli",
+    "dev": "base_ dev ./base_/config.ts",
+    "start": "base_ start ./base_/config.ts",
+    "build": "pnpm run shared:build && pnpm run cli:build",
     "prepack": "pnpm run build && tsx ./scripts/prepack.ts",
-    "dev": "cd packages/cli && pnpm run dev",
-    "start": "cd packages/cli && pnpm run start",
+    "cli:build": "cd packages/cli && pnpm run build",
+    "shared:build": "cd packages/shared && pnpm run build",
     "example:pnpm:dev": "cd examples/pnpm && pnpm run dev",
-    "example:pnpm:start": "cd examples/pnpm && pnpm run start"
+    "example:pnpm:start": "cd examples/pnpm && pnpm run start",
+    "doc:dev": "cd packages/doc && pnpm run dev",
+    "doc:build": "cd packages/doc && pnpm run build",
+    "doc:preview": "cd packages/doc && pnpm run preview",
+    "doc:deploy": "cd packages/doc && pnpm run deploy"
   },
   "devDependencies": {
     "tsx": "^4.19.3"
+  },
+  "dependencies": {
+    "@base_/cli": "^1.0.15"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
+    ]
   }
 }
