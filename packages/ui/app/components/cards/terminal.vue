@@ -24,12 +24,7 @@ const script = computed(() => (props.id ? getScript(props.id) : undefined));
 						<Icon name="lucide:terminal" />
 						{{ getCommandShellScript({ dynamic: script.command }, 'packages/@base_/ui') }}
 					</UiBadge>
-					<UiBadge
-						:class="{
-							'flex gap-2 bg-red-300 hover:bg-red-400': true,
-							'bg-green-300 hover:bg-green-400': script?.status === ScriptStatus.Opened,
-						}"
-					>
+					<UiBadge :variant="script?.status === ScriptStatus.Opened ? 'success' : 'destructive'" class='flex gap-2'>
 						<Icon name="lucide:stethoscope" />
 						<template v-if="script?.status === ScriptStatus.Opened">Opened</template>
 						<template v-else>Closed</template>

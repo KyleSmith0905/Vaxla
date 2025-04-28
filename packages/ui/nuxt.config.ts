@@ -1,5 +1,5 @@
 import { getUserRootDirectory } from '@base_/shared';
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -28,21 +28,10 @@ export default defineNuxtConfig({
 				allow: [getUserRootDirectory()],
 			},
 		},
-		plugins: [
-			tailwindcss(),
-		],
+		plugins: [tailwindcss()],
 	},
 	css: ['./assets/css/tailwind.css'],
-	modules: [
-		'@brycesteve/nuxt-sse',
-		'@nuxtjs/color-mode',
-		'shadcn-nuxt',
-		'@nuxt/fonts',
-		'@nuxt/content',
-		'@nuxt/icon',
-		'dayjs-nuxt',
-		'nuxt-qrcode',
-	],
+	modules: ['@brycesteve/nuxt-sse', 'shadcn-nuxt', '@nuxt/fonts', '@nuxt/content', '@nuxt/icon', 'dayjs-nuxt', 'nuxt-qrcode'],
 
 	qrcode: {
 		options: {
@@ -85,11 +74,13 @@ export default defineNuxtConfig({
 			bodyAttrs: {
 				class: 'font-body h-full',
 			},
-			link: [{
-				rel: 'icon',
-				type: 'image/x-icon',
-				href: '/base_/favicon.ico',
-			}]
+			link: [
+				{
+					rel: 'icon',
+					type: 'image/x-icon',
+					href: '/base_/favicon.ico',
+				},
+			],
 		},
 		rootAttrs: {
 			class: 'h-full',

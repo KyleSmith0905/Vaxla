@@ -41,11 +41,8 @@ const { sites } = useActiveUrl({
 				<UiTooltip>
 					<UiTooltipTrigger as-child>
 						<UiButton
-							variant="outline"
+							:variant="sites?.[link.fullUrl] ? 'success' : 'outline'"
 							size="xs"
-							:class="{
-								'border-green-400 bg-green-400/10 shadow shadow-green-400 hover:bg-green-400/20': sites?.[link.fullUrl],
-							}"
 							as-child
 						>
 							<a :href="link.fullUrl" target="_blank">{{ link.name }}</a>
@@ -54,7 +51,7 @@ const { sites } = useActiveUrl({
 					<UiTooltipContent class="flex flex-col">
 						<div class="flex items-center gap-2">
 							<h1 class="font-header text-base font-bold">{{ link.name }}</h1>
-							<UiButton size="xs" variant="link" class="text-zinc-500">
+							<UiButton size="xs" variant="link" class="text-accent">
 								<a :href="link.fullUrl" target="_blank">{{ link.fullUrl }}</a>
 							</UiButton>
 						</div>
