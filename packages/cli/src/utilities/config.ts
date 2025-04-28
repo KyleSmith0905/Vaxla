@@ -2,6 +2,7 @@ import { createJiti } from 'jiti';
 import type { BaseScoreConfig } from '@base_/shared';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import consola from 'consola';
 
 export const defineBaseScoreConfig = (config: BaseScoreConfig) => {
 	return config;
@@ -22,5 +23,19 @@ export const getBaseScoreVersion = async (): Promise<string> => {
 };
 
 export const getBaseScoreConfigRaw = async (configPath: string): Promise<string> => {
-	return readFileSync(configPath, 'utf-8').trim();
+	const fullPath = resolve(configPath, 'config.ts');
+	try {
+		return readFileSync(fullPath, 'utf-8').trim();
+	} catch (error) {
+		const typedError = error as NodeJS.ErrnoException;
+		if (typedError.code === 'ENOENT') {
+			consola.error(`Error: Config file not found at ${fullPath}`);
+		} else if (typedError.code === 'EISDIR') {
+			consola.error(`Error: Expected a file path but got a directory path: ${fullPath}. Ensure configPath points to the directory containing 'config.ts'.`);
+		} else {
+			consola.error(`Error reading config file at ${fullPath}:`, typedError);
+		}
+
+		throw typedError;
+	}
 };
