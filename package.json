@@ -1,7 +1,7 @@
 {
   "name": "base_",
   "description": "Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "keywords": [
     "developer-tools",
     "devops",
@@ -20,8 +20,8 @@
   },
   "private": true,
   "scripts": {
-    "dev": "base_ dev ./base_/config.ts",
-    "start": "base_ start ./base_/config.ts",
+    "dev": "base_ dev --dir ./tools/base_",
+    "start": "base_ start --dir ./tools/base_",
     "build": "pnpm run shared:build && pnpm run cli:build",
     "prepack": "pnpm run build && tsx ./scripts/prepack.ts",
     "cli:build": "cd packages/cli && pnpm run build",
