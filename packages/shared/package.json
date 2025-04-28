@@ -1,7 +1,7 @@
 {
   "name": "@base_/shared",
   "description": "Shared files and types for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "keywords": [
     "developer-tools",
     "devops",
