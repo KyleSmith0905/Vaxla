@@ -28,6 +28,9 @@ export default defineNuxtConfig({
 				allow: [getUserRootDirectory()],
 			},
 		},
+		optimizeDeps: {
+			include: ['dayjs'],
+		},
 		plugins: [tailwindcss()],
 	},
 	css: ['./assets/css/tailwind.css'],
