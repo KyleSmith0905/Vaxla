@@ -46,3 +46,15 @@ export default defineBaseScoreConfig({
   }
 })
 ```
+
+## Contributing
+
+```
+/base_ # The base_ monorepo configuration for this workspace (we are using our own tech)
+/examples # Examples experimenting with different use cases
+/packages # Source codes for various segments.
+  /cli # The CLI commands and binary.
+  /doc # The documentation.
+  /shared # Shared functions and utilities used by multiple packages.
+  /ui # The visual experience of the tool.
+```
