@@ -3,7 +3,7 @@ import { join, resolve } from 'path';
 import { createRequire } from 'node:module';
 import { dirname } from 'node:path';
 
-const require = createRequire(import.meta.url);
+const require = createRequire(process.argv[1] ? new URL(process.argv[1], "file://").href : import.meta.url);
 
 export const getUserRootDirectory = () => {
 	const configDir = process.env.BASE_SCORE_CONFIG ?? process.cwd();
