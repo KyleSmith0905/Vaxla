@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useDark } from '@vueuse/core';
 
-const dark = useDark();
+const isDark = useDark();
 const theme = ref('default');
 
-const darkString = computed(() => dark ? 'dark' : 'light')
+const darkString = computed(() => isDark.value ? 'dark' : 'light')
 
 definePageMeta({
   layout: false,
@@ -20,7 +20,7 @@ definePageMeta({
         <form class='grid grid-cols-2 gap-2'>
           <UiLabel class='flex flex-col gap-1'>
             Color Schemes
-            <UiSelect v-model:modelValue='darkString' @update:model-value="dark = $event === 'dark'">
+            <UiSelect v-model:modelValue='darkString' @update:model-value="isDark = $event === 'dark'">
               <UiSelectTrigger>
                 <UiSelectValue />
               </UiSelectTrigger>

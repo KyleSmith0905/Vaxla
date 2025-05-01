@@ -4,6 +4,8 @@
 
 @config '../../../tailwind.config.js';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
     --radius: 0.5rem;

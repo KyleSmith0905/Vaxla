@@ -30,7 +30,7 @@ definePageMeta({
       </UiCardHeader>
       <UiSeparator/>
       <UiCardContent class='py-4 px-6'>
-        <ContentRenderer class="prose prose-zinc prose-invert min-w-full" :value='data as any'/>
+        <ContentRenderer class="prose prose-zinc dark:prose-invert min-w-full" :value='data as any'/>
       </UiCardContent>
     </UiCard>
   </NuxtLayout>
