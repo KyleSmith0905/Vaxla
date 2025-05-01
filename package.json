@@ -1,7 +1,7 @@
 {
   "name": "base_",
   "description": "Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "keywords": [
     "developer-tools",
     "devops",
@@ -37,11 +37,14 @@
     "tsx": "^4.19.3"
   },
   "dependencies": {
-    "@base_/cli": "^1.0.15"
+    "@base_/cli": "^1.0.20"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
       "better-sqlite3"
-    ]
+    ],
+    "overrides": {
+      "glob": "npm:@kylesmith0905/glob-always-follow@11.0.2"
+    }
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@base_/ui",
   "description": "UI for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "keywords": [
     "developer-tools",
     "devops",
