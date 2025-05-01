@@ -1,4 +1,5 @@
 import { defineBuildConfig } from 'unbuild';
+import { cpSync } from 'fs';
 
 export default defineBuildConfig({
 	entries: ['./src/index.ts', './src/command.ts'],
@@ -6,4 +7,9 @@ export default defineBuildConfig({
 	rollup: {
 		emitCJS: true,
 	},
+	hooks: {
+		'build:done': () => {
+			cpSync('./dist/', '../ui/.base_/shared', {recursive: true})
+		}
+	}
 });

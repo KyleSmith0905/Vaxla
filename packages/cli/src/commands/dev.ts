@@ -2,11 +2,9 @@ import { runCommand } from 'nuxi';
 import { defineCommand } from 'citty';
 import { getBaseScoreConfig } from '../utilities/config';
 import { dirname, resolve, join } from 'node:path';
-import { createRequire } from 'node:module';
 import chokidar from 'chokidar';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, unlinkSync } from 'node:fs';
-
-const require = createRequire(import.meta.url);
+import { getUiDirectory } from '@base_/shared';
 
 export default defineCommand({
 	meta: {
@@ -34,7 +32,7 @@ export default defineCommand({
 		const finalPort = port ?? config.port ?? 3000;
 
 		// Find the actual location of @base_/ui package
-		const baseScoreUiPath = dirname(require.resolve('@base_/ui/package.json'));
+		const baseScoreUiPath = getUiDirectory();
 
 		const configDirectory = resolve(dir);
 		process.env.BASE_SCORE_CONFIG = configDirectory;

@@ -1,5 +1,6 @@
-import { getUserRootDirectory } from '@base_/shared';
+import { getUserRootDirectory, getUiDirectory } from '@base_/shared';
 import tailwindcss from '@tailwindcss/vite';
+import { join } from 'node:path';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -20,6 +21,7 @@ export default defineNuxtConfig({
 		'dayjs/plugin/relativeTime': 'dayjs/plugin/relativeTime',
 		'dayjs/plugin/updateLocale': 'dayjs/plugin/updateLocale',
 		'ansi-to-html': 'ansi-to-html',
+		'@base_/shared': join(getUiDirectory(), './.base_/shared'),
 	},
 
 	vite: {

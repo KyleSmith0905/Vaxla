@@ -26,7 +26,6 @@
     "start": "tsx ./scripts/start.ts"
   },
   "dependencies": {
-    "@base_/shared": "workspace:*",
     "@brycesteve/nuxt-sse": "^1.0.1",
     "@iconify/vue": "^4.3.0",
     "@nuxt/content": "^3.4.0",

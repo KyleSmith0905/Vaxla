@@ -1,12 +1,10 @@
 import { runCommand } from 'nuxi';
 import { defineCommand } from 'citty';
 import { getBaseScoreConfig, getBaseScoreConfigRaw, getBaseScoreVersion } from '../utilities/config';
-import { dirname, resolve } from 'node:path';
-import { createRequire } from 'node:module';
+import { resolve } from 'node:path';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { consola } from 'consola';
-
-const require = createRequire(import.meta.url);
+import { getUiDirectory } from '@base_/shared';
 
 const shouldBuild = (cliVersion: string, config: string, dir: string): boolean => {
 	const versionFile = resolve(dir, '.build/config-store');
@@ -52,7 +50,7 @@ export default defineCommand({
 		const finalPort = port ?? config.port ?? 3000;
 
 		// Find the actual location of @base_/ui package
-		const baseScoreUiPath = dirname(require.resolve('@base_/ui/package.json'));
+		const baseScoreUiPath = getUiDirectory();
 
 		const configString = await getBaseScoreConfigRaw(dir);
 		const cliVersion = await getBaseScoreVersion();
