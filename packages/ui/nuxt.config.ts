@@ -35,6 +35,7 @@ export default defineNuxtConfig({
 	},
 	css: ['./assets/css/tailwind.css'],
 	modules: ['@brycesteve/nuxt-sse', 'shadcn-nuxt', '@nuxt/fonts', '@nuxt/content', '@nuxt/icon', 'dayjs-nuxt', 'nuxt-qrcode'],
+	ssr: false,
 
 	qrcode: {
 		options: {
