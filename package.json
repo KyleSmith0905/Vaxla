@@ -1,7 +1,7 @@
 {
   "name": "base_",
   "description": "Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.20",
+  "version": "1.0.25",
   "keywords": [
     "developer-tools",
     "devops",
@@ -42,9 +42,6 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "better-sqlite3"
-    ],
-    "overrides": {
-      "glob": "npm:@kylesmith0905/glob-always-follow@11.0.2"
-    }
+    ]
   }
 }
