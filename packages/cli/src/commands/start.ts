@@ -20,6 +20,8 @@ const shouldBuild = (cliVersion: string, config: string, dir: string): boolean =
 };
 
 const updateVersionFile = (cliVersion: string, config: string, dir: string) => {
+	writeFileSync(resolve(dir, '.gitignore'), ['/.build/*'].join('\n'));
+
 	const versionFile = resolve(dir, '.build/config-store');
 	if (!existsSync(versionFile)) {
 		mkdirSync(resolve(dir, '.build'), { recursive: true });
