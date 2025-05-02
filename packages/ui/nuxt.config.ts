@@ -1,10 +1,12 @@
 import { getUserRootDirectory, getUiDirectory } from '@base_/shared';
 import tailwindcss from '@tailwindcss/vite';
 import { join } from 'node:path';
+import { defineNuxtConfig } from 'nuxt/config';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	compatibilityDate: '2024-11-01',
+	debug: true,
 	devtools: { enabled: true },
 	future: {
 		compatibilityVersion: 4,
@@ -12,6 +14,11 @@ export default defineNuxtConfig({
 	telemetry: {
 		enabled: true,
 	},
+	experimental: {
+		buildCache: true,
+	},
+
+	sourcemap: false,
 
 	alias: {
 		'tailwindcss/colors': 'tailwindcss/colors.js',
@@ -24,6 +31,20 @@ export default defineNuxtConfig({
 		'@base_/shared': join(getUiDirectory(), './.base_/shared'),
 	},
 
+	nitro: {
+		compressPublicAssets: false,
+		minify: false,
+		rollupConfig: {
+			perf: true,
+			treeshake: false,
+			output: {
+				indent: false,
+				sourcemap: false,
+				minifyInternalExports: false,
+			},
+		},
+	},
+
 	vite: {
 		server: {
 			fs: {
@@ -32,6 +53,16 @@ export default defineNuxtConfig({
 		},
 		optimizeDeps: {
 			include: ['dayjs'],
+		},
+		build: {
+			minify: false,
+			cssMinify: false,
+			rollupOptions: {
+				treeshake: false,
+				output: {
+					sourcemap: false,
+				},
+			},
 		},
 		plugins: [tailwindcss()],
 	},
