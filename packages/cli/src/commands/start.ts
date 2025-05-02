@@ -38,11 +38,18 @@ export default defineCommand({
 		port: {
 			type: 'string',
 			description: 'The port to run the server on.',
+			alias: 'p',
 		},
 		dir: {
 			type: 'string',
 			description: 'The path to the base_ files, such as the configuration file.',
 			default: './base_',
+			alias: 'd',
+		},
+		forceBuild: {
+			type: 'boolean',
+			description: 'Whether to force a build or not.',
+			alias: 'fb',
 		},
 	},
 	async run({ args }) {
@@ -60,7 +67,7 @@ export default defineCommand({
 		process.env.BASE_SCORE_CONFIG = resolve(dir);
 
 		// Build the UI if needed
-		if (shouldBuild(cliVersion, configString, dir)) {
+		if (shouldBuild(cliVersion, configString, dir) || args.forceBuild) {
 			consola.info('Building UI, this should only run once.');
 			await runCommand('build', ['--port', finalPort, '--cwd', baseScoreUiPath], {
 				overrides: { runtimeConfig: { public: { baseScoreConfig: config } } },
