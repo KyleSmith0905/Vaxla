@@ -27,7 +27,7 @@ const logs = computed(() => {
       <code class='flex flex-col w-full text-sm divide-y divide-border'>
         <span v-for="log of logs" class='flex items-center gap-2 py-px pl-3 pr-2' :class="cn({'bg-cyan-950/25': log.type === 'meta', 'bg-red-950/25': log.type === 'error'})">
           <span v-if="date" class='select-none text-xs text-muted-foreground'>{{ dayjs(log.date).format('LTS') }}</span>
-          <div class='text-wrap' v-html="log.text.trim()"></div>
+          <div class='text-wrap brightness-75 dark:brightness-150' v-html="log.text.trim()"></div>
         </span>
       </code>
     </pre>

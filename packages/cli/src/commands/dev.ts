@@ -2,13 +2,9 @@ import { runCommand } from 'nuxi';
 import { defineCommand } from 'citty';
 import { getBaseScoreConfig } from '../utilities/config';
 import { dirname, resolve, join } from 'node:path';
-import { createRequire } from 'node:module';
 import chokidar from 'chokidar';
-import { copyFileSync, existsSync, mkdirSync, readdirSync, rmdirSync, rmSync, unlinkSync } from 'node:fs';
-import path from 'path';
-import consola from 'consola';
-
-const require = createRequire(import.meta.url);
+import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, unlinkSync } from 'node:fs';
+import { getUiDirectory } from '@base_/shared';
 
 export default defineCommand({
 	meta: {
@@ -19,11 +15,13 @@ export default defineCommand({
 		port: {
 			type: 'string',
 			description: 'The port to run the server on.',
+			alias: 'p',
 		},
 		dir: {
 			type: 'string',
 			description: 'The path to the base_ files, such as the configuration file.',
 			default: './base_',
+			alias: 'd',
 		},
 	},
 	async run({ args }) {
@@ -34,9 +32,9 @@ export default defineCommand({
 		const finalPort = port ?? config.port ?? 3000;
 
 		// Find the actual location of @base_/ui package
-		const baseScoreUiPath = dirname(require.resolve('@base_/ui/package.json'));
+		const baseScoreUiPath = getUiDirectory();
 
-		const configDirectory = resolve(dir)
+		const configDirectory = resolve(dir);
 		process.env.BASE_SCORE_CONFIG = configDirectory;
 
 		// Remove non-internal files in @base_/ui
@@ -45,7 +43,7 @@ export default defineCommand({
 			if (!file.startsWith('base_internal')) {
 				rmSync(join(publicPath, file), { recursive: true, force: true });
 			}
-		})
+		});
 
 		// Watches the public directory and copies the content to the @base_/ui package
 		chokidar

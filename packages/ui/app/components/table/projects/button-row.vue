@@ -35,9 +35,9 @@ const activeScript = computed(() => {
 				<UiTooltipTrigger as-child>
 					<UiButton
 						size="icon"
+						:variant="activeScript[index]?.status === ScriptStatus.Opened ? 'success' : 'outline'"
 						:class="{
-							'size-7 rounded-full border border-zinc-700 bg-muted text-white hover:bg-zinc-800 hover:brightness-125': true,
-							'border-green-700 bg-green-800 hover:bg-green-700': activeScript[index]?.status === ScriptStatus.Opened,
+							'size-7': true,
 						}"
 						@click="
 							activeScript[index]?.status === ScriptStatus.Opened

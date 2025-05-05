@@ -1,12 +1,10 @@
 import { runCommand } from 'nuxi';
 import { defineCommand } from 'citty';
 import { getBaseScoreConfig, getBaseScoreConfigRaw, getBaseScoreVersion } from '../utilities/config';
-import { dirname, resolve } from 'node:path';
-import { createRequire } from 'node:module';
+import { resolve } from 'node:path';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { consola } from 'consola';
-
-const require = createRequire(import.meta.url);
+import { getUiDirectory } from '@base_/shared';
 
 const shouldBuild = (cliVersion: string, config: string, dir: string): boolean => {
 	const versionFile = resolve(dir, '.build/config-store');
@@ -22,6 +20,8 @@ const shouldBuild = (cliVersion: string, config: string, dir: string): boolean =
 };
 
 const updateVersionFile = (cliVersion: string, config: string, dir: string) => {
+	writeFileSync(resolve(dir, '.gitignore'), ['/.build/*'].join('\n'));
+
 	const versionFile = resolve(dir, '.build/config-store');
 	if (!existsSync(versionFile)) {
 		mkdirSync(resolve(dir, '.build'), { recursive: true });
@@ -38,11 +38,18 @@ export default defineCommand({
 		port: {
 			type: 'string',
 			description: 'The port to run the server on.',
+			alias: 'p',
 		},
 		dir: {
 			type: 'string',
 			description: 'The path to the base_ files, such as the configuration file.',
 			default: './base_',
+			alias: 'd',
+		},
+		forceBuild: {
+			type: 'boolean',
+			description: 'Whether to force a build or not.',
+			alias: 'fb',
 		},
 	},
 	async run({ args }) {
@@ -52,7 +59,7 @@ export default defineCommand({
 		const finalPort = port ?? config.port ?? 3000;
 
 		// Find the actual location of @base_/ui package
-		const baseScoreUiPath = dirname(require.resolve('@base_/ui/package.json'));
+		const baseScoreUiPath = getUiDirectory();
 
 		const configString = await getBaseScoreConfigRaw(dir);
 		const cliVersion = await getBaseScoreVersion();
@@ -60,7 +67,7 @@ export default defineCommand({
 		process.env.BASE_SCORE_CONFIG = resolve(dir);
 
 		// Build the UI if needed
-		if (shouldBuild(cliVersion, configString, dir)) {
+		if (shouldBuild(cliVersion, configString, dir) || args.forceBuild) {
 			consola.info('Building UI, this should only run once.');
 			await runCommand('build', ['--port', finalPort, '--cwd', baseScoreUiPath], {
 				overrides: { runtimeConfig: { public: { baseScoreConfig: config } } },

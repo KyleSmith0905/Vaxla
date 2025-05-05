@@ -1,7 +1,7 @@
 {
-  "name": "@base_/shared",
+  "name": "@base_/doc",
   "description": "Shared files and types for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.15",
+  "version": "1.0.25",
   "keywords": [
     "developer-tools",
     "devops",
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/KyleSmith0905/base_.git",
     "directory": "packages/shared"
   },
-  "private": false,
+  "private": true,
   "type": "module",
   "scripts": {
     "build": "nuxt build",

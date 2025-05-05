@@ -22,8 +22,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "base_ dev",
-    "start": "base_ start"
+    "dev": "base_ dev --dir ./tools/base_",
+    "start": "base_ start --dir ./tools/base_"
   },
   "dependencies": {
     "@base_/cli": "link:..\\..\\packages\\cli"

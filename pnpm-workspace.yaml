@@ -3,5 +3,5 @@ packages:
   - examples/*
   - examples/*/apps/*
 
-onlyBuiltDependencies:
-  - esbuild
+overrides:
+  "glob": "npm:@kylesmith0905/glob-always-follow@11.0.2"
