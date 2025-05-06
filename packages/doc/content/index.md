@@ -13,7 +13,7 @@ Development tool to manage complex developer environments and run commands. A UI
 ::
 
 ::div{class="border rounded-lg shadow-md mt-4"}
-  :img{src="http://localhost:3000/screenshots/demo.png" height="1280" width="800" class="w-full"}
+  :img{src="https://base.yskkyle.com/screenshots/demo.png" height="1280" width="800" class="w-full"}
 ::
 
 ::code-tree{defaultValue="base_/config.ts" title="Sample Workspace powered by BASE_"}

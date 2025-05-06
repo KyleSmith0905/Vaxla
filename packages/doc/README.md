@@ -1,49 +1,61 @@
-# shadcn-docs-nuxt Minimal Starter
+# BASE_ (pronounced "Base Score")
 
-Starter template for [shadcn-docs-nuxt](https://github.com/ZTL-UwU/shadcn-docs-nuxt).
+_IN DEVELOPMENT, IGNORE FOR NOW_
 
-## Setup
+A central base for your development environment. View the documentation at https://base.yskkyle.com/.
 
-Make sure to install the dependencies:
+## Installation
 
-```bash
-# yarn
-yarn install
+1. Install with `pnpm i @base_/cli`.
+2. Make a `base-score/` or `base_/` directory.
+3. Create a `config.ts` inside, and configure it to your environment.
+4. Run `base_ dev --dir ./base_`.
 
-# npm
-npm install
+## Example
 
-# pnpm
-pnpm install
+`base-score/config.ts`
+```ts
+import { defineBaseScoreConfig, colors } from '@base_/cli';
+import { rmdirSync } from 'node:fs';
+import { join } from 'node:path';
 
-# bun
-bun install
+export default defineBaseScoreConfig({
+  port: 3000, // Defaults to 3000
+  packages: {
+    mobile: {
+      name: "Mobile",
+      color: colors.red,
+      link: [{ port: 4000, name: "Local Web Server" }],
+      scripts: [
+        {
+          label: "Start Server",
+          command: "start:mobile",
+          type: ScriptType.Serve,
+          icon: "lucide:cloud",
+        },
+        {
+          label: "Deploy App",
+          command: async () => {
+            // Deploys the app
+          },
+          type: ScriptType.Action,
+          icon: "lucide:upload",
+        },
+      ],
+    }
+  }
+})
 ```
 
-## Development Server
+## Contributing
 
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
 ```
-
-## Production
-
-[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?repo=ZTL-UwU/shadcn-docs-nuxt-starter)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FZTL-UwU%2Fshadcn-docs-nuxt-starter)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https%3A%2F%2Fgithub.com%2FZTL-UwU%2Fshadcn-docs-nuxt-starter)
-
-Build the application for production:
-
-```bash
-npm run build
+/examples # Examples experimenting with different use cases
+/packages # Source codes for various segments.
+  /cli # The CLI commands and binary.
+  /doc # The documentation.
+  /shared # Shared functions and utilities used by multiple packages.
+  /ui # The visual experience of the tool.
+/tools # Developer tools and editor configurations.
+  /base_ # The base_ monorepo configuration for this workspace (we are using our own tech).
 ```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Checkout the [deployment documentation](https://shadcn-docs-nuxt.vercel.app/getting-started/deployment) for more information.
