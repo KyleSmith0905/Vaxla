@@ -2,7 +2,7 @@
 
 _IN DEVELOPMENT, IGNORE FOR NOW_
 
-A central base for your development environment. Manage and 
+A central base for your development environment. View the documentation at https://base.yskkyle.com/.
 
 ## Installation
 
