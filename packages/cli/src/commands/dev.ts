@@ -1,10 +1,13 @@
-import { runCommand } from 'nuxi';
 import { defineCommand } from 'citty';
 import { getBaseScoreConfig } from '../utilities/config';
 import { dirname, resolve, join } from 'node:path';
 import chokidar from 'chokidar';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, unlinkSync } from 'node:fs';
 import { getUiDirectory } from '@base_/shared';
+import { runCommand } from '../utilities/command';
+import { consola } from '../utilities/consola';
+import { pollUrl } from '../utilities/polling';
+import { colors } from 'consola/utils';
 
 export default defineCommand({
 	meta: {
@@ -23,9 +26,14 @@ export default defineCommand({
 			default: './base_',
 			alias: 'd',
 		},
+		debug: {
+			type: 'boolean',
+			description: 'Enable debug logging for the UI dev processes.',
+			default: false,
+		},
 	},
 	async run({ args }) {
-		const { port, dir } = args;
+		const { port, dir, debug } = args;
 
 		const { config } = await getBaseScoreConfig(dir);
 
@@ -65,8 +73,30 @@ export default defineCommand({
 				}
 			});
 
-		await runCommand('dev', ['--port', finalPort, '--cwd', baseScoreUiPath], {
-			overrides: { runtimeConfig: { public: { baseScoreConfig: config } } },
-		});
+		consola.start('Starting development server...');
+		await runCommand(
+			`npx nuxi dev --port ${finalPort}`,
+			{
+				// overrides: { runtimeConfig: { public: { baseScoreConfig: config } } },
+				cwd: baseScoreUiPath,
+			},
+			debug
+		);
+
+		await pollUrl(`https://localhost:${finalPort}`);
+
+		consola.box(
+			[
+				`Server running locally on port ${colors.yellowBright(finalPort)}.`,
+				`View at ${colors.blueBright(colors.underline(`http://localhost:${finalPort}`))}`,
+			].join('\n'),
+			{
+				title: 'Server Active',
+				style: {
+					borderColor: 'green',
+					borderStyle: 'rounded',
+				},
+			}
+		);
 	},
 });

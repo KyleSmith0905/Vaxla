@@ -1,7 +1,7 @@
 {
   "name": "base_",
   "description": "Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "keywords": [
     "developer-tools",
     "devops",

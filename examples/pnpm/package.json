@@ -22,7 +22,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "base_ dev --dir ./tools/base_",
+    "dev": "base_ dev --dir ./tools/base_ --debug",
     "start": "base_ start --dir ./tools/base_"
   },
   "dependencies": {

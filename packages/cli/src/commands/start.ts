@@ -1,10 +1,11 @@
-import { runCommand } from 'nuxi';
 import { defineCommand } from 'citty';
 import { getBaseScoreConfig, getBaseScoreConfigRaw, getBaseScoreVersion } from '../utilities/config';
 import { resolve } from 'node:path';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { consola } from 'consola';
 import { getUiDirectory } from '@base_/shared';
+import { runCommand } from '../utilities/command';
+import { consola } from '../utilities/consola';
+import { colors } from 'consola/utils';
 
 const shouldBuild = (cliVersion: string, config: string, dir: string): boolean => {
 	const versionFile = resolve(dir, '.build/config-store');
@@ -51,9 +52,14 @@ export default defineCommand({
 			description: 'Whether to force a build or not.',
 			alias: 'fb',
 		},
+		debug: {
+			type: 'boolean',
+			description: 'Enable debug logging for the UI build and start processes.',
+			default: false,
+		},
 	},
 	async run({ args }) {
-		const { port, dir } = args;
+		const { port, dir, debug } = args;
 
 		const { config } = await getBaseScoreConfig(dir);
 		const finalPort = port ?? config.port ?? 3000;
@@ -68,20 +74,43 @@ export default defineCommand({
 
 		// Build the UI if needed
 		if (shouldBuild(cliVersion, configString, dir) || args.forceBuild) {
-			consola.info('Building UI, this should only run once.');
-			await runCommand('build', ['--port', finalPort, '--cwd', baseScoreUiPath], {
-				overrides: { runtimeConfig: { public: { baseScoreConfig: config } } },
-			});
+			consola.start('Building UI, this should only run once...');
+			await runCommand(
+				'npx nuxi build',
+				{
+					cwd: baseScoreUiPath,
+				},
+				debug
+			);
 
 			updateVersionFile(cliVersion, configString, dir);
-			consola.info('UI build complete. The build will not run again unless the config changes.');
+			consola.success('UI build complete. The build will not run again unless the config changes.');
 		} else {
-			consola.info('Reusing stored UI.');
+			consola.success('Reusing stored UI build.');
 		}
 
-		consola.info('Running server...');
-		await runCommand('start', ['--port', finalPort, '--cwd', baseScoreUiPath], {
-			overrides: { runtimeConfig: { public: { baseScoreConfig: config } } },
-		});
+		consola.start('Running server...');
+
+		consola.box(
+			[
+				`Server running locally on port ${colors.yellowBright(finalPort)}.`,
+				`View at ${colors.blueBright(colors.underline(`http://localhost:${finalPort}`))}`,
+			].join('\n'),
+			{
+				title: 'Server Active',
+				style: {
+					borderColor: 'green',
+					borderStyle: 'rounded',
+				},
+			}
+		);
+
+		runCommand(
+			`npx nuxi start --port ${finalPort}`,
+			{
+				cwd: baseScoreUiPath,
+			},
+			debug
+		);
 	},
 });
