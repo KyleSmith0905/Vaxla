@@ -17,7 +17,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KyleSmith0905/base_.git",
-    "directory": "packages/shared"
+    "directory": "packages/doc"
   },
   "private": true,
   "type": "module",
