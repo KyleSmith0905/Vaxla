@@ -1,4 +1,3 @@
-import { version } from "../package.json";
 import { readFileSync, writeFileSync } from "node:fs";
 import { consola } from 'consola';
 import { globSync } from 'glob';
@@ -7,9 +6,12 @@ export const copyPackageVersions = () => {
   consola.info("Copying root package version to packages...");
   const packageFiles = globSync("packages/*/package.json");
 
+  const packageJson = readFileSync('./package.json', 'utf-8');
+  const parsedPackageJson = JSON.parse(packageJson);
+
   for (const packageFile of packageFiles) {
     const packageJson = JSON.parse(readFileSync(packageFile, "utf-8"));
-    packageJson.version = version;
+    packageJson.version = parsedPackageJson.version;
     writeFileSync(packageFile, JSON.stringify(packageJson, null, 2) + "\n");
   }
   consola.success(`Successfully copied root package versions.`);
