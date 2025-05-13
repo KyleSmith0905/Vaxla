@@ -1,6 +1,6 @@
 {
-  "name": "base_example-pnpm-vite-vanilla-ts",
-  "description": "PNPM Vite Vanilla TS example for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
+  "name": "example",
+  "description": "Example For BASE_ - Development tool to easily manage multiple dev environments and run commands.",
   "version": "1.0.0",
   "keywords": ["developer-tools", "devops", "workflow", "cli", "productivity"],
   "license": "MIT",

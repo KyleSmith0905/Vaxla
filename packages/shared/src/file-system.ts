@@ -1,4 +1,4 @@
-import { existsSync } from 'fs';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
 import { createRequire } from 'node:module';
 import { dirname } from 'node:path';
@@ -27,4 +27,10 @@ export const getUserRootDirectory = () => {
 export const getUiDirectory = () => {
 	const baseScoreUiPath = dirname(require.resolve('@base_/ui/package.json'));
 	return baseScoreUiPath;
-}
+};
+
+export const writeFileRecursive = (filePath: string, content: string): void => {
+	const directory = dirname(filePath);
+	mkdirSync(directory, { recursive: true });
+	writeFileSync(filePath, content);
+};

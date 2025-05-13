@@ -28,6 +28,21 @@ importers:
         specifier: link:..\..\packages\cli
         version: link:../../packages/cli
 
+  examples/pnpm-configless:
+    dependencies:
+      '@base_/cli':
+        specifier: link:..\..\packages\cli
+        version: link:../../packages/cli
+
+  examples/pnpm-configless/apps/vite-vanilla-ts:
+    devDependencies:
+      typescript:
+        specifier: ~5.7.2
+        version: 5.7.3
+      vite:
+        specifier: ^6.2.0
+        version: 6.3.5(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.87.0)(terser@5.39.0)(tsx@4.19.4)(yaml@2.7.1)
+
   examples/pnpm/apps/vite-vanilla-ts:
     devDependencies:
       typescript:
@@ -57,6 +72,9 @@ importers:
       consola:
         specifier: ^3.4.2
         version: 3.4.2
+      glob:
+        specifier: ^11.0.2
+        version: 11.0.2
       jiti:
         specifier: ^2.4.2
         version: 2.4.2

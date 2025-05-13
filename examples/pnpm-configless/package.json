@@ -1,5 +1,5 @@
 {
-  "name": "example",
+  "name": "root",
   "description": "Example For BASE_ - Development tool to easily manage multiple dev environments and run commands.",
   "version": "1.0.0",
   "keywords": [
@@ -17,13 +17,13 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KyleSmith0905/base_.git",
-    "directory": "examples/pnpm"
+    "directory": "examples/pnpm-configless"
   },
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "base_ dev --dir ./tools/base_ --debug",
-    "start": "base_ start --dir ./tools/base_"
+    "dev": "base_ dev --debug",
+    "start": "base_ start --debug"
   },
   "dependencies": {
     "@base_/cli": "link:..\\..\\packages\\cli"

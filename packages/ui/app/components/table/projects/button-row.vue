@@ -34,23 +34,23 @@ const activeScript = computed(() => {
 			<UiTooltip>
 				<UiTooltipTrigger as-child>
 					<UiButton
-						size="icon"
-						:variant="activeScript[index]?.status === ScriptStatus.Opened ? 'success' : 'outline'"
-						:class="{
-							'size-7': true,
-						}"
+					size="icon"
+					:variant="activeScript[index]?.status === ScriptStatus.Opened ? 'success' : 'outline'"
+					:class="{
+						'size-7': true,
+					}"
 						@click="
 							activeScript[index]?.status === ScriptStatus.Opened
-								? killScript(activeScript[index]?.id)
-								: runScript({ packageId: props.packageId, commandIndex: index })
-						"
+							? killScript(activeScript[index]?.id)
+							: runScript({ packageId: props.packageId, commandIndex: index })
+							"
 					>
-						<Icon :name="script.icon" />
+						<Icon :name="script.icon || 'lucide:circle-dashed'" />
 					</UiButton>
 				</UiTooltipTrigger>
 				<UiTooltipContent class="flex flex-col">
 					<div class="flex items-center gap-2">
-						<Icon :name="script.icon" />
+						<Icon :name="script.icon || 'lucide:circle-dashed'" />
 						<h1 class="font-header text-base font-bold">{{ getCommandDisplayName({ script }) }}</h1>
 					</div>
 					<code class="w-fit rounded bg-muted px-2 py-1 font-mono text-xs font-semibold text-muted-foreground">

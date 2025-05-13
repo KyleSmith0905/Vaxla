@@ -1,14 +1,7 @@
 {
-  "name": "example",
   "description": "Example For BASE_ - Development tool to easily manage multiple dev environments and run commands.",
   "version": "1.0.0",
-  "keywords": [
-    "developer-tools",
-    "devops",
-    "workflow",
-    "cli",
-    "productivity"
-  ],
+  "keywords": ["developer-tools", "devops", "workflow", "cli", "productivity"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/KyleSmith0905/base_/issues",
@@ -17,15 +10,17 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KyleSmith0905/base_.git",
-    "directory": "examples/pnpm"
+    "directory": "examples/pnpm/apps/vite-vanilla-ts"
   },
   "private": true,
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "base_ dev --dir ./tools/base_ --debug",
-    "start": "base_ start --dir ./tools/base_"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
-  "dependencies": {
-    "@base_/cli": "link:..\\..\\packages\\cli"
+  "devDependencies": {
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
   }
 }

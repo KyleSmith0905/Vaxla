@@ -30,6 +30,8 @@
     "loading:build": "cd packages/loading && pnpm run build",
     "example:pnpm:dev": "cd examples/pnpm && pnpm run dev",
     "example:pnpm:start": "cd examples/pnpm && pnpm run start",
+    "example:pnpm-configless:dev": "cd examples/pnpm-configless && pnpm run dev",
+    "example:pnpm-configless:start": "cd examples/pnpm-configless && pnpm run start",
     "doc:dev": "cd packages/doc && pnpm run dev",
     "doc:build": "cd packages/doc && pnpm run build",
     "doc:preview": "cd packages/doc && pnpm run preview",

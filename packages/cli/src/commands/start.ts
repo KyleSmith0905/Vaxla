@@ -9,7 +9,7 @@ import { colors } from 'consola/utils';
 import { startLoadingServer } from '../utilities/loading';
 
 const shouldBuild = (cliVersion: string, config: string, dir: string): boolean => {
-	const versionFile = resolve(dir, '.build/config-store');
+	const versionFile = resolve(dir, './.build/config-store');
 	if (!existsSync(versionFile)) return true;
 
 	try {
@@ -45,7 +45,6 @@ export default defineCommand({
 		dir: {
 			type: 'string',
 			description: 'The path to the base_ files, such as the configuration file.',
-			default: './base_',
 			alias: 'd',
 		},
 		forceBuild: {
@@ -66,63 +65,68 @@ export default defineCommand({
 		},
 	},
 	async run({ args }) {
-		const { port, dir, debug, open } = args;
+		try {
+			const { port, dir, debug, open } = args;
 
-		const { config } = await getBaseScoreConfig(dir);
-		const finalPort = port ?? config.port ?? 3000;
+			const { config, path } = await getBaseScoreConfig(dir);
+			const finalPort = port ?? config.port ?? 3000;
 
-		// Find the actual location of @base_/ui package
-		const baseScoreUiPath = getUiDirectory();
+			// Find the actual location of @base_/ui package
+			const baseScoreUiPath = getUiDirectory();
 
-		const configString = await getBaseScoreConfigRaw(dir);
-		const cliVersion = await getBaseScoreVersion();
+			const configDirectory = resolve(path, '..');
+			const configString = await getBaseScoreConfigRaw(configDirectory);
+			const cliVersion = await getBaseScoreVersion();
 
-		process.env.BASE_SCORE_CONFIG = resolve(dir);
+			process.env.BASE_SCORE_CONFIG = configDirectory;
 
-		// Build the UI if needed
-		if (shouldBuild(cliVersion, configString, dir) || args.forceBuild) {
-			consola.start('Building UI, this should only run once...');
+			// Build the UI if needed
+			if (shouldBuild(cliVersion, configString, configDirectory) || args.forceBuild) {
+				consola.start('Building UI, this should only run once...');
 
-			const loadingServer = startLoadingServer(finalPort, { open: open });
+				const loadingServer = startLoadingServer(finalPort, { open: open });
 
-			await runCommand(
-				'npx nuxi build',
+				await runCommand(
+					'npx nuxi build',
+					{
+						cwd: baseScoreUiPath,
+					},
+					debug
+				);
+
+				loadingServer.close();
+
+				updateVersionFile(cliVersion, configString, configDirectory);
+				consola.success('UI build complete. The build will not run again unless the config changes.');
+			} else {
+				consola.success('Reusing stored UI build.');
+			}
+
+			consola.start('Running server...');
+
+			consola.box(
+				[
+					`Server running locally on port ${colors.yellowBright(finalPort)}.`,
+					`View at ${colors.blueBright(colors.underline(`http://localhost:${finalPort}`))}`,
+				].join('\n'),
+				{
+					title: 'Server Active',
+					style: {
+						borderColor: 'green',
+						borderStyle: 'rounded',
+					},
+				}
+			);
+
+			runCommand(
+				`npx nuxi start --port ${finalPort}`,
 				{
 					cwd: baseScoreUiPath,
 				},
 				debug
 			);
-
-			loadingServer.close();
-
-			updateVersionFile(cliVersion, configString, dir);
-			consola.success('UI build complete. The build will not run again unless the config changes.');
-		} else {
-			consola.success('Reusing stored UI build.');
+		} catch (error) {
+			consola.error((error as any).message);
 		}
-
-		consola.start('Running server...');
-
-		consola.box(
-			[
-				`Server running locally on port ${colors.yellowBright(finalPort)}.`,
-				`View at ${colors.blueBright(colors.underline(`http://localhost:${finalPort}`))}`,
-			].join('\n'),
-			{
-				title: 'Server Active',
-				style: {
-					borderColor: 'green',
-					borderStyle: 'rounded',
-				},
-			}
-		);
-
-		runCommand(
-			`npx nuxi start --port ${finalPort}`,
-			{
-				cwd: baseScoreUiPath,
-			},
-			debug
-		);
 	},
 });
