@@ -1,7 +1,10 @@
 import { version } from "../package.json";
-import { globSync, readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
+import { consola } from 'consola';
+import { globSync } from 'glob';
 
-const copyPackageVersions = () => {
+export const copyPackageVersions = () => {
+  consola.info("Copying root package version to packages...");
   const packageFiles = globSync("packages/*/package.json");
 
   for (const packageFile of packageFiles) {
@@ -9,9 +12,11 @@ const copyPackageVersions = () => {
     packageJson.version = version;
     writeFileSync(packageFile, JSON.stringify(packageJson, null, 2) + "\n");
   }
+  consola.success(`Successfully copied root package versions.`);
 };
 
-const copyPackageReadMe = () => {
+export const copyPackageReadMe = () => {
+  consola.info("Copying root README to packages...");
   const readmeFiles = globSync("packages/*/README.md");
 
   const rootReadmeFile = readFileSync("./README.md");
@@ -19,7 +24,15 @@ const copyPackageReadMe = () => {
   for (const readmeFile of readmeFiles) {
     writeFileSync(readmeFile, rootReadmeFile);
   }
+  consola.success(`Successfully copied README.`);
 };
 
-copyPackageVersions();
-copyPackageReadMe();
+export const prepack = () => {
+  copyPackageVersions();
+  copyPackageReadMe();
+}
+
+// Run the script if executed directly
+if (require.main === module) {
+  prepack();
+}

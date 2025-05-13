@@ -23,6 +23,7 @@
     "dev": "base_ dev --dir ./tools/base_",
     "start": "base_ start --dir ./tools/base_",
     "build": "pnpm run shared:build && pnpm run cli:build && pnpm run loading:build",
+    "publish": "tsx ./scripts/publish.ts",
     "prepack": "pnpm run build && tsx ./scripts/prepack.ts",
     "cli:build": "cd packages/cli && pnpm run build",
     "shared:build": "cd packages/shared && pnpm run build",
@@ -38,11 +39,14 @@
     "tsx": "^4.19.3"
   },
   "dependencies": {
-    "@base_/cli": "^1.0.20"
+    "@base_/cli": "^1.0.20",
+    "consola": "^3.4.2",
+    "glob": "^11.0.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
       "better-sqlite3"
     ]
-  }
+  },
+  "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af"
 }
