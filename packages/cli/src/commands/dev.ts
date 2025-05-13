@@ -31,9 +31,14 @@ export default defineCommand({
 			description: 'Enable debug logging for the UI dev processes.',
 			default: false,
 		},
+		open: {
+			type: 'boolean',
+			description: 'Open the browser when the server starts.',
+			default: true,
+		},
 	},
 	async run({ args }) {
-		const { port, dir, debug } = args;
+		const { port, dir, debug, open } = args;
 
 		const { config } = await getBaseScoreConfig(dir);
 
@@ -75,9 +80,8 @@ export default defineCommand({
 
 		consola.start('Starting development server...');
 		await runCommand(
-			`npx nuxi dev --port ${finalPort}`,
+			`npx nuxi dev --port ${finalPort} ${open ? '--open' : ''}`,
 			{
-				// overrides: { runtimeConfig: { public: { baseScoreConfig: config } } },
 				cwd: baseScoreUiPath,
 			},
 			debug

@@ -56,6 +56,7 @@ export default defineBaseScoreConfig({
   /doc # The documentation.
   /shared # Shared functions and utilities used by multiple packages.
   /ui # The visual experience of the tool.
+  /loading # A screen that appears before the full ui becomes active.
 /tools # Developer tools and editor configurations.
   /base_ # The base_ monorepo configuration for this workspace (we are using our own tech).
 ```

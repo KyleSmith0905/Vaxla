@@ -21,11 +21,23 @@ export const runCommand = (command: string, options: { cwd?: string; env?: Recor
 
 		if (debug) {
 			child.stdout?.on('data', (data) => {
-				log(`${colors.yellow('│')} ${data.toString()}`);
+				data
+					.toString()
+					.split('\n')
+					.forEach((e: string) => {
+						if (!e) return;
+						log(`${colors.yellow('│')} ${e}`);
+					});
 			});
 
 			child.stderr?.on('data', (data) => {
-				log(`${colors.yellow('│')} ${data.toString()}`);
+				data
+					.toString()
+					.split('\n')
+					.forEach((e: string) => {
+						if (!e) return;
+						log(`${colors.yellow('│')} ${e}`);
+					});
 			});
 		}
 

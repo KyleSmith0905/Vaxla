@@ -1,5 +1,6 @@
 import { getUserRootDirectory, getUiDirectory } from '@base_/shared';
 import tailwindcss from '@tailwindcss/vite';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { defineNuxtConfig } from 'nuxt/config';
 
@@ -19,6 +20,10 @@ export default defineNuxtConfig({
 	},
 
 	sourcemap: false,
+
+	devServer: {
+		loadingTemplate: () => readFileSync(join(getUiDirectory(), './.base_/loading/index.html'), { encoding: 'utf-8' }),
+	},
 
 	alias: {
 		'tailwindcss/colors': 'tailwindcss/colors.js',

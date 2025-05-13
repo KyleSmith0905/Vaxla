@@ -6,6 +6,7 @@ import { getUiDirectory } from '@base_/shared';
 import { runCommand } from '../utilities/command';
 import { consola } from '../utilities/consola';
 import { colors } from 'consola/utils';
+import { startLoadingServer } from '../utilities/loading';
 
 const shouldBuild = (cliVersion: string, config: string, dir: string): boolean => {
 	const versionFile = resolve(dir, '.build/config-store');
@@ -57,9 +58,14 @@ export default defineCommand({
 			description: 'Enable debug logging for the UI build and start processes.',
 			default: false,
 		},
+		open: {
+			type: 'boolean',
+			description: 'Open the browser when the server starts.',
+			default: true,
+		},
 	},
 	async run({ args }) {
-		const { port, dir, debug } = args;
+		const { port, dir, debug, open } = args;
 
 		const { config } = await getBaseScoreConfig(dir);
 		const finalPort = port ?? config.port ?? 3000;
@@ -75,6 +81,9 @@ export default defineCommand({
 		// Build the UI if needed
 		if (shouldBuild(cliVersion, configString, dir) || args.forceBuild) {
 			consola.start('Building UI, this should only run once...');
+
+			const loadingServer = startLoadingServer(finalPort, { open: open });
+
 			await runCommand(
 				'npx nuxi build',
 				{
@@ -82,6 +91,8 @@ export default defineCommand({
 				},
 				debug
 			);
+
+			loadingServer.close();
 
 			updateVersionFile(cliVersion, configString, dir);
 			consola.success('UI build complete. The build will not run again unless the config changes.');
