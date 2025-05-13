@@ -35,6 +35,7 @@ export default defineCommand({
 			type: 'boolean',
 			description: 'Open the browser when the server starts.',
 			default: true,
+			alias: 'o',
 		},
 	},
 	async run({ args }) {
