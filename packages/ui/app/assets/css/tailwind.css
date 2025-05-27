@@ -5,6 +5,15 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@font-face {
+  font-family: 'sans-file';
+  src: url('/fonts/sans.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'mono-file';
+  src: url('/fonts/mono.ttf') format('truetype');
+}
+
 @layer base {
   :root {
     --radius: 0.5rem;
@@ -97,9 +106,8 @@
 }
 
 @theme {
-  --font-header: 'Geist';
-  --font-body: 'Catamaran';
-  --font-mono: 'Geist Mono';
+  --font-sans: 'sans-file', sans-serif;
+  --font-mono: 'mono-file', monospace;
 
   --rounded-xl: calc(var(--radius) + 4px);
   --rounded-lg: var(--radius);

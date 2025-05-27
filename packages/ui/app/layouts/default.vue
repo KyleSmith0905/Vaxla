@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { useSidebar } from '~/components/ui/sidebar';
+import { useSidebar, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarGroupLabel, SidebarTrigger } from '~/components/ui/sidebar';
+import { Icon } from '@iconify/vue'
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbSeparator, BreadcrumbPage } from '~/components/ui/breadcrumb'
 
 defineProps<{ title?: string; path: string[] }>();
 
@@ -31,30 +33,30 @@ const navigation = [
 ];
 </script>
 <template>
-	<UiSidebar variant="floating">
-		<UiSidebarHeader class="border-b">
+	<Sidebar variant="floating">
+		<SidebarHeader class="border-b">
 			<h1 class="px-2 font-mono text-lg font-bold">BASE_</h1>
-		</UiSidebarHeader>
-		<UiSidebarContent>
-			<UiSidebarGroup v-for="group of navigation">
-				<UiSidebarGroupLabel class="justify-between">
+		</SidebarHeader>
+		<SidebarContent>
+			<SidebarGroup v-for="group of navigation">
+				<SidebarGroupLabel class="justify-between">
 					<span>{{ group.title }}</span>
-				</UiSidebarGroupLabel>
-				<UiSidebarGroupContent>
-					<UiSidebarMenu>
-						<UiSidebarMenuItem v-for="item of group.items">
-							<UiSidebarMenuButton asChild>
+				</SidebarGroupLabel>
+				<SidebarGroupContent>
+					<SidebarMenu>
+						<SidebarMenuItem v-for="item of group.items">
+							<SidebarMenuButton asChild>
 								<NuxtLink :href="item.link">
-									<Icon :name="item.icon" />
+									<Icon :icon="item.icon" />
 									<span>{{ item.title }}</span>
 								</NuxtLink>
-							</UiSidebarMenuButton>
-						</UiSidebarMenuItem>
-					</UiSidebarMenu>
-				</UiSidebarGroupContent>
-			</UiSidebarGroup>
-		</UiSidebarContent>
-	</UiSidebar>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					</SidebarMenu>
+				</SidebarGroupContent>
+			</SidebarGroup>
+		</SidebarContent>
+	</Sidebar>
 	<div
 		:class="{
 			'flex w-full min-w-0 transform flex-col gap-2 py-2 pr-2 transition-transform duration-200 max-md:pl-2': true,
@@ -63,18 +65,18 @@ const navigation = [
 		}"
 	>
 		<header class="rounded-lg border border-sidebar-border bg-sidebar shadow">
-			<UiSidebarTrigger class="absolute" />
-			<UiBreadcrumb class="px-8 py-1">
-				<UiBreadcrumbList>
-					<UiBreadcrumbItem class="font-mono">BASE_</UiBreadcrumbItem>
+			<SidebarTrigger class="absolute" />
+			<Breadcrumb class="px-8 py-1">
+				<BreadcrumbList>
+					<BreadcrumbItem class="font-mono">BASE_</BreadcrumbItem>
 					<template v-for="pathPart of path">
-						<UiBreadcrumbSeparator />
-						<UiBreadcrumbItem>
-							<UiBreadcrumbPage>{{ pathPart }}</UiBreadcrumbPage>
-						</UiBreadcrumbItem>
+						<BreadcrumbSeparator />
+						<BreadcrumbItem>
+							<BreadcrumbPage>{{ pathPart }}</BreadcrumbPage>
+						</BreadcrumbItem>
 					</template>
-				</UiBreadcrumbList>
-			</UiBreadcrumb>
+				</BreadcrumbList>
+			</Breadcrumb>
 		</header>
 
 		<main class="flex min-h-0 flex-grow flex-col gap-2">

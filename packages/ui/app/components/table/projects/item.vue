@@ -1,5 +1,14 @@
 <script setup lang="ts">
 import colors from 'tailwindcss/colors';
+import { useActiveUrl } from '~/composables/useActiveUrl';
+import { useBaseScoreConfig } from '~/composables/useBaseScoreConfig';
+import { Button } from '~/components/ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '~/components/ui/dialog';
+import KillProcess from '~/components/utility/kill-process.vue';
+import { Icon } from '@iconify/vue'
+import QrCode from 'qrcode-vue3';
+import ProjectsButtonTableRow from './button-row.vue'
 
 const appConfig = await useBaseScoreConfig();
 
@@ -34,49 +43,70 @@ const { sites } = useActiveUrl({
 					borderColor: package.color?.[500] ?? colors.neutral[500],
 				}"
 			/>
-			<p class="font-header font-bold">{{ package.name }}</p>
+			<p class="font-bold">{{ package.name }}</p>
 		</div>
 		<div class="flex flex-wrap justify-end gap-2">
 			<template v-for="link of links ?? []">
-				<UiTooltip>
-					<UiTooltipTrigger as-child>
-						<UiButton
+				<Tooltip>
+					<TooltipTrigger as-child>
+						<Button
 							:variant="sites?.[link.fullUrl] ? 'success' : 'outline'"
 							size="xs"
 							as-child
 						>
 							<a :href="link.fullUrl" target="_blank">{{ link.name }}</a>
-						</UiButton>
-					</UiTooltipTrigger>
-					<UiTooltipContent class="flex flex-col">
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent class="flex flex-col">
 						<div class="flex items-center gap-2">
-							<h1 class="font-header text-base font-bold">{{ link.name }}</h1>
-							<UiButton size="xs" variant="link" class="text-accent">
+							<h1 class="text-base font-bold">{{ link.name }}</h1>
+							<Button size="xs" variant="link" class="text-accent">
 								<a :href="link.fullUrl" target="_blank">{{ link.fullUrl }}</a>
-							</UiButton>
+							</Button>
 						</div>
 						<div class="flex gap-1 pt-2">
-							<UiButton @click="qrCodeModalOpen = link.id" size="xs" variant="secondary" class="w-fit">
-								<Icon name="lucide:qr-code" />
+							<Button @click="qrCodeModalOpen = link.id" size="xs" variant="secondary" class="w-fit">
+								<Icon icon="lucide:qr-code" />
 								QR Code
-							</UiButton>
-							<UtilityKillProcess v-if="sites?.[link.fullUrl]" :port="link.port" size="xs" />
+							</Button>
+							<KillProcess v-if="sites?.[link.fullUrl]" :port="link.port" size="xs" />
 						</div>
-					</UiTooltipContent>
-				</UiTooltip>
-				<UiDialog :open="qrCodeModalOpen === link.id" @update:open="qrCodeModalOpen = undefined">
-					<UiDialogContent>
-						<UiDialogHeader>
-							<UiDialogTitle>QR Code</UiDialogTitle>
-							<UiDialogDescription>Scan the QR code to access the website on all of your devices.</UiDialogDescription>
-						</UiDialogHeader>
-						<div class="rounded-lg border">
-							<Qrcode :value="link.fullUrl" variant="rounded" :blackColor="colors.zinc[50]" :radius="8" />
+					</TooltipContent>
+				</Tooltip>
+				<Dialog :open="qrCodeModalOpen === link.id" @update:open="qrCodeModalOpen = undefined">
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>QR Code</DialogTitle>
+							<DialogDescription>Scan the QR code to access the website on all of your devices.</DialogDescription>
+						</DialogHeader>
+						<div class="rounded-lg border overflow-hidden">
+							<QrCode
+								v-if="link.fullUrl"
+								:width="512"
+								:height="512"
+								:value="link.fullUrl"
+								:key="link.fullUrl"
+								:qr-options="{
+									errorCorrectionLevel: 'H'
+								}"
+								:dotsOptions="{
+									color: colors.zinc[50],
+									type: 'square'
+								}"
+								:backgroundOptions="{
+									color: colors.zinc[950],
+								}"
+								:cornersSquareOptions="{
+									color: colors.zinc[50],
+									type: 'square',
+								}"
+								class='max-w-96'
+							/>
 						</div>
-					</UiDialogContent>
-				</UiDialog>
+					</DialogContent>
+				</Dialog>
 			</template>
 		</div>
 	</div>
-	<TableProjectsButtonRow :package="package" :package-id="packageId" />
+	<ProjectsButtonTableRow :package="package" :package-id="packageId" />
 </template>

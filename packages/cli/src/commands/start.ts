@@ -1,35 +1,11 @@
 import { defineCommand } from 'citty';
-import { getBaseScoreConfig, getBaseScoreConfigRaw, getBaseScoreVersion } from '../utilities/config';
+import { getBaseScoreConfig, getBaseScoreVersion } from '../utilities/config';
 import { resolve } from 'node:path';
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { getUiDirectory } from '@base_/shared';
 import { runCommand } from '../utilities/command';
 import { consola } from '../utilities/consola';
 import { colors } from 'consola/utils';
-import { startLoadingServer } from '../utilities/loading';
-
-const shouldBuild = (cliVersion: string, config: string, dir: string): boolean => {
-	const versionFile = resolve(dir, './.build/config-store');
-	if (!existsSync(versionFile)) return true;
-
-	try {
-		const currentVersion = `${cliVersion}\n${config}`;
-		const cachedVersion = readFileSync(versionFile, 'utf-8').trim();
-		return currentVersion !== cachedVersion;
-	} catch (error) {
-		return true;
-	}
-};
-
-const updateVersionFile = (cliVersion: string, config: string, dir: string) => {
-	writeFileSync(resolve(dir, '.gitignore'), ['/.build/*'].join('\n'));
-
-	const versionFile = resolve(dir, '.build/config-store');
-	if (!existsSync(versionFile)) {
-		mkdirSync(resolve(dir, '.build'), { recursive: true });
-	}
-	writeFileSync(versionFile, `${cliVersion}\n${config}`);
-};
+import { default as openUrl } from 'open';
 
 export default defineCommand({
 	meta: {
@@ -68,6 +44,9 @@ export default defineCommand({
 		try {
 			const { port, dir, debug, open } = args;
 
+			const cliVersion = await getBaseScoreVersion();
+			consola.info(`Version: ${colors.yellow(cliVersion)}.`);
+
 			const { config, path } = await getBaseScoreConfig(dir);
 			const finalPort = port ?? config.port ?? 3000;
 
@@ -75,32 +54,8 @@ export default defineCommand({
 			const baseScoreUiPath = getUiDirectory();
 
 			const configDirectory = resolve(path, '..');
-			const configString = await getBaseScoreConfigRaw(configDirectory);
-			const cliVersion = await getBaseScoreVersion();
 
 			process.env.BASE_SCORE_CONFIG = configDirectory;
-
-			// Build the UI if needed
-			if (shouldBuild(cliVersion, configString, configDirectory) || args.forceBuild) {
-				consola.start('Building UI, this should only run once...');
-
-				const loadingServer = startLoadingServer(finalPort, { open: open });
-
-				await runCommand(
-					'npx nuxi build',
-					{
-						cwd: baseScoreUiPath,
-					},
-					debug
-				);
-
-				loadingServer.close();
-
-				updateVersionFile(cliVersion, configString, configDirectory);
-				consola.success('UI build complete. The build will not run again unless the config changes.');
-			} else {
-				consola.success('Reusing stored UI build.');
-			}
 
 			consola.start('Running server...');
 
@@ -119,12 +74,14 @@ export default defineCommand({
 			);
 
 			runCommand(
-				`npx nuxi start --port ${finalPort}`,
+				`node .output/server/index.mjs`,
 				{
 					cwd: baseScoreUiPath,
 				},
 				debug
 			);
+
+			if (open) openUrl(`http://localhost:${finalPort}`);
 		} catch (error) {
 			consola.error((error as any).message);
 		}

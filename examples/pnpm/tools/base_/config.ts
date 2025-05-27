@@ -43,6 +43,22 @@ export default defineBaseScoreConfig({
             }
           },
           icon: "hugeicons:folder-remove",
+        },
+        {
+          id: 'infinite-logging',
+          label: 'Infinite Logging',
+          command: {
+            fn: async () => {
+              console.log('init')
+              const start = performance.now();
+              return new Promise(() => {
+                setInterval(() => {
+                  console.log(`interval - ${(performance.now() - start).toFixed(2).padStart(8, '0')}`)
+                }, 100)
+              })
+            }
+          },
+          icon: "lucide:hard-drive-download",
         }
       ]
     },

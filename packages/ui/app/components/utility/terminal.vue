@@ -2,6 +2,7 @@
 import AnsiToHtml from 'ansi-to-html';
 import colors from 'tailwindcss/colors';
 import type { ActiveScript } from '~/utils/packages/types';
+import { cn } from '@/utils/tailwind';
 
 const props = defineProps<{logs: ActiveScript['logs'], date: boolean}>();
 

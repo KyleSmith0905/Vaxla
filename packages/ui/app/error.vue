@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
+import { SidebarProvider } from './components/ui/sidebar';
+import { Toaster } from './components/ui/sonner';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './components/ui/card';
+import { Button } from './components/ui/button';
 
 const props = defineProps({error: Object as () => NuxtError})
 
@@ -9,26 +13,26 @@ const defaultOpen = computed(() => (typeof sidebarState.value === 'boolean' ? si
 </script>
 
 <template>
-	<UiSidebarProvider :default-open="defaultOpen" @update:open="sidebarState = $event ? 'true' : 'false'" class="h-full">
+	<SidebarProvider :default-open="defaultOpen" @update:open="sidebarState = $event ? 'true' : 'false'" class="h-full">
 		<NuxtLayout name="default" :path="['Error']">
-      <UiCard>
-        <UiCardHeader>
-          <UiCardTitle>Error - {{props.error?.statusCode}}</UiCardTitle>
-          <UiCardDescription>{{props.error?.message}}</UiCardDescription>
-        </UiCardHeader>
-        <UiCardFooter>
-          <UiButton to='/'>To Home</UiButton>
-        </UiCardFooter>
-      </UiCard>
-      <UiCard class='flex-grow'>
-        <UiCardHeader>
-          <UiCardTitle>Debugging</UiCardTitle>
-        </UiCardHeader>
-        <UiCardContent>
+      <Card>
+        <CardHeader>
+          <CardTitle>Error - {{props.error?.statusCode}}</CardTitle>
+          <CardDescription>{{props.error?.message}}</CardDescription>
+        </CardHeader>
+        <CardFooter>
+          <Button to='/'>To Home</Button>
+        </CardFooter>
+      </Card>
+      <Card class='flex-grow'>
+        <CardHeader>
+          <CardTitle>Debugging</CardTitle>
+        </CardHeader>
+        <CardContent>
           <pre><code class='font-mono text-sm text-muted-foreground text-wrap'>{{props.error?.stack?.trim()}}</code></pre>
-        </UiCardContent>
-      </UiCard>
+        </CardContent>
+      </Card>
 		</NuxtLayout>
-	</UiSidebarProvider>
-	<UiToaster />
+	</SidebarProvider>
+	<Toaster />
 </template>

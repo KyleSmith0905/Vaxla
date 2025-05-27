@@ -1,1 +1,3 @@
 .build/
+# BASE_ Internals
+/.base/*

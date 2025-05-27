@@ -52,6 +52,11 @@ export type BaseScoreConfig = {
 			}[];
 			/** Scripts associated with the package. */
 			scripts: {
+				/**
+				 * An optional identifier to help identify this command
+				 * (optional, the index likely works in places where id is accepted).
+				 */
+				id?: string;
 				/** The display label for the script ("dev", "build", "preview", etc). */
 				label?: string;
 				/**

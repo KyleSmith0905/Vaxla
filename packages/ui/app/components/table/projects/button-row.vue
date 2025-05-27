@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ScriptStatus, type ActiveScript } from '~/utils/packages/types';
 import { getCommandShellScript, getCommandDisplayName } from '@base_/shared/command';
+import { useBaseScoreConfig } from '~/composables/useBaseScoreConfig';
+import { useScripts } from '~/composables/useScripts';
+import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
+import { Button } from '~/components/ui/button';
+import { Icon } from '@iconify/vue';
 
 const appConfig = await useBaseScoreConfig();
 
@@ -31,53 +36,53 @@ const activeScript = computed(() => {
 <template>
 	<div class="flex gap-1 px-2">
 		<div v-for="(script, index) in props.package.scripts">
-			<UiTooltip>
-				<UiTooltipTrigger as-child>
-					<UiButton
-					size="icon"
-					:variant="activeScript[index]?.status === ScriptStatus.Opened ? 'success' : 'outline'"
-					:class="{
-						'size-7': true,
-					}"
+			<Tooltip>
+				<TooltipTrigger as-child>
+					<Button
+						size="icon"
+						:variant="activeScript[index]?.status === ScriptStatus.Opened ? 'success' : 'outline'"
+						:class="{
+							'size-7': true,
+						}"
 						@click="
 							activeScript[index]?.status === ScriptStatus.Opened
 							? killScript(activeScript[index]?.id)
 							: runScript({ packageId: props.packageId, commandIndex: index })
 							"
 					>
-						<Icon :name="script.icon || 'lucide:circle-dashed'" />
-					</UiButton>
-				</UiTooltipTrigger>
-				<UiTooltipContent class="flex flex-col">
+						<Icon :icon="script.icon || 'lucide:circle-dashed'" />
+					</Button>
+				</TooltipTrigger>
+				<TooltipContent class="flex flex-col">
 					<div class="flex items-center gap-2">
-						<Icon :name="script.icon || 'lucide:circle-dashed'" />
-						<h1 class="font-header text-base font-bold">{{ getCommandDisplayName({ script }) }}</h1>
+						<Icon :icon="script.icon || 'lucide:circle-dashed'" />
+						<h1 class="text-base font-bold">{{ getCommandDisplayName({ script }) }}</h1>
 					</div>
 					<code class="w-fit rounded bg-muted px-2 py-1 font-mono text-xs font-semibold text-muted-foreground">
 						{{ getCommandShellScript({ script }, props.package.path ?? '') }}
 					</code>
 					<div class="flex gap-1 pt-2">
 						<template v-if="activeScript[index]?.status === ScriptStatus.Opened">
-							<UiButton @click="killScript(activeScript[index]?.id)" size="xs" variant="destructive">
-								<Icon name="lucide:trash-2" />
+							<Button @click="killScript(activeScript[index]?.id)" size="xs" variant="destructive">
+								<Icon icon="lucide:trash-2" />
 								Kill
-							</UiButton>
-							<UiButton size="xs" variant="secondary" as-child>
+							</Button>
+							<Button size="xs" variant="secondary" as-child>
 								<NuxtLink :to="`/logs/${activeScript[index]?.id}`">
-									<Icon name="lucide:receipt-text" />
+									<Icon icon="lucide:receipt-text" />
 									Logs
 								</NuxtLink>
-							</UiButton>
+							</Button>
 						</template>
 						<template v-else>
-							<UiButton @click="runScript({ packageId: props.packageId, commandIndex: index })" size="xs" variant="secondary">
-								<Icon name="lucide:play" />
+							<Button @click="runScript({ packageId: props.packageId, commandIndex: index })" size="xs" variant="secondary">
+								<Icon icon="lucide:play" />
 								Run
-							</UiButton>
+							</Button>
 						</template>
 					</div>
-				</UiTooltipContent>
-			</UiTooltip>
+				</TooltipContent>
+			</Tooltip>
 		</div>
 	</div>
 </template>

@@ -1,7 +1,8 @@
-import { execCommandPromise } from '../utils/cli';
+import { execCommandPromise, getUserRootDirectory } from '@base_/shared';
 import { ScriptStatus } from '~/utils/packages/types';
 import { activeProcesses } from '../utils/cli';
 import { BaseScoreCommand, BaseScoreConfig, getBaseScoreConfig, getCommandDisplayName, getCommandShellScript } from '@base_/shared';
+import { useServerEvents } from '../utils/composables/useServerEvents';
 
 export default defineEventHandler(async (event) => {
 	const body = (await readBody(event)) as { id: string } & ({ command: BaseScoreCommand } | { commandIndex: number; packageId?: string });
@@ -32,22 +33,27 @@ export default defineEventHandler(async (event) => {
 	};
 
 	// Handle functions
-	if (command instanceof Function) {
+	if (typeof command === 'object' && 'fn' in command && command.fn instanceof Function) {
 		startMessage('Executing Function');
 
 		// Override console.log to send messages through the event system
+		console.log('waypoint 0');
 		const originalConsoleLog = console.log;
 		console.log = (...args) => {
 			send({ data: { id: body.id, message: args.join(' '), type: 'log' } });
 		};
 
+		originalConsoleLog('waypoint 1');
 		try {
-			await command();
+			await command.fn();
+			originalConsoleLog('waypoint 2');
 		} catch (error) {
 			send({ data: { id: body.id, message: error instanceof Error ? error.message : (error as any).toString(), type: 'error' } });
 		} finally {
+			originalConsoleLog('waypoint 3');
 			// Restore original console.log
 			console.log = originalConsoleLog;
+			originalConsoleLog('waypoint 4');
 		}
 		send({
 			data: {
@@ -69,10 +75,10 @@ export default defineEventHandler(async (event) => {
 		startMessage('Executing Script');
 
 		await execCommandPromise(commandShell, {
-			id: body.id,
-			onOutput: (msg) => {
-				send({ data: { id: body.id, message: msg.message, type: msg.type } });
-			},
+			cwd: getUserRootDirectory(),
+			onLog: (msg) => send({ data: { id: body.id, message: msg, type: 'log' } }),
+			onError: (msg) => send({ data: { id: body.id, message: msg, type: 'error' } }),
+			onChildProcessInit: (childProcess) => (activeProcesses[body.id] = childProcess),
 		});
 
 		send({

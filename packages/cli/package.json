@@ -1,7 +1,7 @@
 {
   "name": "@base_/cli",
   "description": "CLI for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.28",
+  "version": "1.0.29-beta.30",
   "keywords": [
     "developer-tools",
     "devops",
@@ -41,6 +41,7 @@
     "chokidar": "^4.0.3",
     "citty": "^0.1.6",
     "consola": "^3.4.2",
+    "find-up-simple": "^1.0.1",
     "glob": "^11.0.2",
     "jiti": "^2.4.2",
     "nuxi": "^3.24.1",

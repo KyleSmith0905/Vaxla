@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { toast } from 'vue-sonner';
 import type { ButtonVariants } from '../ui/button';
+import {Tooltip, TooltipTrigger, TooltipContent} from '~/components/ui/tooltip';
+import { Button } from '../ui/button';
+import { Icon } from '@iconify/vue';
 
 const props = defineProps<
 	(
@@ -37,20 +40,20 @@ const killPort = (signal: 'SIGKILL' | 'SIGTERM') => {
 </script>
 
 <template>
-	<UiTooltip>
-		<UiTooltipTrigger>
-			<UiButton @click="killPort('SIGTERM')" variant="destructive" :size="props.size">
-				<Icon name="lucide:heart-off" />
-			</UiButton>
-		</UiTooltipTrigger>
-		<UiTooltipContent>Requests a process to terminate gracefully</UiTooltipContent>
-	</UiTooltip>
-	<UiTooltip>
-		<UiTooltipTrigger>
-			<UiButton @click="killPort('SIGKILL')" variant="destructive" :size="props.size">
-				<Icon name="lucide:power-off" />
-			</UiButton>
-		</UiTooltipTrigger>
-		<UiTooltipContent>Forces a process to terminate immediately</UiTooltipContent>
-	</UiTooltip>
+	<Tooltip>
+		<TooltipTrigger>
+			<Button @click="killPort('SIGTERM')" variant="destructive" :size="props.size">
+				<Icon icon="lucide:heart-off" />
+			</Button>
+		</TooltipTrigger>
+		<TooltipContent>Requests a process to terminate gracefully</TooltipContent>
+	</Tooltip>
+	<Tooltip>
+		<TooltipTrigger>
+			<Button @click="killPort('SIGKILL')" variant="destructive" :size="props.size">
+				<Icon icon="lucide:power-off" />
+			</Button>
+		</TooltipTrigger>
+		<TooltipContent>Forces a process to terminate immediately</TooltipContent>
+	</Tooltip>
 </template>

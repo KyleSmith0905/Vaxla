@@ -3,6 +3,8 @@ import { getCommandDisplayName } from '@base_/shared/command';
 import { nanoid } from 'nanoid';
 import { toast } from 'vue-sonner';
 import { ScriptStatus, type ActiveScript } from '~/utils/packages/types';
+import { useServerEventsClient } from './useServerEventsClient';
+import { useBaseScoreConfig } from './useBaseScoreConfig';
 
 const scripts = ref<ActiveScript[]>([]);
 const loading = ref(true);

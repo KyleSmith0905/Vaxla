@@ -4,12 +4,16 @@ import { readFileSync, writeFileSync } from 'fs';
 import { dirname, relative, resolve } from 'path';
 import consola from 'consola';
 import { globSync } from 'glob';
+import { createRequire } from 'module';
+import { findUpSync } from 'find-up-simple';
+
+const require = createRequire(process.argv[1] ? new URL(process.argv[1], 'file://').href : import.meta.url);
 
 export const defineBaseScoreConfig = (config: BaseScoreConfig) => {
 	return config;
 };
 
-export const getBaseScoreConfig = async (configPath: string): Promise<{ config: BaseScoreConfig; path: string }> => {
+export const getBaseScoreConfig = async (configPath?: string): Promise<{ config: BaseScoreConfig; path: string }> => {
 	if (configPath === undefined) {
 		const config = {
 			packages: {},
@@ -56,7 +60,10 @@ export const getBaseScoreConfig = async (configPath: string): Promise<{ config: 
 };
 
 export const getBaseScoreVersion = async (): Promise<string> => {
-	return (await import('../../package.json')).version;
+	const packageJsonPath = findUpSync('package.json', { cwd: import.meta.filename });
+	const packageJsonString = readFileSync(packageJsonPath!, { encoding: 'utf-8' });
+	const packageJson = JSON.parse(packageJsonString);
+	return packageJson.version;
 };
 
 export const getBaseScoreConfigRaw = async (configPath: string): Promise<string> => {

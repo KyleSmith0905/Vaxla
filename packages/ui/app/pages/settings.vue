@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useDark } from '@vueuse/core';
+import { Card, CardHeader, CardContent, CardTitle } from '~/components/ui/card';
+import { Label } from '~/components/ui/label';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem} from '~/components/ui/select';
 
 const isDark = useDark();
 const theme = ref('default');
@@ -12,41 +15,41 @@ definePageMeta({
 </script>
 <template>
   <NuxtLayout name="default" :path="['Settings']">
-    <UiCard>
-      <UiCardHeader>
-        <UiCardTitle>Personalization</UiCardTitle>
-      </UiCardHeader>
-      <UiCardContent>
+    <Card>
+      <CardHeader>
+        <CardTitle>Personalization</CardTitle>
+      </CardHeader>
+      <CardContent>
         <form class='grid grid-cols-2 gap-2'>
-          <UiLabel class='flex flex-col gap-1'>
+          <Label class='flex flex-col gap-1'>
             Color Schemes
-            <UiSelect v-model:modelValue='darkString' @update:model-value="isDark = $event === 'dark'">
-              <UiSelectTrigger>
-                <UiSelectValue />
-              </UiSelectTrigger>
-              <UiSelectContent>
-                <UiSelectGroup>
-                  <UiSelectItem value="light">Light</UiSelectItem>
-                  <UiSelectItem value="dark">Dark</UiSelectItem>
-                </UiSelectGroup>
-              </UiSelectContent>
-            </UiSelect>
-          </UiLabel>
-          <UiLabel class='flex flex-col gap-1'>
+            <Select v-model:modelValue='darkString' @update:model-value="isDark = $event === 'dark'">
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="light">Light</SelectItem>
+                  <SelectItem value="dark">Dark</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </Label>
+          <Label class='flex flex-col gap-1'>
             Themes
-            <UiSelect v-model="theme">
-              <UiSelectTrigger>
-                <UiSelectValue />
-              </UiSelectTrigger>
-              <UiSelectContent>
-                <UiSelectGroup>
-                  <UiSelectItem value="default">Default</UiSelectItem>
-                </UiSelectGroup>
-              </UiSelectContent>
-            </UiSelect>
-          </UiLabel>
+            <Select v-model="theme">
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="default">Default</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </Label>
         </form>
-      </UiCardContent>
-    </UiCard>
+      </CardContent>
+    </Card>
   </NuxtLayout>
 </template>

@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import colors from 'tailwindcss/colors';
+import { Card, CardHeader, CardDescription, CardTitle, CardContent } from '~/components/ui/card';
+import { Input } from '~/components/ui/input';
+import QrCode from 'qrcode-vue3';
+
 const code = ref('');
 
 definePageMeta({
@@ -8,33 +12,47 @@ definePageMeta({
 </script>
 <template>
   <NuxtLayout name="default" :path="['QR Generator']">
-    <UiCard>
-      <UiCardHeader>
-        <UiCardTitle>Enter QR Code</UiCardTitle>
-      </UiCardHeader>
-      <UiCardContent>
+    <Card>
+      <CardHeader>
+        <CardTitle>Enter QR Code</CardTitle>
+      </CardHeader>
+      <CardContent>
         <form class='flex gap-2'>
-          <UiInput v-model="code" placeholder="https://example.com" />
+          <Input v-model="code" placeholder="https://example.com" />
         </form>
-      </UiCardContent>
-    </UiCard>
-    <UiCard class='flex-grow'>
-      <UiCardHeader>
-        <UiCardTitle>QR Code</UiCardTitle>
-        <UiCardDescription v-if="code">QR code is "{{ code }}" when scanned.</UiCardDescription>
-        <UiCardDescription v-else>When a QR code is entered, it will appear beneath.</UiCardDescription>
-      </UiCardHeader>
-      <UiCardContent>
-        <Qrcode
+      </CardContent>
+    </Card>
+    <Card class='flex-grow'>
+      <CardHeader>
+        <CardTitle>QR Code</CardTitle>
+        <CardDescription v-if="code">QR code is "{{ code }}" when scanned.</CardDescription>
+        <CardDescription v-else>When a QR code is entered, it will appear beneath.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <QrCode
           v-if="code"
+          :width="512"
+          :height="512"
           :value="code"
-          variant="rounded"
-          :blackColor="colors.zinc[50]"
-          :radius="8"
-          class='max-w-96 border rounded-lg'
+          :key="code"
+          :qr-options="{
+            errorCorrectionLevel: 'H'
+          }"
+          :dotsOptions="{
+            color: colors.zinc[50],
+            type: 'square'
+          }"
+          :backgroundOptions="{
+            color: colors.zinc[950],
+          }"
+          :cornersSquareOptions="{
+            color: colors.zinc[50],
+            type: 'square',
+          }"
+          class='max-w-96'
         />
         <p v-else class='text-sm text-muted-foreground text-center py-8'>No QR code yet.</p>
-      </UiCardContent>
-    </UiCard>
+      </CardContent>
+    </Card>
   </NuxtLayout>
 </template>

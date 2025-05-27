@@ -18,12 +18,18 @@
     "type": "git",
     "url": "git+https://github.com/KyleSmith0905/base_.git",
     "directory": "examples/pnpm"
-  },
+  },  
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "base_ dev --dir ./tools/base_ --debug",
-    "start": "base_ start --dir ./tools/base_"
+    "start": "base_ start --dir ./tools/base_",
+    
+    "// Below are scripts to test the standalone script calling.": "",
+    "run:dev": "base_ run viteVanillaTs 0 --dir ./tools/base_",
+    "run:build": "base_ run viteVanillaTs 1 --dir ./tools/base_",
+    "run:preview": "base_ run viteVanillaTs 2 --dir ./tools/base_",
+    "run:remove-dist": "base_ run viteVanillaTs 3 --dir ./tools/base_",
+    "run:infinite-logging": "base_ run viteVanillaTs 4 --dir ./tools/base_"
   },
   "dependencies": {
     "@base_/cli": "link:..\\..\\packages\\cli"

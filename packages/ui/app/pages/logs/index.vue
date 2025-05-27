@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import AnsiToHtml from 'ansi-to-html';
-import colors from 'tailwindcss/colors';
 import { getCommandDisplayName, getCommandShellScript } from '@base_/shared/command';
+import { useScripts } from '~/composables/useScripts';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '~/components/ui/card';
 
 const { scripts } = useScripts();
 
-const logsMap = computed(() => {
-	const ansiToHtml = new AnsiToHtml({ fg: colors.zinc[50], bg: colors.zinc[950], newline: false });
-	return Object.fromEntries(scripts.value.map((e) => [e.command, ansiToHtml.toHtml(e.logs[e.logs.length - 1]?.text.trim?.() ?? '')]));
-});
+const commandLineToHtml = (logs: string) => {
+	const ansiToHtml = new AnsiToHtml()
+	return ansiToHtml.toHtml(logs.trim());
+};
 
 definePageMeta({
 	layout: false,
@@ -17,12 +18,13 @@ definePageMeta({
 
 <template>
 	<NuxtLayout name="default" :path="['Logs']">
-		<UiCard>
-			<UiCardHeader>
-				<UiCardTitle>Logs</UiCardTitle>
-				<UiCardDescription>{{ scripts.length }} scripts are currently running.</UiCardDescription>
-			</UiCardHeader>
-			<UiCardContent class="px-0">
+		<Card>
+			<CardHeader>
+				<CardTitle>Logs</CardTitle>
+				<CardDescription>{{ scripts.length }} scripts are currently running.</CardDescription>
+			</CardHeader>
+			<CardContent class="px-0">
+				<p>{{ logsMap }}</p>
 				<table v-if="scripts.length > 0" class="w-full border-b">
 					<tbody>
 						<tr v-for="script in scripts" class="cursor-pointer border-t hover:bg-accent/50" @click="navigateTo(`/logs/${script.id}`)">
@@ -38,14 +40,14 @@ definePageMeta({
 							</td>
 							<td>
 								<pre class="scale-75 truncate opacity-50">
-                  <code v-html="logsMap[script.command]?.slice(0, 240)"/>
+                  <code v-html="commandLineToHtml(script.logs[script.logs.length - 1]?.text ?? '')?.slice(0, 240)"/>
                 </pre>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 				<p v-else class="py-8 text-center text-sm text-muted-foreground">Run a command and it'll appear here.</p>
-			</UiCardContent>
-		</UiCard>
+			</CardContent>
+		</Card>
 	</NuxtLayout>
 </template>

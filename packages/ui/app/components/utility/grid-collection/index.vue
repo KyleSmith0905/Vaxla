@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useElementBounding } from '@vueuse/core';
 import type { HTMLAttributes } from 'vue';
+import { cn } from '~/utils/tailwind'
 
 const props = defineProps<{ class?: HTMLAttributes['class']; items: number; variant?: 'default' | 'card' }>();
 const gridRef = ref<HTMLDivElement>();

@@ -15,9 +15,6 @@ export default defineNuxtConfig({
 	telemetry: {
 		enabled: true,
 	},
-	experimental: {
-		buildCache: true,
-	},
 
 	sourcemap: false,
 
@@ -34,20 +31,7 @@ export default defineNuxtConfig({
 		'dayjs/plugin/updateLocale': 'dayjs/plugin/updateLocale',
 		'ansi-to-html': 'ansi-to-html',
 		'@base_/shared': join(getUiDirectory(), './.base_/shared'),
-	},
-
-	nitro: {
-		compressPublicAssets: false,
-		minify: false,
-		rollupConfig: {
-			perf: true,
-			treeshake: false,
-			output: {
-				indent: false,
-				sourcemap: false,
-				minifyInternalExports: false,
-			},
-		},
+		'qrcode-vue3': 'qrcode-vue3/src/QRCodeVue3.vue',
 	},
 
 	vite: {
@@ -56,55 +40,33 @@ export default defineNuxtConfig({
 				allow: [getUserRootDirectory()],
 			},
 		},
+		plugins: [tailwindcss()],
 		optimizeDeps: {
-			include: ['dayjs'],
+			include: ['entities/lib/decode.js'],
 		},
 		build: {
-			minify: false,
-			cssMinify: false,
-			rollupOptions: {
-				treeshake: false,
-				output: {
-					sourcemap: false,
-				},
+			commonjsOptions: {
+				include: [/node_modules/, /entities/],
 			},
 		},
-		plugins: [tailwindcss()],
+
+		ssr: {
+			noExternal: ['entities'],
+		},
 	},
-	css: ['./assets/css/tailwind.css'],
-	modules: ['@brycesteve/nuxt-sse', 'shadcn-nuxt', '@nuxt/fonts', '@nuxt/content', '@nuxt/icon', 'dayjs-nuxt', 'nuxt-qrcode'],
+
+	nitro: {
+		noExternals: true,
+	},
+
 	ssr: false,
-
-	qrcode: {
-		options: {
-			variant: {
-				inner: 'circle',
-				marker: 'rounded',
-				pixel: 'rounded',
-			},
-			radius: 1,
-			blackColor: 'currentColor',
-			whiteColor: 'transparent',
-		},
-	},
-
-	shadcn: {
-		prefix: 'Ui',
-		componentDir: './app/components/ui',
-	},
+	css: ['./assets/css/tailwind.css'],
+	modules: ['@nuxt/content', 'dayjs-nuxt', '@nuxt/devtools'],
 
 	dayjs: {
 		locales: ['en'],
 		plugins: ['relativeTime', 'localizedFormat'],
 		defaultLocale: 'en',
-	},
-
-	fonts: {
-		families: [
-			{ name: 'Geist', provider: 'google' },
-			{ name: 'Catamaran', provider: 'google' },
-			{ name: 'Geist Mono', provider: 'google' },
-		],
 	},
 
 	app: {

@@ -1,5 +1,5 @@
-import { activeScripts } from "../utils/package";
+import { activeScripts } from '../utils/package';
 
 export default defineEventHandler(async () => {
-  return {scripts: activeScripts};
+	return { scripts: activeScripts };
 });

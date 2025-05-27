@@ -1,7 +1,7 @@
 {
   "name": "base_",
   "description": "Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.0.28",
+  "version": "1.0.29-beta.30",
   "keywords": [
     "developer-tools",
     "devops",
@@ -22,9 +22,10 @@
   "scripts": {
     "dev": "base_ dev --dir ./tools/base_",
     "start": "base_ start --dir ./tools/base_",
-    "build": "pnpm run shared:build && pnpm run cli:build && pnpm run loading:build",
+    "build": "pnpm run shared:build && pnpm run cli:build && pnpm run loading:build && npm run ui:build",
     "publish": "tsx ./scripts/publish.ts",
     "prepack": "pnpm run build && tsx ./scripts/prepack.ts",
+    "ui:build": "cd packages/ui && pnpm run build",
     "cli:build": "cd packages/cli && pnpm run build",
     "shared:build": "cd packages/shared && pnpm run build",
     "loading:build": "cd packages/loading && pnpm run build",

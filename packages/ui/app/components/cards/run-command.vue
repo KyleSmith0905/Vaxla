@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { nanoid } from 'nanoid';
+import { useScripts } from '~/composables/useScripts';
+import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
+import { Icon } from '@iconify/vue';
 
 const command = ref('');
 const props = defineProps<{ id?: string }>();
@@ -15,17 +20,17 @@ const runScriptWrapper = () => {
 };
 </script>
 <template>
-	<UiCard>
-		<UiCardHeader>
-			<UiCardTitle>Run Command</UiCardTitle>
-		</UiCardHeader>
-		<UiCardContent>
+	<Card>
+		<CardHeader>
+			<CardTitle>Run Command</CardTitle>
+		</CardHeader>
+		<CardContent>
 			<form @submit.prevent="runScriptWrapper()" class="flex gap-2">
-				<UiInput v-model="command" placeholder="pnpm run start" />
-				<UiButton size="icon" type="submit">
-					<Icon name="lucide:send" />
-				</UiButton>
+				<Input v-model="command" placeholder="pnpm run start" />
+				<Button size="icon" type="submit">
+					<Icon icon="lucide:send" />
+				</Button>
 			</form>
-		</UiCardContent>
-	</UiCard>
+		</CardContent>
+	</Card>
 </template>

@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
+import { Label } from '~/components/ui/label'
+import { Textarea } from '~/components/ui/textarea'
+import { Alert, AlertTitle, AlertDescription } from '~/components/ui/alert'
+import BaseInput from '~/components/utility/base-input.vue'
+
 const inputText = ref('');
 const fromBase = ref(10);
 const toBase = ref(10);
@@ -34,40 +40,40 @@ definePageMeta({
 </script>
 <template>
   <NuxtLayout name="default" :path="['Base Conversion']">
-    <UiCard>
-      <UiCardHeader>
-        <UiCardTitle>Input</UiCardTitle>
-      </UiCardHeader>
-      <UiCardContent>
+    <Card>
+      <CardHeader>
+        <CardTitle>Input</CardTitle>
+      </CardHeader>
+      <CardContent>
         <form class='flex flex-col gap-2'>
-          <UiLabel class='flex flex-col gap-1'>
+          <Label class='flex flex-col gap-1'>
             Text
-            <UiTextarea v-model="inputText" />
-          </UiLabel>
+            <Textarea v-model="inputText" />
+          </Label>
           <div class='flex gap-2'>
-            <UiLabel class='flex flex-col gap-1 w-full'>
+            <Label class='flex flex-col gap-1 w-full'>
               From Base
-              <UtilityBaseInput v-model="fromBase" />
-            </UiLabel>
-            <UiLabel class='flex flex-col gap-1 w-full'>
+              <BaseInput v-model="fromBase" />
+            </Label>
+            <Label class='flex flex-col gap-1 w-full'>
               To Base
-              <UtilityBaseInput v-model="toBase" />
-            </UiLabel>
+              <BaseInput v-model="toBase" />
+            </Label>
           </div>
         </form>
-      </UiCardContent>
-    </UiCard>
-    <UiCard class='flex-grow'>
-      <UiCardHeader>
-        <UiCardTitle>Output</UiCardTitle>
-      </UiCardHeader>
-      <UiCardContent>
-        <UiAlert v-if="convertBase.error" variant='destructive'>
-          <UiAlertTitle>Error</UiAlertTitle>
-          <UiAlertDescription>{{ convertBase.error }}</UiAlertDescription>
-        </UiAlert>
+      </CardContent>
+    </Card>
+    <Card class='flex-grow'>
+      <CardHeader>
+        <CardTitle>Output</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Alert v-if="convertBase.error" variant='destructive'>
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{{ convertBase.error }}</AlertDescription>
+        </Alert>
         <p v-if="convertBase.success" class='font-mono break-all'>{{ convertBase.success }}</p>
-      </UiCardContent>
-    </UiCard>
+      </CardContent>
+    </Card>
   </NuxtLayout>
 </template>

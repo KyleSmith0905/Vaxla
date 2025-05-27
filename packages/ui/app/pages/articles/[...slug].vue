@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { Button } from '~/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '~/components/ui/card';
+import { Separator } from '~/components/ui/separator';
+import { Badge } from '~/components/ui/badge';
+import DateBadge from '~/components/utility/date-badge.vue';
+import { Icon } from '@iconify/vue';
+
 const route = useRoute();
 const dayjs = useDayjs();
 
@@ -13,25 +20,25 @@ definePageMeta({
 
 <template>
   <NuxtLayout name="default" :path="['Articles', data?.title ?? '']">
-    <UiButton variant='outline' as-child class='w-fit'>
+    <Button variant='outline' as-child class='w-fit'>
       <NuxtLink to="/articles">
-        <Icon name='lucide:move-left'/>
+        <Icon icon='lucide:move-left'/>
         Back
       </NuxtLink>
-    </UiButton>
-    <UiCard>
-      <UiCardHeader class='py-4 px-6'>
-        <UiCardTitle v-if="data?.title">{{ data.title }}</UiCardTitle>
-        <UiCardDescription v-if="data?.description">{{ data.description }}</UiCardDescription>
+    </Button>
+    <Card>
+      <CardHeader class='py-4 px-6'>
+        <CardTitle v-if="data?.title">{{ data.title }}</CardTitle>
+        <CardDescription v-if="data?.description">{{ data.description }}</CardDescription>
         <div class='flex gap-1'>
-          <UiBadge v-if="data?.author" class='flex gap-2'><Icon name="lucide:user-round"/>{{ data.author }}</UiBadge>
-          <UtilityDateBadge :articlePath="data?.path ?? ''" />
+          <Badge v-if="data?.author" class='flex gap-2'><Icon icon="lucide:user-round"/>{{ data.author }}</Badge>
+          <DateBadge :articlePath="data?.path ?? ''" />
         </div>
-      </UiCardHeader>
-      <UiSeparator/>
-      <UiCardContent class='py-4 px-6'>
+      </CardHeader>
+      <Separator/>
+      <CardContent class='py-4 px-6'>
         <ContentRenderer class="prose prose-zinc dark:prose-invert min-w-full" :value='data as any'/>
-      </UiCardContent>
-    </UiCard>
+      </CardContent>
+    </Card>
   </NuxtLayout>
 </template>
