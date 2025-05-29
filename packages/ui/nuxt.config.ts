@@ -61,7 +61,7 @@ export default defineNuxtConfig({
 
 	ssr: false,
 	css: ['./assets/css/tailwind.css'],
-	modules: ['@nuxt/content', 'dayjs-nuxt', '@nuxt/devtools'],
+	modules: ['@nuxtjs/mdc', 'dayjs-nuxt', '@nuxt/devtools'],
 
 	dayjs: {
 		locales: ['en'],

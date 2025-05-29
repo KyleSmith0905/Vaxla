@@ -6,9 +6,9 @@ import { Badge } from '~/components/ui/badge';
 import DateBadge from '~/components/utility/date-badge.vue';
 import { Icon } from '@iconify/vue';
 
-const { data: navigation } = await useAsyncData('article-navigation', () => queryCollectionNavigation('articles', ['description', 'author']));
+const { data: articles } = await useAsyncData('article-navigation', () => $fetch('/api/articles/list'));
 
-const flattenedArticle = computed(() => navigation.value?.[0]?.children);
+const flattenedArticle = computed(() => articles.value?.articles ?? []);
 
 definePageMeta({
 	layout: false,
@@ -26,17 +26,17 @@ definePageMeta({
 			</CardHeader>
 			<CardContent v-if="flattenedArticle && flattenedArticle.length > 0" class="px-0 pb-0">
 				<GridCollection :items="flattenedArticle?.length ?? 0" variant="card">
-					<UtilityGridCollectionItem v-for="article in flattenedArticle ?? []" :key="article.path">
-						<NuxtLink :to="article.path" class="flex flex-col gap-1 h-full px-3 pb-3 pt-2 hover:bg-accent/50">
+					<UtilityGridCollectionItem v-for="article in flattenedArticle ?? []" :key="article.fileName">
+						<NuxtLink :to="article.fileName" class="flex flex-col gap-1 h-full px-3 pb-3 pt-2 hover:bg-accent/50">
 							<h2 class="font-bold">{{ article.title }}</h2>
 							<div class="flex gap-2">
-								<Badge v-if="article.author" variant="outline" class="flex gap-2">
+								<Badge v-if="article.metadata.author" variant="outline" class="flex gap-2">
 									<Icon icon="lucide:user-round" />
-									{{ article.author }}
+									{{ article.metadata.author }}
 								</Badge>
-								<DateBadge :articlePath="article.path" variant='outline'/>
+								<DateBadge :date="article.uploadDate" variant='outline'/>
 							</div>
-							<p class="text-muted-foreground">{{ article.description }}</p>
+							<p class="text-muted-foreground">{{ article.metadata.description }}</p>
 						</NuxtLink>
 					</UtilityGridCollectionItem>
 				</GridCollection>
