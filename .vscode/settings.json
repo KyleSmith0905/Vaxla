@@ -1,5 +1,8 @@
 {
   "cSpell.words": [
     "configless"
-  ]
+  ],
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
 }

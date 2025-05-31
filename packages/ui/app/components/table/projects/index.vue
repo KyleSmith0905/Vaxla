@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { useBaseScoreConfig } from '~/composables/useBaseScoreConfig';
+import { useVaxlaConfig } from '~/composables/useVaxlaConfig';
 import GridCollection from '~/components/utility/grid-collection/index.vue'
 import GridCollectionItem from '~/components/utility/grid-collection/item.vue'
 import ProjectsItemTable from '~/components/table/projects/item.vue'
 
-const appConfig = await useBaseScoreConfig();
+const appConfig = await useVaxlaConfig();
 </script>
 <template>
 	<div class="overflow-hidden rounded-b-lg">

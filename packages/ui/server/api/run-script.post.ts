@@ -1,16 +1,16 @@
-import { execCommandPromise, getUserRootDirectory } from '@base_/shared';
+import { execCommandPromise, getUserRootDirectory } from '@vaxla/shared';
 import { ScriptStatus } from '~/utils/packages/types';
 import { activeProcesses } from '../utils/cli';
-import { BaseScoreCommand, BaseScoreConfig, getBaseScoreConfig, getCommandDisplayName, getCommandShellScript } from '@base_/shared';
+import { VaxlaCommand, VaxlaConfig, getVaxlaConfig, getCommandDisplayName, getCommandShellScript } from '@vaxla/shared';
 import { useServerEvents } from '../utils/composables/useServerEvents';
 
 export default defineEventHandler(async (event) => {
-	const body = (await readBody(event)) as { id: string } & ({ command: BaseScoreCommand } | { commandIndex: number; packageId?: string });
+	const body = (await readBody(event)) as { id: string } & ({ command: VaxlaCommand } | { commandIndex: number; packageId?: string });
 	const { send } = useServerEvents();
 
-	const configPath = process.env.BASE_SCORE_CONFIG;
+	const configPath = process.env.VAXLA_CONFIG;
 
-	const config = typeof configPath === 'string' ? await getBaseScoreConfig(configPath) : ({} as BaseScoreConfig);
+	const config = typeof configPath === 'string' ? await getVaxlaConfig(configPath) : ({} as VaxlaConfig);
 	const packageInfo = 'packageId' in body ? config.packages[body.packageId ?? ''] : undefined;
 	const command = 'commandIndex' in body ? packageInfo?.scripts[body.commandIndex].command : body.command;
 

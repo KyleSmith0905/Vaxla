@@ -1,8 +1,8 @@
-import { defineBaseScoreConfig, colors } from '@base_/cli';
+import { defineVaxlaConfig, colors } from '@vaxla/cli';
 import { rmdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-export default defineBaseScoreConfig({
+export default defineVaxlaConfig({
   port: 3000,
   packages: {
     viteVanillaTs: {

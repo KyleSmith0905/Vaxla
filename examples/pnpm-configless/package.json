@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "description": "Example For BASE_ - Development tool to easily manage multiple dev environments and run commands.",
+  "description": "Example For Vaxla - Development tool to easily manage multiple dev environments and run commands.",
   "version": "1.0.0",
   "keywords": [
     "developer-tools",
@@ -11,21 +11,21 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "url": "https://github.com/KyleSmith0905/vaxla/issues",
     "email": "bugs@yskkyle.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KyleSmith0905/base_.git",
+    "url": "git+https://github.com/KyleSmith0905/vaxla.git",
     "directory": "examples/pnpm-configless"
   },
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "base_ dev --debug",
-    "start": "base_ start --debug"
+    "dev": "vx dev --debug",
+    "start": "vx start --debug"
   },
   "dependencies": {
-    "@base_/cli": "link:..\\..\\packages\\cli"
+    "@vaxla/cli": "link:..\\..\\packages\\cli"
   }
 }

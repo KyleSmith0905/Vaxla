@@ -22,9 +22,9 @@ const bumpVersion = () => {
 
   let newVersion = version;
   if (version.includes('-')) {
-    const [baseVersion, preRelease] = version.split('-');
+    const [vaxlaVersion, preRelease] = version.split('-');
     const [stage, stageNumber] = preRelease!.split('.');
-    newVersion = `${baseVersion}-${stage}.${stageNumber ? parseInt(stageNumber) + 1 : 0}`;
+    newVersion = `${vaxlaVersion}-${stage}.${stageNumber ? parseInt(stageNumber) + 1 : 0}`;
   }
   else {
     newVersion = `${version}-beta.0`;

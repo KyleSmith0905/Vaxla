@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AnsiToHtml from 'ansi-to-html';
-import { getCommandDisplayName, getCommandShellScript } from '@base_/shared/command';
+import { getCommandDisplayName, getCommandShellScript } from '@vaxla/shared/command';
 import { useScripts } from '~/composables/useScripts';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '~/components/ui/card';
 

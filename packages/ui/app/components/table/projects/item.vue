@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import colors from 'tailwindcss/colors';
 import { useActiveUrl } from '~/composables/useActiveUrl';
-import { useBaseScoreConfig } from '~/composables/useBaseScoreConfig';
+import { useVaxlaConfig } from '~/composables/useVaxlaConfig';
 import { Button } from '~/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '~/components/ui/dialog';
@@ -10,7 +10,7 @@ import { Icon } from '@iconify/vue'
 import QrCode from 'qrcode-vue3';
 import ProjectsButtonTableRow from './button-row.vue'
 
-const appConfig = await useBaseScoreConfig();
+const appConfig = await useVaxlaConfig();
 
 const props = defineProps<{
 	package: (typeof appConfig.value.packages)[string];

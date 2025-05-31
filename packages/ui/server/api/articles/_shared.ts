@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
 export const parseArticle = (fileName: string) => {
-	const articlesPath = resolve(process.env.BASE_SCORE_CONFIG!, 'articles', fileName);
+	const articlesPath = resolve(process.env.VAXLA_CONFIG!, 'articles', fileName);
 
 	const file = readFileSync(articlesPath);
 	const fileString = file.toString('utf-8');

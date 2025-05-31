@@ -9,7 +9,7 @@ import { colors } from 'consola/utils';
 const require = createRequire(import.meta.url);
 
 export const startLoadingServer = (port: number | string, options: { open: boolean }): { close: () => void } => {
-	const loadingPath = dirname(require.resolve('@base_/loading/package.json'));
+	const loadingPath = dirname(require.resolve('@vaxla/loading/package.json'));
 
 	const file = readFileSync(resolve(loadingPath, './dist/index.html'));
 	const server = createServer((_, res) => {

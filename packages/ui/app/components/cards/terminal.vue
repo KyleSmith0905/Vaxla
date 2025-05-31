@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ScriptStatus } from '~/utils/packages/types';
-import { getCommandShellScript } from '@base_/shared/command';
+import { getCommandShellScript } from '@vaxla/shared/command';
 import { useLocalStorage } from '@vueuse/core';
 import { useScripts } from '~/composables/useScripts';
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card';
@@ -28,7 +28,7 @@ const script = computed(() => (props.id ? getScript(props.id) : undefined));
 					</Badge>
 					<Badge class="flex gap-2 font-mono">
 						<Icon icon="lucide:terminal" />
-						{{ getCommandShellScript({ dynamic: script.command }, 'packages/@base_/ui') }}
+						{{ getCommandShellScript({ dynamic: script.command }, 'packages/@vaxla/ui') }}
 					</Badge>
 					<Badge :variant="script?.status === ScriptStatus.Opened ? 'success' : 'destructive'" class='flex gap-2'>
 						<Icon icon="lucide:stethoscope" />

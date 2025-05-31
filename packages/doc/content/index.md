@@ -6,33 +6,36 @@ navigation: false
 ::hero-alt
 
 #title
-[\> BASE_ ./]{class="font-mono"}
+[\> Vaxla ./]{class="font-mono"}
 
 #description
 Development tool to manage complex developer environments and run commands. A UI for your CLI.
 ::
 
 ::div{class="border rounded-lg shadow-md mt-4"}
-  :img{src="https://base.yskkyle.com/screenshots/demo.png" height="1280" width="800" class="w-full"}
+:img{src="https://vaxla.yskkyle.com/screenshots/demo.png" height="1280" width="800" class="w-full"}
 ::
 
-::code-tree{defaultValue="base_/config.ts" title="Sample Workspace powered by BASE_"}
+::code-tree{defaultValue="vaxla/config.ts" title="Sample Workspace powered by Vaxla"}
 
 ```[apps/mobile]
+
 ```
 
 ```[apps/web]
+
 ```
 
 ```[packages/shared]
+
 ```
 
-```ts [base_/config.ts]
-import { defineBaseScoreConfig, colors } from '@base_/cli';
+```ts [vaxla/config.ts]
+import { defineVaxlaConfig, colors } from '@vaxla/cli';
 import { rmdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-export default defineBaseScoreConfig({
+export default defineVaxlaConfig({
   port: 3000,
   packages: {
     mobile: {
@@ -125,17 +128,17 @@ export default defineBaseScoreConfig({
 
 ```yaml [pnpm-workspace.yaml]
 packages:
-  - 'apps/*'
-  - 'packages/*'
+  - "apps/*"
+  - "packages/*"
 ```
 
 ```json [package.json]
 {
-  "name": "root",
-  "scripts": {
-    "dev": "base_ dev ./base_/config.ts",
-    "build": "base_ start ./base_/config.ts"
-  }
+	"name": "root",
+	"scripts": {
+		"dev": "vaxla dev ./vaxla/config.ts",
+		"build": "vaxla start ./vaxla/config.ts"
+	}
 }
 ```
 

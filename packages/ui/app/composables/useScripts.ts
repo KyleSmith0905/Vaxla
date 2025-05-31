@@ -1,10 +1,10 @@
-import type { BaseScoreCommand } from '@base_/shared';
-import { getCommandDisplayName } from '@base_/shared/command';
+import type { VaxlaCommand } from '@vaxla/shared';
+import { getCommandDisplayName } from '@vaxla/shared/command';
 import { nanoid } from 'nanoid';
 import { toast } from 'vue-sonner';
 import { ScriptStatus, type ActiveScript } from '~/utils/packages/types';
 import { useServerEventsClient } from './useServerEventsClient';
-import { useBaseScoreConfig } from './useBaseScoreConfig';
+import { useVaxlaConfig } from './useVaxlaConfig';
 
 const scripts = ref<ActiveScript[]>([]);
 const loading = ref(true);
@@ -65,8 +65,8 @@ if (import.meta.client) {
 }
 
 export const useScripts = () => {
-	const runScript = async (options: { id?: string } & ({ command: BaseScoreCommand } | { commandIndex: number; packageId?: string })) => {
-		const config = await useBaseScoreConfig();
+	const runScript = async (options: { id?: string } & ({ command: VaxlaCommand } | { commandIndex: number; packageId?: string })) => {
+		const config = await useVaxlaConfig();
 
 		options.id ??= nanoid();
 

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useBaseScoreConfig } from '~/composables/useBaseScoreConfig';
+import { useVaxlaConfig } from '~/composables/useVaxlaConfig';
 import RunCommand from '~/components/cards/run-command.vue';
 import ProjectsTable from '~/components/table/projects/index.vue';
 import { Card, CardHeader, CardDescription, CardTitle } from '~/components/ui/card';
 
-const appConfig = await useBaseScoreConfig();
+const appConfig = await useVaxlaConfig();
 
 const packagesInfo = computed(() => {
 	return Object.entries(appConfig.value.packages ?? {});

@@ -1,19 +1,19 @@
 import { defineCommand } from 'citty';
-import { getBaseScoreConfig, getBaseScoreVersion } from '../utilities/config';
+import { inferVaxlaConfig, getVaxlaVersion } from '../utilities/config';
 import { resolve } from 'node:path';
 import { consola, startLog } from '../utilities/consola';
 import { colors } from 'consola/utils';
-import { execCommandPromise, getCommandShellScript, getUserRootDirectory } from '@base_/shared';
+import { execCommandPromise, getCommandShellScript, getUserRootDirectory } from '@vaxla/shared';
 
 export default defineCommand({
 	meta: {
 		name: 'run',
-		description: 'Run commands specified within the configuration file. Example: `base_ run web dev --dir ./base_`.',
+		description: 'Run commands specified within the configuration file. Example: `vaxla run web dev --dir ./vaxla`.',
 	},
 	args: {
 		package: {
 			type: 'string',
-			description: "A key of the base_ config's `packages` record.",
+			description: "A key of the vaxla config's `packages` record.",
 			alias: 'p',
 		},
 		command: {
@@ -23,7 +23,7 @@ export default defineCommand({
 		},
 		dir: {
 			type: 'string',
-			description: 'The path to the base_ files, such as the configuration file.',
+			description: 'The path to the vaxla files, such as the configuration file.',
 			alias: 'd',
 		},
 	},
@@ -33,13 +33,13 @@ export default defineCommand({
 			const packageId = packageIdArg ?? (args._[0] as string);
 			const command = commandArg ?? (args._[1] as string);
 
-			const cliVersion = await getBaseScoreVersion();
+			const cliVersion = await getVaxlaVersion();
 			consola.info(`Version: ${colors.yellow(cliVersion)}.`);
 
-			const { config, path } = await getBaseScoreConfig(dir);
+			const { config, path } = await inferVaxlaConfig(dir);
 
 			const configDirectory = resolve(path, '..');
-			process.env.BASE_SCORE_CONFIG = configDirectory;
+			process.env.VAXLA_CONFIG = configDirectory;
 
 			const packageInfo = config.packages[packageId];
 			if (!packageInfo) throw `Could not find package ${colors.gray(packageId)}.`;

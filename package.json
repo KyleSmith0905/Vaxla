@@ -1,7 +1,7 @@
 {
-  "name": "base_",
+  "name": "vaxla",
   "description": "Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.1.0",
+  "version": "1.1.0-beta.2",
   "keywords": [
     "developer-tools",
     "devops",
@@ -11,17 +11,17 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "url": "https://github.com/KyleSmith0905/vaxla/issues",
     "email": "bugs@yskkyle.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KyleSmith0905/base_.git"
+    "url": "git+https://github.com/KyleSmith0905/vaxla.git"
   },
   "private": true,
   "scripts": {
-    "dev": "base_ dev --dir ./tools/base_",
-    "start": "base_ start --dir ./tools/base_",
+    "dev": "vaxla dev --dir ./tools/vaxla",
+    "start": "vaxla start --dir ./tools/vaxla",
     "build": "pnpm run shared:build && pnpm run cli:build && pnpm run loading:build && npm run ui:build",
     "publish": "tsx ./scripts/publish.ts",
     "prepack": "pnpm run build && tsx ./scripts/prepack.ts",
@@ -42,14 +42,9 @@
     "tsx": "^4.19.3"
   },
   "dependencies": {
-    "@base_/cli": "^1.0.20",
+    "@vaxla/cli": "^1.1.0",
     "consola": "^3.4.2",
     "glob": "^11.0.2"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "better-sqlite3"
-    ]
   },
   "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af"
 }

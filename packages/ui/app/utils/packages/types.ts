@@ -1,4 +1,4 @@
-import type { BaseScoreCommand, BaseScoreConfig } from '@base_/shared';
+import type { VaxlaCommand, VaxlaConfig } from '@vaxla/shared';
 
 export enum ScriptStatus {
 	/** The script is closed. This is the default status of a script. */
@@ -12,7 +12,7 @@ export enum ScriptStatus {
 }
 
 export type ActiveScript = {
-	command: BaseScoreCommand | BaseScoreConfig['packages'][string]['scripts'][number];
+	command: VaxlaCommand | VaxlaConfig['packages'][string]['scripts'][number];
 	packageId?: string;
 	commandIndex?: number;
 	id: string;

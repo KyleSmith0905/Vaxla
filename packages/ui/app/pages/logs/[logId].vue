@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { getCommandShellScript } from '@base_/shared/command';
-import { useBaseScoreConfig } from '~/composables/useBaseScoreConfig';
+import { getCommandShellScript } from '@vaxla/shared/command';
+import { useVaxlaConfig } from '~/composables/useVaxlaConfig';
 import { useScripts } from '~/composables/useScripts';
 import Terminal from '~/components/cards/terminal.vue'
 
 const route = useRoute();
-const config = await useBaseScoreConfig();
+const config = await useVaxlaConfig();
 
 const { getScript } = useScripts();
 const script = computed(() => getScript(route.params.logId as string));

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ScriptStatus, type ActiveScript } from '~/utils/packages/types';
-import { getCommandShellScript, getCommandDisplayName } from '@base_/shared/command';
-import { useBaseScoreConfig } from '~/composables/useBaseScoreConfig';
+import { getCommandShellScript, getCommandDisplayName } from '@vaxla/shared/command';
+import { useVaxlaConfig } from '~/composables/useVaxlaConfig';
 import { useScripts } from '~/composables/useScripts';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { Button } from '~/components/ui/button';
 import { Icon } from '@iconify/vue';
 
-const appConfig = await useBaseScoreConfig();
+const appConfig = await useVaxlaConfig();
 
 const props = defineProps<{
 	package: (typeof appConfig.value.packages)[string];

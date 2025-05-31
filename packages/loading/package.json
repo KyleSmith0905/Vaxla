@@ -1,7 +1,7 @@
 {
-  "name": "@base_/loading",
-  "description": "Loading screen for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.1.0",
+  "name": "@vaxla/loading",
+  "description": "Loading screen for Vaxla - Development tool to easily manage multiple dev environments and run commands.",
+  "version": "1.1.0-beta.2",
   "keywords": [
     "developer-tools",
     "devops",
@@ -11,12 +11,12 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "url": "https://github.com/KyleSmith0905/vaxla/issues",
     "email": "bugs@yskkyle.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KyleSmith0905/base_.git",
+    "url": "git+https://github.com/KyleSmith0905/vaxla.git",
     "directory": "packages/loading"
   },
   "type": "module",

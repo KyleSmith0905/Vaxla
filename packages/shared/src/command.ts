@@ -1,11 +1,11 @@
-import type { BaseScoreConfig, BaseScoreCommand } from "./types";
+import type { VaxlaConfig, VaxlaCommand } from "./types";
 
 type CommandOptions = 
   /** @deprecated Use `{dynamic: ...}` instead. */
-  | {script: BaseScoreConfig['packages'][string]['scripts'][number]}
+  | {script: VaxlaConfig['packages'][string]['scripts'][number]}
   /** @deprecated Use `{dynamic: ...}` instead. */
-  | {command: BaseScoreCommand | undefined}
-  | {dynamic: BaseScoreCommand | BaseScoreConfig['packages'][string]['scripts'][number] | undefined}
+  | {command: VaxlaCommand | undefined}
+  | {dynamic: VaxlaCommand | VaxlaConfig['packages'][string]['scripts'][number] | undefined}
 
 /**
  * Receives a user-friendly name for the command.

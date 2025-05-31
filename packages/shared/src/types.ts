@@ -1,7 +1,7 @@
 /**
  * Color palette template based around TailwindCSS colors.
  */
-export type BaseScoreColor = {
+export type VaxlaColor = {
 	'50': string;
 	'100': string;
 	'200': string;
@@ -15,7 +15,7 @@ export type BaseScoreColor = {
 	'950': string;
 };
 
-export type BaseScoreCommand = string
+export type VaxlaCommand = string
 	| {
 		/** Whether the command should be run inside the package path. */
 		package?: boolean;
@@ -30,7 +30,7 @@ export type BaseScoreCommand = string
 	}
 	| {fn: (() => Promise<void>)};
 
-export type BaseScoreConfig = {
+export type VaxlaConfig = {
 	port?: number;
 	packages: Record<
 		string,
@@ -40,7 +40,7 @@ export type BaseScoreConfig = {
 			/** The path to the package's directory, inside should be a package.json file. */
 			path?: string;
 			/** A color for the package, to help identify it in the UI. */
-			color?: BaseScoreColor;
+			color?: VaxlaColor;
 			/** Links to localhost servers, relevant to the package (development server, test preview, etc). */
 			link?: {
 				/** A name to identify the link. */
@@ -75,7 +75,7 @@ export type BaseScoreConfig = {
 				 * "command": {package: true, npm: "dev"} // Runs an npm command inside the package path.
 				 * ```
 				 */
-				command: BaseScoreCommand;
+				command: VaxlaCommand;
 				/** An iconify icon to display on the script button. */
 				icon?: string;
 			}[];

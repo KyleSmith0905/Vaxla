@@ -12,9 +12,9 @@ const facts = [
 	'TypeScript\'s codebase was written in TypeScript',
 	'The average webpage is 2.2MB',
   'Feel free to create an issue and suggest fun facts',
-  'BASE_ was originally made to handle the complex environments at Sparrow Design',
-  'Our internal BASE_ project at Sparrow Design was developed over a weekend',
-  'BASE_ is fully open source and welcomes all contributors',
+  'Vaxla was originally made to handle the complex environments at Sparrow Design',
+  'Our internal Vaxla project at Sparrow Design was developed over a weekend',
+  'Vaxla is fully open source and welcomes all contributors',
 ]
 const randomFact = ref(Math.floor(Math.random() * facts.length));
 const getRandomFact = () => {
@@ -33,7 +33,7 @@ const getRandomFact = () => {
     <Button variant='link' @click="getRandomFact()">random</Button>
   </div>
   <Button as-child variant='link'>
-    <a href="https://github.com/KyleSmith0905/BASE_/issues/new?title=[Fun+Fact+Suggestion]:+" target="_blank">
+    <a href="https://github.com/KyleSmith0905/vaxla/issues/new?title=[Fun+Fact+Suggestion]:+" target="_blank">
       suggest
     </a>
   </Button>

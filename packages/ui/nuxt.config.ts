@@ -1,4 +1,4 @@
-import { getUserRootDirectory, getUiDirectory } from '@base_/shared';
+import { getUserRootDirectory, getUiDirectory } from '@vaxla/shared';
 import tailwindcss from '@tailwindcss/vite';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -19,7 +19,7 @@ export default defineNuxtConfig({
 	sourcemap: false,
 
 	devServer: {
-		loadingTemplate: () => readFileSync(join(getUiDirectory(), './.base_/loading/index.html'), { encoding: 'utf-8' }),
+		loadingTemplate: () => readFileSync(join(getUiDirectory(), './.vaxla/loading/index.html'), { encoding: 'utf-8' }),
 	},
 
 	alias: {
@@ -30,7 +30,7 @@ export default defineNuxtConfig({
 		'dayjs/plugin/relativeTime': 'dayjs/plugin/relativeTime',
 		'dayjs/plugin/updateLocale': 'dayjs/plugin/updateLocale',
 		'ansi-to-html': 'ansi-to-html',
-		'@base_/shared': join(getUiDirectory(), './.base_/shared'),
+		'@vaxla/shared': join(getUiDirectory(), './.vaxla/shared'),
 		'qrcode-vue3': 'qrcode-vue3/src/QRCodeVue3.vue',
 	},
 
@@ -71,7 +71,7 @@ export default defineNuxtConfig({
 
 	app: {
 		head: {
-			title: 'BASE_',
+			title: 'Vaxla',
 			htmlAttrs: {
 				class: 'h-full',
 			},
@@ -82,7 +82,7 @@ export default defineNuxtConfig({
 				{
 					rel: 'icon',
 					type: 'image/x-icon',
-					href: '/base_/favicon.ico',
+					href: '/vaxla-internal/favicon.ico',
 				},
 			],
 		},

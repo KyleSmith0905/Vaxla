@@ -12,7 +12,7 @@ export default defineConfig({
     viteSingleFile(),
     {
       closeBundle: () => {
-        cpSync('./dist/', '../ui/.base_/loading', {recursive: true});
+        cpSync('./dist/', '../ui/.vaxla/loading', {recursive: true});
       }
     }
   ],

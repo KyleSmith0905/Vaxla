@@ -1,15 +1,15 @@
 {
-  "description": "Example For BASE_ - Development tool to easily manage multiple dev environments and run commands.",
+  "description": "Example For Vaxla - Development tool to easily manage multiple dev environments and run commands.",
   "version": "1.0.0",
   "keywords": ["developer-tools", "devops", "workflow", "cli", "productivity"],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "url": "https://github.com/KyleSmith0905/vaxla/issues",
     "email": "bugs@yskkyle.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KyleSmith0905/base_.git",
+    "url": "git+https://github.com/KyleSmith0905/vaxla.git",
     "directory": "examples/pnpm/apps/vite-vanilla-ts"
   },
   "private": true,

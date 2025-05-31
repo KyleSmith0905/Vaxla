@@ -6,7 +6,7 @@ import { dirname } from 'node:path';
 const require = createRequire(process.argv[1] ? new URL(process.argv[1], "file://").href : import.meta.url);
 
 export const getUserRootDirectory = () => {
-	const configDir = process.env.BASE_SCORE_CONFIG ?? process.cwd();
+	const configDir = process.env.VAXLA_CONFIG ?? process.cwd();
 	let currentDir = configDir;
 
 	while (currentDir !== '/') {
@@ -25,8 +25,8 @@ export const getUserRootDirectory = () => {
 
 
 export const getUiDirectory = () => {
-	const baseScoreUiPath = dirname(require.resolve('@base_/ui/package.json'));
-	return baseScoreUiPath;
+	const vaxlaUiPath = dirname(require.resolve('@vaxla/ui/package.json'));
+	return vaxlaUiPath;
 };
 
 export const writeFileRecursive = (filePath: string, content: string): void => {

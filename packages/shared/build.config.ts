@@ -10,9 +10,9 @@ export default defineBuildConfig({
 	},
 	hooks: {
 		'build:done': async () => {
-			cpSync('./dist/', '../ui/.base_/shared', {recursive: true});
+			cpSync('./dist/', '../ui/.vaxla/shared', {recursive: true});
 			
-			// Copies the dependencies over to @base_/ui
+			// Copies the dependencies over to @vaxla/ui
 			const response = exec('pnpm list --prod --json');
 			response.stdout?.addListener('data', async (e) => {
 				const dependencies = JSON.parse(e)[0].dependencies as Record<string, {from: string, version: string, path: string}>;

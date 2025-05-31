@@ -1,7 +1,7 @@
 export default defineAppConfig({
   shadcnDocs: {
     site: {
-      name: 'BASE_ Documentation',
+      name: 'Vaxla Documentation',
       description: 'Development tool to manage complex developer environments and run commands. A UI for your CLI.',
       umami: {
         enable: true,
@@ -24,20 +24,23 @@ export default defineAppConfig({
           {
             title: 'Getting Started',
             to: '/getting-started',
-            description: 'A quick start guide to get your local environment hooked up to BASE_.',
+            description: 'A quick start guide to get your local environment hooked up to Vaxla.',
             icon: 'lucide:rocket'
           }
         ]
       }],
       links: [{
         icon: 'lucide:github',
-        to: 'https://github.com/KyleSmith0905/base_',
+        to: 'https://github.com/KyleSmith0905/vaxla',
         target: '_blank',
       }],
     },
     aside: {
       useLevel: true,
       collapse: false,
+    },
+    banner: {
+      enable: false,
     },
     main: {
       breadCrumb: true,
@@ -47,7 +50,7 @@ export default defineAppConfig({
       credits: 'Copyright © 2025',
       links: [{
         icon: 'lucide:github',
-        to: 'https://github.com/KyleSmith0905/base_',
+        to: 'https://github.com/KyleSmith0905/vaxla',
         target: '_blank',
       }],
     },
@@ -57,12 +60,12 @@ export default defineAppConfig({
       links: [{
         title: 'Star on GitHub',
         icon: 'lucide:star',
-        to: 'https://github.com/KyleSmith0905/base_',
+        to: 'https://github.com/KyleSmith0905/vaxla',
         target: '_blank',
       }, {
         title: 'Create Issues',
         icon: 'lucide:circle-dot',
-        to: 'https://github.com/KyleSmith0905/base_/issues',
+        to: 'https://github.com/KyleSmith0905/vaxla/issues',
         target: '_blank',
       }],
     },
@@ -70,5 +73,5 @@ export default defineAppConfig({
       enable: true,
       inAside: false,
     }
-  }
+  } as DefaultConfig,
 });

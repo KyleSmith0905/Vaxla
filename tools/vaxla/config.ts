@@ -1,10 +1,10 @@
-import { defineBaseScoreConfig, colors } from '@base_/cli';
+import { defineVaxlaConfig, colors } from '@vaxla/cli';
 
-export default defineBaseScoreConfig({
+export default defineVaxlaConfig({
   port: 3001,
   packages: {
     shared: {
-      name: 'BASE_ Shared',
+      name: 'Vaxla Shared',
       path: './packages/shared',
       color: colors.red,
       scripts: [
@@ -15,7 +15,7 @@ export default defineBaseScoreConfig({
       ]
     },
     cli: {
-      name: 'BASE_ CLI',
+      name: 'Vaxla CLI',
       path: './packages/cli',
       color: colors.orange,
       scripts: [
@@ -26,7 +26,7 @@ export default defineBaseScoreConfig({
       ]
     },
     doc: {
-      name: 'BASE_ Documentation',
+      name: 'Vaxla Documentation',
       path: './packages/doc',
       color: colors.yellow,
       link: [

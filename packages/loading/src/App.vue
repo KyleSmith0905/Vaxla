@@ -28,7 +28,7 @@ const refetch = () => {
   
       if (res.status !== 200) return;
       const text = await res.text();
-      if (text.includes('<title>BASE_ Loading</title>')) return;
+      if (text.includes('<title>Vaxla Loading</title>')) return;
       location.href = 'http://localhost:3000';
     })
     .catch((err) => {
@@ -53,7 +53,7 @@ useIntervalFn(() => refetch(), 500, {immediate: true});
       <h1>STATUS</h1>
       <p>The server is building.</p>
       <br/>
-      <p>Every few seconds we will automatically fetch and route you to the BASE_ when ready.</p>
+      <p>Every few seconds we will automatically fetch and route you to the Vaxla when ready.</p>
       <p>FETCHED DATE: {{ typeof fetchedDate === 'string' ? fetchedDate : new Date(fetchedDate).toISOString() }}</p>
       <p>FETCHED STATUS: {{ fetchedStatus }}</p>
       <div class="flex gap-3">
@@ -64,7 +64,7 @@ useIntervalFn(() => refetch(), 500, {immediate: true});
       <AnimPage/>
     </Card>
     <Card v-if="selectedTab === 'docs'" class='grow p-0 border-solid'>
-      <iframe src="https://base.yskkyle.com/getting-started" frameborder="0" class='w-full h-full outline-0'/>
+      <iframe src="https://vaxla.yskkyle.com/getting-started" frameborder="0" class='w-full h-full outline-0'/>
     </Card>
     <Card v-if="selectedTab === 'fact'" class='grow'>
       <FactPage />

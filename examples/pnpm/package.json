@@ -1,6 +1,6 @@
 {
   "name": "example",
-  "description": "Example For BASE_ - Development tool to easily manage multiple dev environments and run commands.",
+  "description": "Example For Vaxla - Development tool to easily manage multiple dev environments and run commands.",
   "version": "1.0.0",
   "keywords": [
     "developer-tools",
@@ -11,27 +11,27 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "url": "https://github.com/KyleSmith0905/vaxla/issues",
     "email": "bugs@yskkyle.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KyleSmith0905/base_.git",
+    "url": "git+https://github.com/KyleSmith0905/vaxla.git",
     "directory": "examples/pnpm"
   },  
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "base_ start --dir ./tools/base_",
+    "start": "vx start --dir ./tools/vaxla",
     
     "// Below are scripts to test the standalone script calling.": "",
-    "run:dev": "base_ run viteVanillaTs 0 --dir ./tools/base_",
-    "run:build": "base_ run viteVanillaTs 1 --dir ./tools/base_",
-    "run:preview": "base_ run viteVanillaTs 2 --dir ./tools/base_",
-    "run:remove-dist": "base_ run viteVanillaTs 3 --dir ./tools/base_",
-    "run:infinite-logging": "base_ run viteVanillaTs 4 --dir ./tools/base_"
+    "run:dev": "vx run viteVanillaTs 0 --dir ./tools/vaxla",
+    "run:build": "vx run viteVanillaTs 1 --dir ./tools/vaxla",
+    "run:preview": "vx run viteVanillaTs 2 --dir ./tools/vaxla",
+    "run:remove-dist": "vx run viteVanillaTs 3 --dir ./tools/vaxla",
+    "run:infinite-logging": "vx run viteVanillaTs 4 --dir ./tools/vaxla"
   },
   "dependencies": {
-    "@base_/cli": "link:..\\..\\packages\\cli"
+    "@vaxla/cli": "link:..\\..\\packages\\cli"
   }
 }

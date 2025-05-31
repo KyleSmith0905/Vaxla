@@ -1,72 +1,94 @@
 import { createJiti } from 'jiti';
-import { writeFileRecursive, type BaseScoreConfig } from '@base_/shared';
-import { readFileSync, writeFileSync } from 'fs';
+import { writeFileRecursive, type VaxlaConfig } from '@vaxla/shared';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { dirname, relative, resolve } from 'path';
 import consola from 'consola';
 import { globSync } from 'glob';
-import { createRequire } from 'module';
-import { findUpSync } from 'find-up-simple';
+import { findUpSync, findUpMultipleSync } from 'find-up';
 
-const require = createRequire(process.argv[1] ? new URL(process.argv[1], 'file://').href : import.meta.url);
-
-export const defineBaseScoreConfig = (config: BaseScoreConfig) => {
+export const defineVaxlaConfig = (config: VaxlaConfig) => {
 	return config;
 };
 
-export const getBaseScoreConfig = async (configPath?: string): Promise<{ config: BaseScoreConfig; path: string }> => {
-	if (configPath === undefined) {
-		const config = {
-			packages: {},
-		} as BaseScoreConfig;
+const getVaxlaConfig = async (configPath: string) => {
+	console.log('getVaxlaConfig');
+	const jiti = createJiti(import.meta.url);
 
-		const globResult = globSync('**/package.json', { ignore: ['**/node_modules/**'], absolute: true });
-		globResult.map((packageJsonPath) => {
-			const relativePath = dirname(relative(process.cwd(), packageJsonPath));
-			const packageJsonString = readFileSync(packageJsonPath, { encoding: 'utf-8' });
-			const packageJson = JSON.parse(packageJsonString);
-			config.packages[relativePath === '.' ? 'root' : relativePath] = {
-				name: packageJson.name ?? (relativePath === '.' ? 'root' : relativePath),
-				path: relativePath,
-				scripts: Object.keys(packageJson.scripts).map((key) => {
-					return {
-						label: key,
-						command: { npm: key },
-					};
-				}),
-			};
-		});
+	const path = resolve(configPath, 'config.ts');
 
-		let configString = JSON.stringify(config, null, '\t');
-		writeFileRecursive('./.base_/configless/config.ts', `export default ${configString}`);
-
-		try {
-			const gitIgnore = readFileSync('./.gitignore', { encoding: 'utf-8' });
-			if (!gitIgnore.includes('\n/.base/*')) writeFileSync('./.gitignore', `${gitIgnore}\n# BASE_ Internals\n/.base/*`);
-		} catch {
-			consola.info('Suggestion: Add /.base/* to .gitignore to prevent committing the configless information.');
-		}
-
-		return { config: config, path: './.base_/configless/config.ts' };
-	} else {
-		const jiti = createJiti(import.meta.url);
-
-		const path = resolve(configPath, 'config.ts');
-
-		const config = await jiti.import(path, { default: true }).catch((e) => {
-			if (e.code === 'MODULE_NOT_FOUND') throw new Error(`Could not find the BASE_ config, searching "${path}"`);
-		});
-		return { config: config as BaseScoreConfig, path };
-	}
+	const config = await jiti.import(path, { default: true }).catch((e) => {
+		if (e.code === 'MODULE_NOT_FOUND') throw new Error(`Could not find the Vaxla config, searching "${path}"`);
+	});
+	return { config: config as VaxlaConfig, path: path };
 };
 
-export const getBaseScoreVersion = async (): Promise<string> => {
+/**
+ * Infers the location of the Vaxla config in a 3-step order.
+ * If we cannot find a config, we'll generate one based on their environment setup.
+ */
+export const inferVaxlaConfig = async (configPath?: string): Promise<{ config: VaxlaConfig; path: string }> => {
+	// 1. The user defines configuration path within the CLI.
+	if (configPath !== undefined) return await getVaxlaConfig(configPath);
+
+	// 2. The user defines configuration path within the package.json.
+	const packageJsonList = findUpMultipleSync('package.json');
+	for (const packageJsonPath of packageJsonList) {
+		const packageJsonString = readFileSync(packageJsonPath, 'utf-8');
+		const packageJson = JSON.parse(packageJsonString);
+		const configPath = packageJson?.vaxla?.config;
+		if (configPath) return await getVaxlaConfig(configPath);
+	}
+
+	// 3. The user has the configuration path in a common location.
+	const plausibleConfigList = findUpMultipleSync(['vaxla', 'tools/vaxla'], { type: 'directory' });
+	for (const plausibleConfigPath of plausibleConfigList) {
+		const path = existsSync(resolve(plausibleConfigPath, 'config.ts'));
+		if (path) return await getVaxlaConfig(plausibleConfigPath);
+	}
+
+	// 4. We generate a default configuration graph.
+	const config = {
+		packages: {},
+	} as VaxlaConfig;
+
+	const globResult = globSync('**/package.json', { ignore: ['**/node_modules/**'], absolute: true });
+	globResult.map((packageJsonPath) => {
+		const relativePath = dirname(relative(process.cwd(), packageJsonPath));
+		const packageJsonString = readFileSync(packageJsonPath, { encoding: 'utf-8' });
+		const packageJson = JSON.parse(packageJsonString);
+		config.packages[relativePath === '.' ? 'root' : relativePath] = {
+			name: packageJson.name ?? (relativePath === '.' ? 'root' : relativePath),
+			path: relativePath,
+			scripts: Object.keys(packageJson.scripts).map((key) => {
+				return {
+					label: key,
+					command: { npm: key },
+				};
+			}),
+		};
+	});
+
+	let configString = JSON.stringify(config, null, '\t');
+	writeFileRecursive('./.vaxla/configless/config.ts', `export default ${configString}`);
+
+	try {
+		const gitIgnore = readFileSync('./.gitignore', { encoding: 'utf-8' });
+		if (!gitIgnore.includes('\n/.vaxla/*')) writeFileSync('./.gitignore', `${gitIgnore}\n# Vaxla Internals\n/.vaxla/*`);
+	} catch {
+		consola.info('Suggestion: Add /.vaxla/* to .gitignore to prevent committing the configless information.');
+	}
+
+	return { config: config, path: './.vaxla/configless/config.ts' };
+};
+
+export const getVaxlaVersion = async (): Promise<string> => {
 	const packageJsonPath = findUpSync('package.json', { cwd: import.meta.filename });
 	const packageJsonString = readFileSync(packageJsonPath!, { encoding: 'utf-8' });
 	const packageJson = JSON.parse(packageJsonString);
 	return packageJson.version;
 };
 
-export const getBaseScoreConfigRaw = async (configPath: string): Promise<string> => {
+export const getVaxlaConfigRaw = async (configPath: string): Promise<string> => {
 	const fullPath = resolve(configPath, 'config.ts');
 	try {
 		return readFileSync(fullPath, 'utf-8').trim();

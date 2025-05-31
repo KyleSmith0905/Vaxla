@@ -1,7 +1,7 @@
 {
-  "name": "@base_/cli",
-  "description": "CLI for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.1.0",
+  "name": "@vaxla/cli",
+  "description": "CLI for Vaxla - Development tool to easily manage multiple dev environments and run commands.",
+  "version": "1.1.0-beta.2",
   "keywords": [
     "developer-tools",
     "devops",
@@ -11,21 +11,22 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "url": "https://github.com/KyleSmith0905/vaxla/issues",
     "email": "bugs@yskkyle.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KyleSmith0905/base_.git",
+    "url": "git+https://github.com/KyleSmith0905/vaxla.git",
     "directory": "packages/cli"
   },
   "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
-    "./cli": "./bin/base_.mjs"
+    "./cli": "./bin/vaxla.mjs"
   },
   "bin": {
-    "base_": "./bin/base_.mjs"
+    "vaxla": "./bin/vaxla.mjs",
+    "vx": "./bin/vaxla.mjs"
   },
   "files": [
     "bin",
@@ -35,13 +36,13 @@
     "build": "unbuild"
   },
   "dependencies": {
-    "@base_/loading": "workspace:*",
-    "@base_/shared": "workspace:*",
-    "@base_/ui": "workspace:*",
+    "@vaxla/loading": "workspace:*",
+    "@vaxla/shared": "workspace:*",
+    "@vaxla/ui": "workspace:*",
     "chokidar": "^4.0.3",
     "citty": "^0.1.6",
     "consola": "^3.4.2",
-    "find-up-simple": "^1.0.1",
+    "find-up": "^7.0.0",
     "glob": "^11.0.2",
     "jiti": "^2.4.2",
     "nuxi": "^3.24.1",

@@ -35,7 +35,7 @@ const navigation = [
 <template>
 	<Sidebar variant="floating">
 		<SidebarHeader class="border-b">
-			<h1 class="px-2 font-mono text-lg font-bold">BASE_</h1>
+			<h1 class="px-2 font-mono text-lg font-bold">Vaxla</h1>
 		</SidebarHeader>
 		<SidebarContent>
 			<SidebarGroup v-for="group of navigation">
@@ -68,7 +68,7 @@ const navigation = [
 			<SidebarTrigger class="absolute" />
 			<Breadcrumb class="px-8 py-1">
 				<BreadcrumbList>
-					<BreadcrumbItem class="font-mono">BASE_</BreadcrumbItem>
+					<BreadcrumbItem class="font-mono">Vaxla</BreadcrumbItem>
 					<template v-for="pathPart of path">
 						<BreadcrumbSeparator />
 						<BreadcrumbItem>

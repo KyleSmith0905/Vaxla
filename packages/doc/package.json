@@ -1,7 +1,7 @@
 {
-  "name": "@base_/doc",
-  "description": "Shared files and types for BASE_ - Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.1.0",
+  "name": "@vaxla/doc",
+  "description": "Shared files and types for Vaxla - Development tool to easily manage multiple dev environments and run commands.",
+  "version": "1.1.0-beta.2",
   "keywords": [
     "developer-tools",
     "devops",
@@ -11,12 +11,12 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KyleSmith0905/base_/issues",
+    "url": "https://github.com/KyleSmith0905/vaxla/issues",
     "email": "bugs@yskkyle.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KyleSmith0905/base_.git",
+    "url": "git+https://github.com/KyleSmith0905/vaxla.git",
     "directory": "packages/doc"
   },
   "private": true,
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@nuxt/fonts": "^0.10.3",
+    "better-sqlite3": "^11.10.0",
     "nuxt": "^3.16.0",
     "nuxt-component-meta": "^0.10.1",
     "shadcn-docs-nuxt": "^0.8.21",

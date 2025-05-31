@@ -2,5 +2,5 @@ node_modules/
 dist/
 .vercel
 
-# BASE_ Internals
-/.base/*
+# Vaxla Internals
+/.vaxla/*

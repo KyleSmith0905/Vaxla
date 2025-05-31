@@ -4,8 +4,8 @@ import { description, version, name } from '../package.json';
 import colors from 'tailwindcss/colors.js';
 
 export { colors };
-export { defineBaseScoreConfig } from './utilities/config';
-export { type BaseScoreConfig, type BaseScoreColor } from '@base_/shared';
+export { defineVaxlaConfig } from './utilities/config';
+export { type VaxlaConfig, type VaxlaColor } from '@vaxla/shared';
 
 export const main = defineCommand({
 	meta: {

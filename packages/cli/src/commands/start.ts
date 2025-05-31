@@ -1,7 +1,7 @@
 import { defineCommand } from 'citty';
-import { getBaseScoreConfig, getBaseScoreVersion } from '../utilities/config';
+import { inferVaxlaConfig, getVaxlaVersion } from '../utilities/config';
 import { resolve } from 'node:path';
-import { getUiDirectory } from '@base_/shared';
+import { getUiDirectory } from '@vaxla/shared';
 import { runCommand } from '../utilities/command';
 import { consola } from '../utilities/consola';
 import { colors } from 'consola/utils';
@@ -10,7 +10,7 @@ import { default as openUrl } from 'open';
 export default defineCommand({
 	meta: {
 		name: 'start',
-		description: 'Starts BASE_ regular server. Runs a build command if needed, then starts a server.',
+		description: 'Starts Vaxla regular server. Runs a build command if needed, then starts a server.',
 	},
 	args: {
 		port: {
@@ -20,7 +20,7 @@ export default defineCommand({
 		},
 		dir: {
 			type: 'string',
-			description: 'The path to the base_ files, such as the configuration file.',
+			description: 'The path to the vaxla files, such as the configuration file.',
 			alias: 'd',
 		},
 		forceBuild: {
@@ -44,18 +44,19 @@ export default defineCommand({
 		try {
 			const { port, dir, debug, open } = args;
 
-			const cliVersion = await getBaseScoreVersion();
+			const cliVersion = await getVaxlaVersion();
 			consola.info(`Version: ${colors.yellow(cliVersion)}.`);
 
-			const { config, path } = await getBaseScoreConfig(dir);
+			const { config, path } = await inferVaxlaConfig(dir);
+			consola.info(`Config Path: ${colors.yellow(path)}.`);
 			const finalPort = port ?? config.port ?? 3000;
 
-			// Find the actual location of @base_/ui package
-			const baseScoreUiPath = getUiDirectory();
+			// Find the actual location of @vaxla/ui package
+			const vaxlaUiPath = getUiDirectory();
 
 			const configDirectory = resolve(path, '..');
 
-			process.env.BASE_SCORE_CONFIG = configDirectory;
+			process.env.VAXLA_CONFIG = configDirectory;
 
 			consola.start('Running server...');
 
@@ -76,7 +77,7 @@ export default defineCommand({
 			runCommand(
 				`node .output/server/index.mjs`,
 				{
-					cwd: baseScoreUiPath,
+					cwd: vaxlaUiPath,
 				},
 				debug
 			);
