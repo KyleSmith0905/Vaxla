@@ -6,9 +6,9 @@ import { Button } from '~/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '~/components/ui/dialog';
 import KillProcess from '~/components/utility/kill-process.vue';
-import { Icon } from '@iconify/vue'
+import { Icon } from '@iconify/vue';
 import QrCode from 'qrcode-vue3';
-import ProjectsButtonTableRow from './button-row.vue'
+import ProjectsButtonTableRow from './button-row.vue';
 
 const appConfig = await useVaxlaConfig();
 
@@ -20,9 +20,9 @@ const props = defineProps<{
 const qrCodeModalOpen = ref<string | undefined>(undefined);
 
 const links = computed(() => {
-	return props.package.link?.map((link) => ({
+	return Object.entries(props.package.link ?? {}).map(([id, link]) => ({
 		fullUrl: `http://localhost:${link.port}/${link.path ?? ''}`,
-		id: `${link.port}/${link.path ?? ''}`,
+		id: id,
 		name: link.name,
 		port: link.port,
 	}));
@@ -49,11 +49,7 @@ const { sites } = useActiveUrl({
 			<template v-for="link of links ?? []">
 				<Tooltip>
 					<TooltipTrigger as-child>
-						<Button
-							:variant="sites?.[link.fullUrl] ? 'success' : 'outline'"
-							size="xs"
-							as-child
-						>
+						<Button :variant="sites?.[link.fullUrl] ? 'success' : 'outline'" size="xs" as-child>
 							<a :href="link.fullUrl" target="_blank">{{ link.name }}</a>
 						</Button>
 					</TooltipTrigger>
@@ -79,7 +75,7 @@ const { sites } = useActiveUrl({
 							<DialogTitle>QR Code</DialogTitle>
 							<DialogDescription>Scan the QR code to access the website on all of your devices.</DialogDescription>
 						</DialogHeader>
-						<div class="rounded-lg border overflow-hidden">
+						<div class="overflow-hidden rounded-lg border">
 							<QrCode
 								v-if="link.fullUrl"
 								:width="512"
@@ -87,11 +83,11 @@ const { sites } = useActiveUrl({
 								:value="link.fullUrl"
 								:key="link.fullUrl"
 								:qr-options="{
-									errorCorrectionLevel: 'H'
+									errorCorrectionLevel: 'H',
 								}"
 								:dotsOptions="{
 									color: colors.zinc[50],
-									type: 'square'
+									type: 'square',
 								}"
 								:backgroundOptions="{
 									color: colors.zinc[950],
@@ -100,7 +96,7 @@ const { sites } = useActiveUrl({
 									color: colors.zinc[50],
 									type: 'square',
 								}"
-								class='max-w-96'
+								class="max-w-96"
 							/>
 						</div>
 					</DialogContent>

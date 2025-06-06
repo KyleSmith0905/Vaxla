@@ -42,21 +42,16 @@ export type VaxlaConfig = {
 			/** A color for the package, to help identify it in the UI. */
 			color?: VaxlaColor;
 			/** Links to localhost servers, relevant to the package (development server, test preview, etc). */
-			link?: {
+			link?: Record<string, {
 				/** A name to identify the link. */
 				name: string;
 				/** The port of the website, `http://localhost:{port}`. */
 				port: number;
 				/** The path to poll and send the user to on the website. */
 				path?: string;
-			}[];
+			}>;
 			/** Scripts associated with the package. */
-			scripts: {
-				/**
-				 * An optional identifier to help identify this command
-				 * (optional, the index likely works in places where id is accepted).
-				 */
-				id?: string;
+			scripts: Record<string, {
 				/** The display label for the script ("dev", "build", "preview", etc). */
 				label?: string;
 				/**
@@ -78,7 +73,7 @@ export type VaxlaConfig = {
 				command: VaxlaCommand;
 				/** An iconify icon to display on the script button. */
 				icon?: string;
-			}[];
+			}>;
 		}
 	>;
 };

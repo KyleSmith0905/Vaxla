@@ -11,7 +11,6 @@ export const defineVaxlaConfig = (config: VaxlaConfig) => {
 };
 
 const getVaxlaConfig = async (configPath: string) => {
-	console.log('getVaxlaConfig');
 	const jiti = createJiti(import.meta.url);
 
 	const path = resolve(configPath, 'config.ts');

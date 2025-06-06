@@ -11,7 +11,7 @@ export const parseArticle = (fileName: string) => {
 
 	let error: undefined | string = undefined;
 	let document = '';
-	let metadata: Partial<{ description: string; author: string }> = {};
+	let metadata: Partial<{ description: string; author: string; title: string }> = {};
 	if (fileParts.length > 2) {
 		const [_, metadataString, ...documentSplit] = fileParts;
 
@@ -46,7 +46,7 @@ export const parseArticle = (fileName: string) => {
 
 	return {
 		fileName: fileName,
-		title: title,
+		title: metadata['title'] ?? title,
 		metadata: metadata,
 		document: document,
 		uploadDate,

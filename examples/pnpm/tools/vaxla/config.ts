@@ -9,32 +9,32 @@ export default defineVaxlaConfig({
       name: 'Vite Vanilla TS',
       path: './apps/vite-vanilla-ts',
       color: colors.red,
-      link: [
-        {
+      link: {
+        dev: {
           port: 5173,
           name: 'Development Server',
         },
-        {
+        preview: {
           port: 4173,
           name: 'Preview Server',
         },
-      ],
-      scripts: [
-        {
+      },
+      scripts: {
+        dev: {
           command: {package: true, npm: 'dev'}, // cd ./apps/vite-vanilla-ts && pnpm run dev
           icon: 'lucide:code-xml',
         },
-        {
+        build: {
           label: "build",
           command: {package: true, shell: 'pnpm run build'}, // cd ./apps/vite-vanilla-ts && pnpm run build
           icon: "lucide:hammer",
         },
-        {
+        preview: {
           label: "preview",
           command: "cd ./apps/vite-vanilla-ts && pnpm run preview", // cd ./apps/vite-vanilla-ts && pnpm run preview
           icon: "lucide:app-window",
         },
-        {
+        'clear-dist': {
           command: {
             fn: async () => {
               console.log('1/2 About to clear dist.');
@@ -44,8 +44,7 @@ export default defineVaxlaConfig({
           },
           icon: "hugeicons:folder-remove",
         },
-        {
-          id: 'infinite-logging',
+        'infinite-logging': {
           label: 'Infinite Logging',
           command: {
             fn: async () => {
@@ -60,7 +59,7 @@ export default defineVaxlaConfig({
           },
           icon: "lucide:hard-drive-download",
         }
-      ]
+      }
     },
   }
 })

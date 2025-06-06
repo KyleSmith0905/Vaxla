@@ -14,7 +14,7 @@ export enum ScriptStatus {
 export type ActiveScript = {
 	command: VaxlaCommand | VaxlaConfig['packages'][string]['scripts'][number];
 	packageId?: string;
-	commandIndex?: number;
+	commandId?: string;
 	id: string;
 	status: ScriptStatus;
 	logs: { text: string; date: Date; type?: 'error' | 'meta' | 'log' }[];

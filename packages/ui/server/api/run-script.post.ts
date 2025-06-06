@@ -5,14 +5,14 @@ import { VaxlaCommand, VaxlaConfig, getVaxlaConfig, getCommandDisplayName, getCo
 import { useServerEvents } from '../utils/composables/useServerEvents';
 
 export default defineEventHandler(async (event) => {
-	const body = (await readBody(event)) as { id: string } & ({ command: VaxlaCommand } | { commandIndex: number; packageId?: string });
+	const body = (await readBody(event)) as { id: string } & ({ command: VaxlaCommand } | { commandId: number; packageId?: string });
 	const { send } = useServerEvents();
 
 	const configPath = process.env.VAXLA_CONFIG;
 
 	const config = typeof configPath === 'string' ? await getVaxlaConfig(configPath) : ({} as VaxlaConfig);
 	const packageInfo = 'packageId' in body ? config.packages[body.packageId ?? ''] : undefined;
-	const command = 'commandIndex' in body ? packageInfo?.scripts[body.commandIndex].command : body.command;
+	const command = 'commandId' in body ? packageInfo?.scripts[body.commandId].command : body.command;
 
 	const commandShell = command ? getCommandShellScript({ dynamic: command }, packageInfo?.path ?? '') : '';
 	const commandName = command ? getCommandDisplayName({ dynamic: command }) : '';
