@@ -30,7 +30,6 @@ export default defineNuxtConfig({
 		'dayjs/plugin/relativeTime': 'dayjs/plugin/relativeTime',
 		'dayjs/plugin/updateLocale': 'dayjs/plugin/updateLocale',
 		'ansi-to-html': 'ansi-to-html',
-		'@vaxla/shared': join(getUiDirectory(), './.vaxla/shared'),
 		'qrcode-vue3': 'qrcode-vue3/src/QRCodeVue3.vue',
 	},
 

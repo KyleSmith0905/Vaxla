@@ -15,5 +15,5 @@ const defaultOpen = computed(() => (typeof sidebarState.value === 'boolean' ? si
 			<NuxtPage />
 		</NuxtLayout>
 	</SidebarProvider>
-	<Toaster />
+	<Toaster rich-colors />
 </template>

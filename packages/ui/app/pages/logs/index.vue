@@ -24,7 +24,6 @@ definePageMeta({
 				<CardDescription>{{ scripts.length }} scripts are currently running.</CardDescription>
 			</CardHeader>
 			<CardContent class="px-0">
-				<p>{{ logsMap }}</p>
 				<table v-if="scripts.length > 0" class="w-full border-b">
 					<tbody>
 						<tr v-for="script in scripts" class="cursor-pointer border-t hover:bg-accent/50" @click="navigateTo(`/logs/${script.id}`)">
@@ -35,7 +34,7 @@ definePageMeta({
 							</td>
 							<td class="p-1">
 								<code class="block w-fit rounded bg-muted px-2 py-1 font-mono text-xs font-semibold">
-									{{ getCommandShellScript({ dynamic: script.command }, 'packages/ui') }}
+									{{ getCommandShellScript({ dynamic: script.command }, script.package.path) }}
 								</code>
 							</td>
 							<td>

@@ -46,7 +46,8 @@ export default defineCommand({
 			const script = packageInfo.scripts?.find((e) => e.id === command) ?? packageInfo.scripts?.[parseInt(command)];
 			if (!script) throw `Could not find command ${colors.gray(command)}.`;
 
-			const log = startLog('::custom_function::');
+			const shell = getCommandShellScript({ dynamic: script.command }, packageInfo?.path ?? '');
+			const log = startLog(shell);
 			log.start();
 
 			const originalLog = console.log;
@@ -57,7 +58,7 @@ export default defineCommand({
 			if (typeof script.command === 'object' && 'fn' in script.command && script.command.fn instanceof Function) {
 				await script.command.fn();
 			} else {
-				const commandShell = script.command ? getCommandShellScript({ dynamic: script.command }, packageInfo?.path ?? '') : '';
+				const commandShell = script.command ? shell : '';
 				await execCommandPromise(commandShell, {
 					cwd: getUserRootDirectory(),
 					onLog: (msg) => log.log(msg),

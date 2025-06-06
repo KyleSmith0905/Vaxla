@@ -8,7 +8,7 @@ import { Icon } from '@iconify/vue';
 
 const route = useRoute();
 
-const { data: article } = await useAsyncData('article-navigation', () => $fetch('/api/articles/retrieve', {query: {fileName: route.params.slug}}));
+const { data: article } = await useFetch('/api/articles/retrieve', {query: {fileName: route.params.slug}});
 
 definePageMeta({
   layout: false,
@@ -27,6 +27,7 @@ definePageMeta({
       <CardHeader class='py-4 px-6'>
         <CardTitle v-if="article?.title">{{ article.title }}</CardTitle>
         <CardDescription v-if="article?.metadata.description">{{ article.metadata.description }}</CardDescription>
+        <p v-if="article?.error" class="text-destructive italic text-sm">{{ article.error }}</p>
         <div class='flex gap-1'>
           <Badge v-if="article?.metadata.author" class='flex gap-2'><Icon icon="lucide:user-round"/>{{ article.metadata.author }}</Badge>
           <DateBadge v-if="article?.uploadDate" :date="article.uploadDate" />
@@ -34,7 +35,7 @@ definePageMeta({
       </CardHeader>
       <Separator/>
       <CardContent class='py-4 px-6'>
-        <MDC class="prose prose-zinc dark:prose-invert min-w-full" :value='article?.document!'/>
+        <MDC class="prose prose-zinc dark:prose-invert min-w-full [&>pre]:border-border [&>pre]:border [&>pre]:bg-zinc-950" :value='article?.document!'/>
       </CardContent>
     </Card>
   </NuxtLayout>

@@ -1,6 +1,6 @@
 # Vaxla
 
-_IN DEVELOPMENT, IGNORE FOR NOW_
+_IN DEVELOPMENT, PLEASE BE AWARE OF FAST CHANGES AND LOW STABILITY_
 
 A central hub for your development environment. View the documentation at https://vaxla.yskkyle.com/.
 
@@ -9,7 +9,7 @@ A central hub for your development environment. View the documentation at https:
 1. Install with `pnpm i @vaxla/cli`.
 2. Make a `vaxla/` directory.
 3. Create a `config.ts` inside, and configure it to your environment.
-4. Run `vaxla dev --dir ./vaxla`.
+4. Run `vaxla start`.
 
 ## Example
 
@@ -31,15 +31,14 @@ export default defineVaxlaConfig({
 				{
 					label: "Start Server",
 					command: "start:mobile",
-					type: ScriptType.Serve,
 					icon: "lucide:cloud",
 				},
 				{
+					id: "deploy",
 					label: "Deploy App",
 					command: async () => {
 						// Deploys the app
 					},
-					type: ScriptType.Action,
 					icon: "lucide:upload",
 				},
 			],
@@ -47,6 +46,10 @@ export default defineVaxlaConfig({
 	},
 });
 ```
+
+Run `vaxla start` to start a visual workspace manager for Vaxla.
+
+You can also run `vaxla run mobile deploy` or `vx run mobile deploy` to run the deploy script.
 
 ## Contributing
 

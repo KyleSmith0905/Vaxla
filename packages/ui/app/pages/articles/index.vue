@@ -6,7 +6,7 @@ import { Badge } from '~/components/ui/badge';
 import DateBadge from '~/components/utility/date-badge.vue';
 import { Icon } from '@iconify/vue';
 
-const { data: articles } = await useAsyncData('article-navigation', () => $fetch('/api/articles/list'));
+const { data: articles } = await useFetch('/api/articles/list');
 
 const flattenedArticle = computed(() => articles.value?.articles ?? []);
 
@@ -27,7 +27,7 @@ definePageMeta({
 			<CardContent v-if="flattenedArticle && flattenedArticle.length > 0" class="px-0 pb-0">
 				<GridCollection :items="flattenedArticle?.length ?? 0" variant="card">
 					<UtilityGridCollectionItem v-for="article in flattenedArticle ?? []" :key="article.fileName">
-						<NuxtLink :to="article.fileName" class="flex flex-col gap-1 h-full px-3 pb-3 pt-2 hover:bg-accent/50">
+						<NuxtLink :to="`articles/${article.fileName}`" class="flex flex-col gap-1 h-full px-3 pb-3 pt-2 hover:bg-accent/50">
 							<h2 class="font-bold">{{ article.title }}</h2>
 							<div class="flex gap-2">
 								<Badge v-if="article.metadata.author" variant="outline" class="flex gap-2">
@@ -36,7 +36,8 @@ definePageMeta({
 								</Badge>
 								<DateBadge :date="article.uploadDate" variant='outline'/>
 							</div>
-							<p class="text-muted-foreground">{{ article.metadata.description }}</p>
+							<p v-if="article.metadata.description" class="text-muted-foreground">{{ article.metadata.description }}</p>
+							<p v-if="article.error" class="text-destructive italic text-sm">{{ article.error }}</p>
 						</NuxtLink>
 					</UtilityGridCollectionItem>
 				</GridCollection>
