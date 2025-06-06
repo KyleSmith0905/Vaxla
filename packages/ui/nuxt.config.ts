@@ -1,4 +1,4 @@
-import { getUserRootDirectory, getUiDirectory } from '@vaxla/shared';
+import { getUserRootDirectory, getUiDirectory, copyFileRecursive } from '@vaxla/shared';
 import tailwindcss from '@tailwindcss/vite';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -88,6 +88,20 @@ export default defineNuxtConfig({
 		},
 		rootAttrs: {
 			class: 'h-full',
+		},
+	},
+
+	hooks: {
+		close: async () => {
+			// `fkill` depends on psList, which depends on this executable being present.
+			await copyFileRecursive(
+				join(getUiDirectory(), './meta/fastlist-0.3.0-x64.exe'),
+				join(getUiDirectory(), './.output/server/vendor/fastlist-0.3.0-x64.exe')
+			);
+			await copyFileRecursive(
+				join(getUiDirectory(), './meta/fastlist-0.3.0-x86.exe'),
+				join(getUiDirectory(), './.output/server/vendor/fastlist-0.3.0-x86.exe')
+			);
 		},
 	},
 });

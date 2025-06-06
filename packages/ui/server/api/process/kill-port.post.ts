@@ -10,6 +10,9 @@ export default defineEventHandler(async (event) => {
 	const processId = isPort ? ((await portToPid(Number(query.port))) ?? `:${query.port}`) : query.process;
 
 	return fkill(processId, { force: signal === 'SIGKILL', tree: true }).catch((e: AggregateError) => {
-		throw new Error(e.message.split('\n')[1].trim());
+		throw createError({
+			statusCode: 400,
+			message: e.message.split('\n')[1].trim(),
+		});
 	});
 });
