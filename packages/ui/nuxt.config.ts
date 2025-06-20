@@ -19,6 +19,7 @@ export default defineNuxtConfig({
 	sourcemap: false,
 
 	devServer: {
+		host: process.env.TAURI_DEV_HOST || 'localhost',
 		loadingTemplate: () => readFileSync(join(getUiDirectory(), './.vaxla/loading/index.html'), { encoding: 'utf-8' }),
 	},
 
@@ -35,6 +36,7 @@ export default defineNuxtConfig({
 
 	vite: {
 		server: {
+			strictPort: true,
 			fs: {
 				allow: [getUserRootDirectory()],
 			},
@@ -52,6 +54,8 @@ export default defineNuxtConfig({
 		ssr: {
 			noExternal: ['entities'],
 		},
+		clearScreen: false,
+		envPrefix: ['VITE_', 'TAURI_'],
 	},
 
 	nitro: {

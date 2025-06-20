@@ -1,0 +1,1 @@
+# An example to how articles with no dates error

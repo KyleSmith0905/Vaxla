@@ -6,6 +6,7 @@ import { runCommand } from '../utilities/command';
 import { consola } from '../utilities/consola';
 import { colors } from 'consola/utils';
 import { default as openUrl } from 'open';
+import { platform } from 'os';
 
 export default defineCommand({
 	meta: {
@@ -39,10 +40,16 @@ export default defineCommand({
 			default: true,
 			alias: 'o',
 		},
+		desktop: {
+			type: 'boolean',
+			description: 'Open Vaxla inside of a desktop app.',
+			default: false,
+			alias: 'dt',
+		},
 	},
 	async run({ args }) {
 		try {
-			const { port, dir, debug, open } = args;
+			const { port, dir, debug, open, desktop } = args;
 
 			const cliVersion = await getVaxlaVersion();
 			consola.info(`Version: ${colors.yellow(cliVersion)}.`);
@@ -81,6 +88,20 @@ export default defineCommand({
 				},
 				debug
 			);
+
+			if (desktop) {
+				if (platform() === 'win32') {
+					runCommand(
+						`start ./src-tauri/target/release/Vaxla.exe`,
+						{
+							cwd: vaxlaUiPath,
+						},
+						debug
+					);
+				} else {
+					consola.error('Desktop mode is not supported on this platform, please support our development by contributing to the project.');
+				}
+			}
 
 			if (open) openUrl(`http://localhost:${finalPort}`);
 		} catch (error) {
