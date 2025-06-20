@@ -32,6 +32,11 @@ export type VaxlaCommand = string
 
 export type VaxlaConfig = {
 	port?: number;
+	externalLinks?: Record<string, {
+		icon?: string;
+		name?: string;
+		href: string;
+	}>
 	packages: Record<
 		string,
 		{

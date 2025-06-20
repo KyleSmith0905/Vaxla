@@ -43,12 +43,11 @@ export default defineCommand({
 
 			const packageInfo = config.packages[packageId];
 			if (!packageInfo) throw `Could not find package ${colors.gray(packageId)}.`;
-			const script = packageInfo.scripts?.find((e) => e.id === command) ?? packageInfo.scripts?.[parseInt(command)];
+			const script = packageInfo.scripts[command];
 			if (!script) throw `Could not find command ${colors.gray(command)}.`;
 
 			const shell = getCommandShellScript({ dynamic: script.command }, packageInfo?.path ?? '');
 			const log = startLog(shell);
-			log.start();
 
 			const originalLog = console.log;
 			console.log = (data) => log.log(data);

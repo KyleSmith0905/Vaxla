@@ -9,7 +9,6 @@ export const runCommand = (command: string, options: { cwd?: string; env?: Recor
 		const child = exec(command, { cwd, env });
 
 		const log = startLog(command);
-		log.start();
 
 		if (debug) {
 			child.stdout?.on('data', (data) => log.log(data));

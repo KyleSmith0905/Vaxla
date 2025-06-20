@@ -8,29 +8,54 @@ consola.box = (...args: Parameters<typeof box>) => {
 	return output;
 };
 
+let currentTitle = '';
+
 export const startLog = (title: string) => {
 	const log = (message: string) => {
 		process.stdout.write(`${colors.dim(message.trim())}\n`);
 	};
 
+	const startLog = () => log(colors.yellow(`╭────${title}─────`));
+	const endLog = () => log(colors.yellow(`╰────${title}─────`));
+
 	return {
+		/**
+		 * Rarely needed, usually just run the `log` function and a header will be automatically added.
+		 */
 		start: () => {
-			log(colors.yellow(`╭────${title}─────`));
+			startLog();
+			currentTitle = title;
 		},
 		log: (data: string) => {
+			if (currentTitle !== title) {
+				if (currentTitle !== '') endLog();
+				startLog();
+				currentTitle = title;
+			}
+
 			data.split('\n').forEach((e: string) => {
 				if (!e) return;
 				log(`${colors.yellow('│')} ${e}`);
 			});
 		},
 		error: (data: string) => {
+			if (currentTitle !== title) {
+				if (currentTitle !== '') endLog();
+				startLog();
+				currentTitle = title;
+			}
+
 			data.split('\n').forEach((e: string) => {
 				if (!e) return;
 				log(`${colors.red('│')} ${e}`);
 			});
 		},
+		/**
+		 * Signifies an end to a log.
+		 */
 		end: () => {
-			log(colors.yellow(`╰────${title}─────`));
+			endLog();
+			currentTitle = '';
 		},
 	};
 };

@@ -35,16 +35,7 @@ const { sites } = useActiveUrl({
 </script>
 <template>
 	<div class="flex items-start justify-between gap-2 px-2">
-		<div class="flex items-center gap-2">
-			<div
-				class="size-2 rounded-full border"
-				:style="{
-					backgroundColor: package.color?.[700] ?? colors.neutral[700],
-					borderColor: package.color?.[500] ?? colors.neutral[500],
-				}"
-			/>
-			<p class="font-bold">{{ package.name }}</p>
-		</div>
+		<UtilityPackageName :package="package" />
 		<div class="flex flex-wrap justify-end gap-2">
 			<template v-for="link of links ?? []">
 				<Tooltip>
@@ -65,7 +56,7 @@ const { sites } = useActiveUrl({
 								<Icon icon="lucide:qr-code" />
 								QR Code
 							</Button>
-							<KillProcess v-if="sites?.[link.fullUrl]" :port="link.port" size="xs" />
+							<KillProcess v-if="sites?.[link.fullUrl]" :port="link.port" size="xs" side="bottom" />
 						</div>
 					</TooltipContent>
 				</Tooltip>

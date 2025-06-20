@@ -1,13 +1,31 @@
 <script setup lang="ts">
-import { useSidebar, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarGroupLabel, SidebarTrigger } from '~/components/ui/sidebar';
-import { Icon } from '@iconify/vue'
-import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbSeparator, BreadcrumbPage } from '~/components/ui/breadcrumb'
+import {
+	Sidebar,
+	SidebarContent,
+	SidebarGroup,
+	SidebarGroupContent,
+	SidebarMenu,
+	SidebarMenuItem,
+	SidebarMenuButton,
+	SidebarHeader,
+	SidebarGroupLabel,
+	SidebarTrigger,
+} from '~/components/ui/sidebar';
+import { Icon } from '@iconify/vue';
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbSeparator, BreadcrumbPage } from '~/components/ui/breadcrumb';
+import { useVaxlaConfig } from '~/composables/useVaxlaConfig';
+import { SidebarProvider } from '~/components/ui/sidebar';
+import { getCurrentWindow } from '@tauri-apps/api/window';
+
+const sidebarState = useCookie('sidebar:state');
+const defaultOpen = computed(() => (typeof sidebarState.value === 'boolean' ? sidebarState.value : sidebarState.value === 'true'));
 
 defineProps<{ title?: string; path: string[] }>();
 
-const { open } = useSidebar();
+const config = await useVaxlaConfig();
 
-const navigation = [
+const navigation = computed(() => {
+	const items = [
 	{
 		title: 'Primary',
 		items: [
@@ -31,9 +49,40 @@ const navigation = [
 		],
 	},
 ];
+
+	if (config.value.externalLinks) {
+		items.push({
+			title: 'External',
+			items: Object.entries(config.value.externalLinks ?? {}).map(([id, link]) => ({
+				title: link.name ?? id,
+				link: link.href,
+				icon: link.icon ?? 'lucide:link',
+			})),
+		});
+	}
+
+	return items;
+});
 </script>
 <template>
-	<Sidebar variant="floating">
+	<div class="flex h-full w-full flex-col">
+		<div v-if="isTauri" data-tauri-drag-region class="border-sidebar-border flex h-8 items-center border-b">
+			<h1 class="px-2 text-sm">Vaxla Desktop</h1>
+			<div class="ml-auto flex items-center">
+				<button class="hover:bg-sidebar-accent flex h-8 w-8 items-center justify-center" @click="getCurrentWindow().minimize()">
+					<Icon icon="mdi:window-minimize" />
+				</button>
+				<button class="hover:bg-sidebar-accent flex h-8 w-8 items-center justify-center" @click="getCurrentWindow().toggleMaximize()">
+					<Icon icon="mdi:window-maximize" />
+				</button>
+				<button class="hover:bg-destructive hover:text-destructive-foreground flex h-8 w-8 items-center justify-center" @click="getCurrentWindow().close()">
+					<Icon icon="mdi:close" />
+				</button>
+			</div>
+		</div>
+		<div class="relative flex flex-grow">
+			<SidebarProvider :default-open="defaultOpen" @update:open="sidebarState = $event ? 'true' : 'false'" class="relative h-full">
+				<Sidebar variant="floating" class="absolute h-full pr-0">
 		<SidebarHeader class="border-b">
 			<h1 class="px-2 font-mono text-lg font-bold">Vaxla</h1>
 		</SidebarHeader>
@@ -46,7 +95,7 @@ const navigation = [
 					<SidebarMenu>
 						<SidebarMenuItem v-for="item of group.items">
 							<SidebarMenuButton asChild>
-								<NuxtLink :href="item.link">
+											<NuxtLink :href="item.link" :target="item.link.startsWith('http') ? '_blank' : undefined">
 									<Icon :icon="item.icon" />
 									<span>{{ item.title }}</span>
 								</NuxtLink>
@@ -60,11 +109,11 @@ const navigation = [
 	<div
 		:class="{
 			'flex w-full min-w-0 transform flex-col gap-2 py-2 pr-2 transition-transform duration-200 max-md:pl-2': true,
-			'pl-2': !open,
-			'pl-0': open,
+						'pl-2': sidebarState !== 'true',
+						'pl-0': sidebarState === 'true',
 		}"
 	>
-		<header class="rounded-lg border border-sidebar-border bg-sidebar shadow">
+					<header class="border-sidebar-border bg-sidebar rounded-lg border shadow">
 			<SidebarTrigger class="absolute" />
 			<Breadcrumb class="px-8 py-1">
 				<BreadcrumbList>
@@ -82,5 +131,8 @@ const navigation = [
 		<main class="flex min-h-0 flex-grow flex-col gap-2">
 			<slot />
 		</main>
+				</div>
+			</SidebarProvider>
+		</div>
 	</div>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toast } from 'vue-sonner';
 import type { ButtonVariants } from '../ui/button';
-import {Tooltip, TooltipTrigger, TooltipContent} from '~/components/ui/tooltip';
+import { Tooltip, TooltipTrigger, TooltipContent } from '~/components/ui/tooltip';
 import { Button } from '../ui/button';
 import { Icon } from '@iconify/vue';
 
@@ -15,6 +15,7 @@ const props = defineProps<
 		  }
 	) & {
 		size?: ButtonVariants['size'];
+		side?: 'top' | 'bottom' | 'left' | 'right';
 	}
 >();
 
@@ -46,7 +47,7 @@ const killPort = (signal: 'SIGKILL' | 'SIGTERM') => {
 				<Icon icon="lucide:heart-off" />
 			</Button>
 		</TooltipTrigger>
-		<TooltipContent>Requests a process to terminate gracefully</TooltipContent>
+		<TooltipContent :side="props.side">Requests a process to terminate gracefully</TooltipContent>
 	</Tooltip>
 	<Tooltip>
 		<TooltipTrigger>
@@ -54,6 +55,6 @@ const killPort = (signal: 'SIGKILL' | 'SIGTERM') => {
 				<Icon icon="lucide:power-off" />
 			</Button>
 		</TooltipTrigger>
-		<TooltipContent>Forces a process to terminate immediately</TooltipContent>
+		<TooltipContent :side="props.side">Forces a process to terminate immediately</TooltipContent>
 	</Tooltip>
 </template>

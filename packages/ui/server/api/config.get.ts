@@ -10,5 +10,7 @@ export default defineEventHandler(async () => {
 		});
 	}
 
-	return { config: await getVaxlaConfig(configPath) };
+	const config = await getVaxlaConfig(configPath);
+
+	return { config };
 });

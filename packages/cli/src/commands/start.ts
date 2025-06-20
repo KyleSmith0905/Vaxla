@@ -35,7 +35,7 @@ export default defineCommand({
 		},
 		open: {
 			type: 'boolean',
-			description: 'Open the browser when the server starts.',
+			description: 'Open the app inside the default browser when the server starts.',
 			default: true,
 			alias: 'o',
 		},

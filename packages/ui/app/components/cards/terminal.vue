@@ -28,9 +28,9 @@ const script = computed(() => (props.id ? getScript(props.id) : undefined));
 					</Badge>
 					<Badge class="flex gap-2 font-mono">
 						<Icon icon="lucide:terminal" />
-						{{ getCommandShellScript({ dynamic: script.command }, 'packages/@vaxla/ui') }}
+						{{ getCommandShellScript({ dynamic: script.command }, script.package?.path ?? '') }}
 					</Badge>
-					<Badge :variant="script?.status === ScriptStatus.Opened ? 'success' : 'destructive'" class='flex gap-2'>
+					<Badge :variant="script?.status === ScriptStatus.Opened ? 'success' : 'destructive'" class="flex gap-2">
 						<Icon icon="lucide:stethoscope" />
 						<template v-if="script?.status === ScriptStatus.Opened">Opened</template>
 						<template v-else>Closed</template>

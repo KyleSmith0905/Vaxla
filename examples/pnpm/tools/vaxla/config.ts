@@ -4,6 +4,20 @@ import { join } from 'node:path';
 
 export default defineVaxlaConfig({
   port: 3000,
+  externalLinks: {
+    'vaxla': {
+      href: 'https://vaxla.yskkyle.com',
+    },
+    'example.com': {
+      href: 'https://example.com',
+      icon: 'line-md:sun-rising-filled-loop',
+    },
+    'google': {
+      href: 'https://google.com',
+      name: 'Google',
+      icon: 'gg:google',
+    },
+  },
   packages: {
     viteVanillaTs: {
       name: 'Vite Vanilla TS',
