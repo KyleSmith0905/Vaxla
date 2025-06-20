@@ -15,7 +15,6 @@ import { Icon } from '@iconify/vue';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbSeparator, BreadcrumbPage } from '~/components/ui/breadcrumb';
 import { useVaxlaConfig } from '~/composables/useVaxlaConfig';
 import { SidebarProvider } from '~/components/ui/sidebar';
-import { getCurrentWindow } from '@tauri-apps/api/window';
 
 const sidebarState = useCookie('sidebar:state');
 const defaultOpen = computed(() => (typeof sidebarState.value === 'boolean' ? sidebarState.value : sidebarState.value === 'true'));
@@ -66,20 +65,6 @@ const navigation = computed(() => {
 </script>
 <template>
 	<div class="flex h-full w-full flex-col">
-		<div v-if="isTauri" data-tauri-drag-region class="border-sidebar-border flex h-8 items-center border-b">
-			<h1 class="px-2 text-sm">Vaxla Desktop</h1>
-			<div class="ml-auto flex items-center">
-				<button class="hover:bg-sidebar-accent flex h-8 w-8 items-center justify-center" @click="getCurrentWindow().minimize()">
-					<Icon icon="mdi:window-minimize" />
-				</button>
-				<button class="hover:bg-sidebar-accent flex h-8 w-8 items-center justify-center" @click="getCurrentWindow().toggleMaximize()">
-					<Icon icon="mdi:window-maximize" />
-				</button>
-				<button class="hover:bg-destructive hover:text-destructive-foreground flex h-8 w-8 items-center justify-center" @click="getCurrentWindow().close()">
-					<Icon icon="mdi:close" />
-				</button>
-			</div>
-		</div>
 		<div class="relative flex flex-grow">
 			<SidebarProvider :default-open="defaultOpen" @update:open="sidebarState = $event ? 'true' : 'false'" class="relative h-full">
 				<Sidebar variant="floating" class="absolute h-full pr-0">
