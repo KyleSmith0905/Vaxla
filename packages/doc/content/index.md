@@ -6,7 +6,7 @@ navigation: false
 ::hero-alt
 
 #title
-[\> Vaxla ./]{class="font-mono"}
+[Vaxla]{class="font-mono"}
 
 #description
 Development tool to manage complex developer environments and run commands. A UI for your CLI.
@@ -15,6 +15,13 @@ Development tool to manage complex developer environments and run commands. A UI
 ::div{class="border rounded-lg shadow-md mt-4"}
 :img{src="https://vaxla.yskkyle.com/screenshots/demo.png" height="1280" width="800" class="w-full"}
 ::
+
+## Easy Setup
+Find out in under a minute if this is right for you, just run our start command in any monorepo.
+
+:pm-x{command="@vaxla/cli start"}
+
+## Simple Configuration
 
 ::code-tree{defaultValue="vaxla/config.ts" title="Sample Workspace powered by Vaxla"}
 

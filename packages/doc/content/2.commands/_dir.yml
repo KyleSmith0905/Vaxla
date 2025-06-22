@@ -1,0 +1,4 @@
+title: Commands
+description: API reference for terminal commands.
+icon: lucide:terminal
+navigation.redirect: /commands/start

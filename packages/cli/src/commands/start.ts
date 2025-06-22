@@ -23,11 +23,6 @@ export default defineCommand({
 			description: 'The path to the vaxla files, such as the configuration file.',
 			alias: 'd',
 		},
-		forceBuild: {
-			type: 'boolean',
-			description: 'Whether to force a build or not.',
-			alias: 'fb',
-		},
 		debug: {
 			type: 'boolean',
 			description: 'Enable debug logging for the UI build and start processes.',
