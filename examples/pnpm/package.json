@@ -22,7 +22,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "vx start --dir ./tools/vaxla --debug",
+    "start": "vx start --debug",
     
     "// Below are scripts to test the standalone script calling.": "",
     "run:dev": "vx run viteVanillaTs 0 --dir ./tools/vaxla",

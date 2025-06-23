@@ -180,6 +180,9 @@ importers:
 
   packages/shared:
     dependencies:
+      find-up:
+        specifier: ^7.0.0
+        version: 7.0.0
       jiti:
         specifier: ^2.4.2
         version: 2.4.2
