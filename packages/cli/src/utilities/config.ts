@@ -1,6 +1,6 @@
 import { createJiti } from 'jiti';
 import { writeFileRecursive, type VaxlaConfig } from '@vaxla/shared';
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, lstatSync } from 'fs';
 import { dirname, relative, resolve } from 'path';
 import consola from 'consola';
 import { globSync } from 'glob';
@@ -11,9 +11,11 @@ export const defineVaxlaConfig = (config: VaxlaConfig) => {
 };
 
 const getVaxlaConfig = async (configPath: string) => {
-	const jiti = createJiti(import.meta.url);
+	// Normalize the path to correct for people entering /vaxla/config.ts instead of /vaxla.
+	const isDirectory = lstatSync(configPath).isDirectory();
+	let path = isDirectory ? resolve(configPath, 'config.ts') : resolve(configPath);
 
-	const path = resolve(configPath, 'config.ts');
+	const jiti = createJiti(import.meta.url);
 
 	const config = await jiti.import(path, { default: true }).catch((e) => {
 		if (e.code === 'MODULE_NOT_FOUND') throw new Error(`Could not find the Vaxla config, searching "${path}"`);
@@ -35,7 +37,10 @@ export const inferVaxlaConfig = async (configPath?: string): Promise<{ config: V
 		const packageJsonString = readFileSync(packageJsonPath, 'utf-8');
 		const packageJson = JSON.parse(packageJsonString);
 		const configPath = packageJson?.vaxla?.config;
-		if (configPath) return await getVaxlaConfig(configPath);
+
+		if (!configPath) continue;
+
+		return await getVaxlaConfig(resolve(dirname(packageJsonPath), configPath));
 	}
 
 	// 3. The user has the configuration path in a common location.
@@ -55,20 +60,26 @@ export const inferVaxlaConfig = async (configPath?: string): Promise<{ config: V
 		const relativePath = dirname(relative(process.cwd(), packageJsonPath));
 		const packageJsonString = readFileSync(packageJsonPath, { encoding: 'utf-8' });
 		const packageJson = JSON.parse(packageJsonString);
+
+		const scripts = Object.entries(packageJson.scripts).map(([key, value]) => {
+			return [
+				key,
+				{
+					label: key,
+					command: { npm: value },
+				},
+			];
+		});
+
 		config.packages[relativePath === '.' ? 'root' : relativePath] = {
 			name: packageJson.name ?? (relativePath === '.' ? 'root' : relativePath),
 			path: relativePath,
-			scripts: Object.keys(packageJson.scripts).map((key) => {
-				return {
-					label: key,
-					command: { npm: key },
-				};
-			}),
+			scripts: Object.fromEntries(scripts),
 		};
 	});
 
 	let configString = JSON.stringify(config, null, '\t');
-	writeFileRecursive('./.vaxla/configless/config.ts', `export default ${configString}`);
+	writeFileRecursive('./.vaxla/configless/config.json', configString);
 
 	try {
 		const gitIgnore = readFileSync('./.gitignore', { encoding: 'utf-8' });
@@ -77,7 +88,7 @@ export const inferVaxlaConfig = async (configPath?: string): Promise<{ config: V
 		consola.info('Suggestion: Add /.vaxla/* to .gitignore to prevent committing the configless information.');
 	}
 
-	return { config: config, path: './.vaxla/configless/config.ts' };
+	return { config: config, path: './.vaxla/configless/config.json' };
 };
 
 export const getVaxlaVersion = async (): Promise<string> => {
