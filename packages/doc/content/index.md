@@ -16,137 +16,55 @@ Development tool to manage complex developer environments and run commands. A UI
 :img{src="https://vaxla.yskkyle.com/screenshots/demo.png" height="1280" width="800" class="w-full"}
 ::
 
-## Easy Setup
-Find out in under a minute if this is right for you, just run our start command in any monorepo.
+## What is Vaxla?
 
-:pm-x{command="@vaxla/cli start"}
+Instead of running commands in your terminal, **we provide a dashboard to run terminal commands**.
 
-## Simple Configuration
+Often you would need this when developing a complex monorepo needing multiple commands to be ran in sequence or parallel. It would be useful when:
+- Running a testing suite that requires multiple local services to be running.
+- Developing a feature spanning across multiple microfrontends and microservices.
+- Executing a script with a long name that's hard to remember.
 
-::code-tree{defaultValue="vaxla/config.ts" title="Sample Workspace powered by Vaxla"}
+## Features
 
-```[apps/mobile]
+::card-group
+  ::card
+  ---
+  title: Easy Setup
+  icon: lucide:plane-takeoff
+  to: /getting-started/installation
+  target: _blank
+  ---
+  Use on your monorepo right now with `npx @vaxla/cli start`
+  ::
 
-```
+  ::card
+  ---
+  title: Simple Configuration
+  icon: lucide:code-xml
+  to: /getting-started/configuration
+  target: _blank
+  ---
+  Configure your workspace in seconds with our simple configuration file.
+  ::
 
-```[apps/web]
+  ::card
+  ---
+  title: Powerful CLI
+  icon: lucide:terminal
+  to: /getting-started/cli
+  target: _blank
+  ---
+  Scripts created on Vaxla can easily be ran outside of the UI.
+  ::
 
-```
-
-```[packages/shared]
-
-```
-
-```ts [vaxla/config.ts]
-import { defineVaxlaConfig, colors } from '@vaxla/cli';
-import { rmdirSync } from 'node:fs';
-import { join } from 'node:path';
-
-export default defineVaxlaConfig({
-  port: 3000,
-  packages: {
-    mobile: {
-      name: 'Mobile',
-      path: './apps/mobile',
-      color: colors.red,
-      link: [
-        {
-          port: 5174,
-          name: 'Development Server',
-        },
-        {
-          port: 4174,
-          name: 'Preview Server',
-        },
-      ],
-      scripts: [
-        {
-          command: {package: true, npm: 'dev'},
-          icon: 'lucide:code-xml',
-        },
-        {
-          label: "build",
-          command: {package: true, shell: 'pnpm run build'},
-          icon: "lucide:hammer",
-        },
-        {
-          label: "preview",
-          command: "cd ./apps/mobile && pnpm run preview",
-          icon: "lucide:app-window",
-        },
-      ]
-    },
-    web: {
-      name: 'Web',
-      path: './apps/web',
-      color: colors.orange,
-      link: [
-        {
-          port: 5173,
-          name: 'Development Server',
-        },
-        {
-          port: 4173,
-          name: 'Preview Server',
-        },
-      ],
-      scripts: [
-        {
-          command: {package: true, npm: 'dev'},
-          icon: 'lucide:code-xml',
-        },
-        {
-          label: "build",
-          command: {package: true, shell: 'pnpm run build'},
-          icon: "lucide:hammer",
-        },
-      ]
-    },
-    shared: {
-      name: 'Shared',
-      path: './packages/shared',
-      color: colors.yellow,
-      scripts: [
-        {
-          command: {package: true, npm: 'watch'},
-          icon: 'lucide:code-xml',
-        },
-        {
-          label: "build",
-          command: {package: true, shell: 'pnpm run build'},
-          icon: "lucide:hammer",
-        },
-        {
-          label: 'clear dist'
-          command: {
-            fn: async () => {
-              console.log('1/2 About to clear dist.');
-              rmdirSync(join(process.cwd(), './packages/shared/dist'), {recursive: true});
-              console.log('2/2 Cleared dist.');
-            }
-          },
-          icon: "hugeicons:folder-remove",
-        }
-      ]
-    }
-  }
-})
-```
-
-```yaml [pnpm-workspace.yaml]
-packages:
-  - "apps/*"
-  - "packages/*"
-```
-
-```json [package.json]
-{
-	"name": "root",
-	"scripts": {
-		"dev": "vaxla dev ./vaxla/config.ts",
-		"build": "vaxla start ./vaxla/config.ts"
-	}
-}
-```
-
+  ::card
+  ---
+  title: Share Documentation
+  icon: lucide:share-2
+  to: /getting-started/pages
+  target: _blank
+  ---
+  Create and share links, articles, and documentation with your team.
+  ::
 ::

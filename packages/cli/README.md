@@ -4,9 +4,11 @@ _IN DEVELOPMENT, PLEASE BE AWARE OF FAST CHANGES AND LOW STABILITY_
 
 A central hub for your development environment. View the documentation at https://vaxla.yskkyle.com/.
 
-## Installation
+Get started today with `npx @vaxla/cli start`
 
-1. Install with `pnpm i @vaxla/cli`.
+## Full Installation
+
+1. Install with `npm i @vaxla/cli`.
 2. Make a `vaxla/` directory.
 3. Create a `config.ts` inside, and configure it to your environment.
 4. Run `vaxla start`.
