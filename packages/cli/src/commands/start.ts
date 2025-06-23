@@ -72,6 +72,9 @@ export default defineCommand({
 			runCommand(
 				`node .output/server/index.mjs`,
 				{
+					env: {
+						PORT: finalPort.toString(),
+					},
 					cwd: vaxlaUiPath,
 				},
 				debug
