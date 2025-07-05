@@ -11,10 +11,12 @@ export default defineEventHandler(async (event) => {
 	const configPath = process.env.VAXLA_CONFIG;
 
 	const config = typeof configPath === 'string' ? await getVaxlaConfig(configPath) : ({} as VaxlaConfig);
-	const packageInfo = 'packageId' in body ? config.packages[body.packageId ?? ''] : undefined;
+	const commandId = 'commandId' in body ? body.commandId : undefined;
+	const packageId = 'packageId' in body ? body.packageId : undefined;
+	const packageInfo = packageId ? config.packages[packageId] : undefined;
 	const command = 'commandId' in body ? packageInfo?.scripts[body.commandId].command : body.command;
 
-	const commandShell = command ? getCommandShellScript({ dynamic: command }, packageInfo?.path ?? '') : '';
+	let commandShell = command ? getCommandShellScript({ dynamic: command }, packageInfo?.path ?? '') : '';
 	const commandName = command ? getCommandDisplayName({ dynamic: command }) : '';
 
 	const startMessage = (message: string) => {
@@ -34,36 +36,7 @@ export default defineEventHandler(async (event) => {
 
 	// Handle functions
 	if (typeof command === 'object' && 'fn' in command && command.fn instanceof Function) {
-		startMessage('Executing Function');
-
-		// Override console.log to send messages through the event system
-		console.log('waypoint 0');
-		const originalConsoleLog = console.log;
-		console.log = (...args) => {
-			send({ data: { id: body.id, message: args.join(' '), type: 'log' } });
-		};
-
-		originalConsoleLog('waypoint 1');
-		try {
-			await command.fn();
-			originalConsoleLog('waypoint 2');
-		} catch (error) {
-			send({ data: { id: body.id, message: error instanceof Error ? error.message : (error as any).toString(), type: 'error' } });
-		} finally {
-			originalConsoleLog('waypoint 3');
-			// Restore original console.log
-			console.log = originalConsoleLog;
-			originalConsoleLog('waypoint 4');
-		}
-		send({
-			data: {
-				id: body.id,
-				message: '\x1b[1m| Script Finished',
-				status: ScriptStatus.Closed,
-				type: 'meta',
-			},
-		});
-		return {};
+		commandShell = `vaxla run ${packageId} ${commandId}`;
 	}
 
 	// Handle shell scripts
