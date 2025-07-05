@@ -1,0 +1,6 @@
+{
+  "vaxla": {
+    "config": "package-json-vaxla"
+  },
+  "private": true
+}

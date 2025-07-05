@@ -1,7 +1,7 @@
 {
   "name": "@vaxla/cli",
   "description": "CLI for Vaxla - Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "keywords": [
     "developer-tools",
     "devops",
@@ -22,7 +22,8 @@
   "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
-    "./cli": "./bin/vaxla.mjs"
+    "./cli": "./bin/vaxla.mjs",
+    "./utilities/config": "./dist/utilities/config.mjs"
   },
   "bin": {
     "@vaxla/cli": "./bin/vaxla.mjs",

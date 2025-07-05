@@ -42,7 +42,7 @@ export default defineCommand({
 			const cliVersion = await getVaxlaVersion();
 			consola.info(`Version: ${colors.yellow(cliVersion)}.`);
 
-			const { config, path } = await inferVaxlaConfig(dir);
+			const { config, path } = await inferVaxlaConfig({ configPath: dir });
 			consola.info(`Config Path: ${colors.yellow(path)}.`);
 			const finalPort = port ?? config.port ?? 3000;
 

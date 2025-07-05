@@ -27,27 +27,31 @@ const getVaxlaConfig = async (configPath: string) => {
  * Infers the location of the Vaxla config in a 3-step order.
  * If we cannot find a config, we'll generate one based on their environment setup.
  */
-export const inferVaxlaConfig = async (configPath?: string): Promise<{ config: VaxlaConfig; path: string }> => {
-	// 1. The user defines configuration path within the CLI.
-	if (configPath !== undefined) return await getVaxlaConfig(configPath);
+export const inferVaxlaConfig = async (options?: { configPath?: string; forceGeneration?: boolean }): Promise<{ config: VaxlaConfig; path: string }> => {
+	const { configPath, forceGeneration } = options ?? {};
 
-	// 2. The user defines configuration path within the package.json.
-	const packageJsonList = findUpMultipleSync('package.json');
-	for (const packageJsonPath of packageJsonList) {
-		const packageJsonString = readFileSync(packageJsonPath, 'utf-8');
-		const packageJson = JSON.parse(packageJsonString);
-		const configPath = packageJson?.vaxla?.config;
+	if (!forceGeneration) {
+		// 1. The user defines configuration path within the CLI.
+		if (configPath !== undefined) return await getVaxlaConfig(configPath);
 
-		if (!configPath) continue;
+		// 2. The user defines configuration path within the package.json.
+		const packageJsonList = findUpMultipleSync('package.json');
+		for (const packageJsonPath of packageJsonList) {
+			const packageJsonString = readFileSync(packageJsonPath, 'utf-8');
+			const packageJson = JSON.parse(packageJsonString);
+			const configPath = packageJson?.vaxla?.config;
 
-		return await getVaxlaConfig(resolve(dirname(packageJsonPath), configPath));
-	}
+			if (!configPath) continue;
 
-	// 3. The user has the configuration path in a common location.
-	const plausibleConfigList = findUpMultipleSync(['vaxla', 'tools/vaxla'], { type: 'directory' });
-	for (const plausibleConfigPath of plausibleConfigList) {
-		const path = existsSync(resolve(plausibleConfigPath, 'config.ts'));
-		if (path) return await getVaxlaConfig(plausibleConfigPath);
+			return await getVaxlaConfig(resolve(dirname(packageJsonPath), configPath));
+		}
+
+		// 3. The user has the configuration path in a common location.
+		const plausibleConfigList = findUpMultipleSync(['vaxla', 'tools/vaxla'], { type: 'directory' });
+		for (const plausibleConfigPath of plausibleConfigList) {
+			const path = existsSync(resolve(plausibleConfigPath, 'config.ts'));
+			if (path) return await getVaxlaConfig(plausibleConfigPath);
+		}
 	}
 
 	// 4. We generate a default configuration graph.

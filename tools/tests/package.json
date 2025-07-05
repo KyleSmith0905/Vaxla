@@ -1,0 +1,39 @@
+{
+  "name": "@vaxla/tests",
+  "description": "Tests for Vaxla - Development tool to easily manage multiple dev environments and run commands.",
+  "version": "1.1.8",
+  "keywords": [
+    "developer-tools",
+    "devops",
+    "workflow",
+    "cli",
+    "productivity"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KyleSmith0905/vaxla/issues",
+    "email": "bugs@yskkyle.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KyleSmith0905/vaxla.git",
+    "directory": "tools/tests"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@vaxla/cli": "workspace:*",
+    "@vaxla/doc": "workspace:*",
+    "@vaxla/loading": "workspace:*",
+    "@vaxla/shared": "workspace:*",
+    "@vaxla/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitest/ui": "^3.2.4",
+    "vitest": "^3.2.4"
+  }
+}

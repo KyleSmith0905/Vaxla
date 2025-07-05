@@ -1,0 +1,8 @@
+{
+  "name": "web",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build"
+  },
+  "private": true
+}
