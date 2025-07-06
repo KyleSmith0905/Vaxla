@@ -1,52 +1,79 @@
-import { prepack } from './prepack';
+import { prepack } from "./prepack";
 import { version } from "../package.json";
-import { readFileSync, writeFileSync } from 'fs';
-import consola from 'consola';
-import { runCommand } from './_shared';
+import { readFileSync, writeFileSync } from "fs";
+import consola from "consola";
+import { bumpVersion, runCommand } from "./_shared";
+import { getVersions } from "fast-npm-meta";
 
 /**
  * I'm experimenting with this command for a little, eventually I'll add a way to publish to production.
  * This only works on beta versions for now (where the version is in the format x.x.x-beta.x).
  */
 
-const build = async () => {
-  consola.start('Building Packages...');
-  await runCommand('pnpm run build', {}, true);
-  consola.success('Packages built successfully.');
-}
+let nextVersion: string | undefined;
 
-const bumpVersion = () => {
-  consola.info('Bumping Versions...');
-  const packageJson = readFileSync('./package.json', 'utf-8');
+const optionPrompts = async () => {
+  const latestVersion = await getVersions("@vaxla/cli");
+  consola.info(`Latest version: ${JSON.stringify(latestVersion, null, 2)}`);
+
+  const answer = (await consola.prompt("How should we bump the version?", {
+    type: "select",
+    options: ["next", "patch", "minor", "major"],
+  })) as "next" | "patch" | "minor" | "major";
+
+  nextVersion = bumpVersion(latestVersion.distTags.latest, answer);
+
+  if (answer !== "next") {
+    const confirmation = await consola.prompt(
+      `Are you sure you want to publish version ${nextVersion}?`,
+      {
+        type: "confirm",
+      },
+    );
+    if (!confirmation) {
+      consola.error("Publish cancelled.");
+      process.exit(1);
+    }
+  }
+
+  consola.info(`Publishing to version ${nextVersion}...`);
+};
+
+const build = async () => {
+  consola.start("Building packages...");
+  await runCommand("pnpm run build", {}, true);
+  consola.success("Packages built successfully.");
+};
+
+const propagateVersion = () => {
+  consola.info("Bumping versions...");
+  const packageJson = readFileSync("./package.json", "utf-8");
   const parsedPackageJson = JSON.parse(packageJson);
 
-  let newVersion = version;
-  if (version.includes('-')) {
-    const [vaxlaVersion, preRelease] = version.split('-');
-    const [stage, stageNumber] = preRelease!.split('.');
-    newVersion = `${vaxlaVersion}-${stage}.${stageNumber ? parseInt(stageNumber) + 1 : 0}`;
-  }
-  else {
-    newVersion = `${version}-beta.0`;
-  }
-  parsedPackageJson.version = newVersion;
-  consola.success(`Bumping version to ${newVersion}.`);
-  writeFileSync('./package.json', JSON.stringify(parsedPackageJson, null, 2));
-}
+  parsedPackageJson.version = nextVersion;
+  consola.success(`Bumped version to ${nextVersion}.`);
+  writeFileSync("./package.json", JSON.stringify(parsedPackageJson, null, 2));
+};
 
 const npmUpload = async () => {
-  consola.start('Publishing to NPM...');
-  await runCommand('pnpm publish --recursive --no-git-check --tag next', {}, true);
-  consola.success('Published to NPM successfully.');
-}
+  consola.start("Publishing to NPM...");
+  await runCommand(
+    "pnpm publish --recursive --no-git-check --tag next",
+    {},
+    true,
+  );
+  consola.success("Published to NPM successfully.");
+};
 
 const publish = async () => {
-  bumpVersion();
+  await optionPrompts();
+
+  propagateVersion();
   await build();
   prepack();
   await npmUpload();
-  consola.success('Publish successful.');
-}
+  consola.success("Publish successful.");
+};
 
 // Run the script if executed directly
 if (require.main === module) {
