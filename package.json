@@ -38,9 +38,7 @@
     "test": "cd tools/tests && pnpm run test"
   },
   "devDependencies": {
-    "tsx": "^4.19.3"
-  },
-  "dependencies": {
+    "tsx": "^4.19.3",
     "@vaxla/cli": "^1.1.8",
     "consola": "^3.4.2",
     "glob": "^11.0.2"
