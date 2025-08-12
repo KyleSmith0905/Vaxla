@@ -1,5 +1,5 @@
 import { createJiti } from 'jiti';
-import { writeFileRecursive, type VaxlaConfig } from '@vaxla/shared';
+import { normalizePath, writeFileRecursive, type VaxlaConfig } from '@vaxla/shared';
 import { readFileSync, writeFileSync, existsSync, lstatSync } from 'fs';
 import { dirname, relative, resolve } from 'path';
 import consola from 'consola';
@@ -61,7 +61,7 @@ export const inferVaxlaConfig = async (options?: { configPath?: string; forceGen
 
 	const globResult = globSync('**/package.json', { ignore: ['**/node_modules/**'], absolute: true });
 	globResult.map((packageJsonPath) => {
-		const relativePath = dirname(relative(process.cwd(), packageJsonPath));
+		const relativePath = normalizePath(dirname(relative(process.cwd(), packageJsonPath)));
 		const packageJsonString = readFileSync(packageJsonPath, { encoding: 'utf-8' });
 		const packageJson = JSON.parse(packageJsonString);
 

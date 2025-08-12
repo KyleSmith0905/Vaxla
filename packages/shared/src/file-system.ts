@@ -6,6 +6,10 @@ import { copyFileSync } from 'node:fs';
 
 const require = createRequire(process.argv[1] ? new URL(process.argv[1], "file://").href : import.meta.url);
 
+export const normalizePath = (path: string) => {
+	return path.replaceAll('\\', '/');
+};
+
 export const getUserRootDirectory = () => {
 	const configDir = process.env.VAXLA_CONFIG ?? process.cwd();
 	let currentDir = configDir;

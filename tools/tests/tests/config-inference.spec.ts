@@ -84,9 +84,9 @@ describe("Config Inference", () => {
           },
         },
       },
-      "apps\\web": {
+      "apps/web": {
         name: "web",
-        path: "apps\\web",
+        path: "apps/web",
         scripts: {
           start: {
             label: "start",
