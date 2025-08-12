@@ -18,6 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/KyleSmith0905/vaxla.git"
   },
+  "packageManager": "pnpm@9.15.0",
   "private": true,
   "scripts": {
     "dev": "vaxla dev --dir ./tools/vaxla",
