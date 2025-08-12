@@ -23,7 +23,8 @@
   "scripts": {
     "dev": "vaxla dev --dir ./tools/vaxla",
     "start": "vaxla start --dir ./tools/vaxla",
-    "build": "pnpm run shared:build && pnpm run cli:build && pnpm run loading:build && npm run ui:build",
+    "build:ci": "pnpm run shared:build && pnpm run cli:build && pnpm run ui:build",
+    "build": "pnpm run shared:build && pnpm run cli:build && pnpm run loading:build && pnpm run ui:build",
     "publish": "tsx ./scripts/publish.ts",
     "prepack": "pnpm run build && tsx ./scripts/prepack.ts",
     "ui:build": "cd packages/ui && pnpm run build",

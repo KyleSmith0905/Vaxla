@@ -19,6 +19,6 @@ jobs:
           node-version: 22
           cache: "pnpm"
       - run: pnpm install
-      - run: pnpm build
+      - run: pnpm build:ci
       - run: pnpm test
       - uses: codecov/codecov-action@v3
