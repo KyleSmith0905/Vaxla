@@ -1,4 +1,4 @@
-import type { VaxlaCommand, VaxlaConfig } from '@vaxla/shared';
+import type { VaxlaConfig } from '@vaxla/shared';
 
 export enum ScriptStatus {
 	/** The script is closed. This is the default status of a script. */
@@ -12,7 +12,7 @@ export enum ScriptStatus {
 }
 
 export type ActiveScript = {
-	command: VaxlaCommand | VaxlaConfig['packages'][string]['scripts'][number];
+	command: VaxlaConfig['packages'][string]['scripts'][number];
 	packageId?: string;
 	commandId?: string;
 	id: string;

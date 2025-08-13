@@ -49,8 +49,8 @@ export default defineEventHandler(async (event) => {
 
 		await execCommandPromise(commandShell, {
 			cwd: getUserRootDirectory(),
-			onLog: (msg) => send({ data: { id: body.id, message: msg, type: 'log' } }),
-			onError: (msg) => send({ data: { id: body.id, message: msg, type: 'error' } }),
+			onLog: (msg) => send({ data: { id: body.id, message: msg, type: 'log', status: ScriptStatus.Opened } }),
+			onError: (msg) => send({ data: { id: body.id, message: msg, type: 'error', status: ScriptStatus.Opened } }),
 			onChildProcessInit: (childProcess) => (activeProcesses[body.id] = childProcess),
 		});
 

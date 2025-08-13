@@ -38,9 +38,11 @@
 		"@nuxt/icon": "^1.12.0",
 		"@nuxtjs/mdc": "^0.17.0",
 		"@radix-icons/vue": "^1.0.0",
+		"@tailwindcss/typography": "^0.5.16",
 		"@tailwindcss/vite": "^4.1.4",
 		"@types/node-netstat": "^1.8.4",
 		"@vaxla/cli": "workspace:*",
+		"@vaxla/shared": "workspace:*",
 		"@vueuse/core": "^13.1.0",
 		"ansi-to-html": "^0.7.2",
 		"class-variance-authority": "^0.7.1",
@@ -49,6 +51,9 @@
 		"dayjs": "^1.11.13",
 		"dayjs-nuxt": "^2.1.11",
 		"find-process": "^1.4.10",
+		"find-up": "7.0.0",
+		"fkill": "^9.0.0",
+		"fs-extra": "^11.3.0",
 		"jiti": "2.4.2",
 		"lucide-vue-next": "^0.503.0",
 		"nanoid": "^5.1.5",
@@ -62,17 +67,10 @@
 		"tailwind-merge": "^3.2.0",
 		"tailwindcss": "^4.1.4",
 		"tailwindcss-animate": "^1.0.7",
+		"tree-kill": "1.2.2",
+		"vue": "^3.5.13",
 		"vue-loader": "^17.4.2",
 		"vue-sonner": "^1.3.2",
 		"zod": "^3.24.3"
-	},
-	"dependencies": {
-		"@tailwindcss/typography": "^0.5.16",
-		"@vaxla/shared": "workspace:*",
-		"find-up": "7.0.0",
-		"fkill": "^9.0.0",
-		"fs-extra": "^11.3.0",
-		"jiti": "2.4.2",
-		"tree-kill": "1.2.2"
 	}
 }

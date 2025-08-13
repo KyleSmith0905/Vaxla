@@ -54,6 +54,14 @@ export default defineNuxtConfig({
 		},
 	},
 
+	components: {
+		dirs: ['~/components'],
+	},
+
+	imports: {
+		autoImport: true,
+	},
+
 	nitro: {
 		noExternals: true,
 	},

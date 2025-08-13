@@ -5,6 +5,7 @@ import { toast } from 'vue-sonner';
 import { ScriptStatus, type ActiveScript } from '~/utils/packages/types';
 import { useServerEventsClient } from './useServerEventsClient';
 import { useVaxlaConfig } from './useVaxlaConfig';
+import { sleep } from '~~/shared/timing';
 
 const scripts = ref<
 	{
@@ -21,7 +22,7 @@ const scripts = ref<
 const loading = ref(true);
 
 const getScriptIndex = (id: string) => scripts.value.findIndex((e) => e.id === id);
-const getScript = (id: string) => scripts.value.find((e) => e.id === id);
+const getScript = (id: string | undefined) => scripts.value.find((e) => e.id === id);
 
 const hydrateActiveScripts = async () => {
 	const newScripts: { scripts: ActiveScript[] } = await $fetch('/api/active-script');
@@ -86,7 +87,11 @@ export const useScripts = () => {
 
 		options.id ??= nanoid();
 
-		const command = 'command' in options ? options.command : vaxlaConfig.value.packages[options.packageId ?? '']?.scripts[options.commandId];
+		const command =
+			'command' in options
+				? { label: getCommandDisplayName({ dynamic: options.command }), command: options.command }
+				: vaxlaConfig.value.packages[options.packageId ?? '']?.scripts[options.commandId];
+
 		if (!command) return;
 
 		scripts.value = scripts.value
@@ -118,5 +123,15 @@ export const useScripts = () => {
 		});
 	};
 
-	return { scripts, runScript, killScript, getScriptIndex, getScript };
+	const restartScript = async (id: string | undefined) => {
+		await killScript(id);
+		await sleep();
+
+		const script = getScript(id);
+		if (script?.packageId) await runScript({ commandId: script.commandId!, packageId: script.packageId, id });
+		else if (script?.command) await runScript({ command: script.command.command, id });
+		else return toast.error('Script not found.');
+	};
+
+	return { scripts, runScript, killScript, restartScript, getScriptIndex, getScript };
 };

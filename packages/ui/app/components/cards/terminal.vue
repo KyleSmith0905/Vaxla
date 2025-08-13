@@ -4,13 +4,12 @@ import { getCommandShellScript } from '@vaxla/shared/command';
 import { useLocalStorage } from '@vueuse/core';
 import { useScripts } from '~/composables/useScripts';
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card';
-import { Button } from '~/components/ui/button';
 import { Badge } from '~/components/ui/badge';
 import UtilityTerminal from '~/components/utility/terminal.vue';
 import { Icon } from '@iconify/vue';
 
 const props = defineProps<{ id?: string }>();
-const { getScript, killScript } = useScripts();
+const { getScript, killScript, restartScript } = useScripts();
 const dayjs = useDayjs();
 
 const date = useLocalStorage('terminal-date', false, { initOnMounted: true });
@@ -38,10 +37,9 @@ const script = computed(() => (props.id ? getScript(props.id) : undefined));
 				</div>
 			</div>
 			<div class="flex gap-2">
-				<Button :variant="date ? 'default' : 'secondary'" size="icon" @click="date = !date"><Icon icon="lucide:clock" /></Button>
-				<Button :disabled="script?.status !== ScriptStatus.Opened" variant="destructive" size="icon" @click="killScript(id)">
-					<Icon icon="lucide:trash-2" />
-				</Button>
+				<UtilityButtonsIcon icon="lucide:clock" :tooltip="date ? 'Disable date display' : 'Enable date display'" :variant="date ? 'default' : 'secondary'" @click="date = !date" />
+				<UtilityButtonsIcon icon="lucide:refresh-cw" tooltip="Restart script" variant="destructive" @click="restartScript(id)" />
+				<UtilityButtonsIcon icon="lucide:trash-2" tooltip="Kill script" :disabled="script?.status !== ScriptStatus.Opened" variant="destructive" @click="killScript(id)" />
 			</div>
 		</CardHeader>
 		<CardContent class="min-h-0 px-0">

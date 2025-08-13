@@ -197,28 +197,6 @@ importers:
         version: 3.6.0(typescript@5.9.2)(vue@3.5.18(typescript@5.9.2))
 
   packages/ui:
-    dependencies:
-      '@tailwindcss/typography':
-        specifier: ^0.5.16
-        version: 0.5.16(tailwindcss@4.1.11)
-      '@vaxla/shared':
-        specifier: workspace:*
-        version: link:../shared
-      find-up:
-        specifier: 7.0.0
-        version: 7.0.0
-      fkill:
-        specifier: ^9.0.0
-        version: 9.0.0
-      fs-extra:
-        specifier: ^11.3.0
-        version: 11.3.1
-      jiti:
-        specifier: 2.4.2
-        version: 2.4.2
-      tree-kill:
-        specifier: 1.2.2
-        version: 1.2.2
     devDependencies:
       '@brycesteve/nuxt-sse':
         specifier: ^1.0.1
@@ -244,6 +222,9 @@ importers:
       '@radix-icons/vue':
         specifier: ^1.0.0
         version: 1.0.0(vue@3.5.18(typescript@5.7.3))
+      '@tailwindcss/typography':
+        specifier: ^0.5.16
+        version: 0.5.16(tailwindcss@4.1.11)
       '@tailwindcss/vite':
         specifier: ^4.1.4
         version: 4.1.11(vite@6.3.5(@types/node@22.17.1)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.43.1)(tsx@4.20.3)(yaml@2.8.1))
@@ -253,6 +234,9 @@ importers:
       '@vaxla/cli':
         specifier: workspace:*
         version: link:../cli
+      '@vaxla/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@vueuse/core':
         specifier: ^13.1.0
         version: 13.6.0(vue@3.5.18(typescript@5.7.3))
@@ -277,6 +261,18 @@ importers:
       find-process:
         specifier: ^1.4.10
         version: 1.4.11
+      find-up:
+        specifier: 7.0.0
+        version: 7.0.0
+      fkill:
+        specifier: ^9.0.0
+        version: 9.0.0
+      fs-extra:
+        specifier: ^11.3.0
+        version: 11.3.1
+      jiti:
+        specifier: 2.4.2
+        version: 2.4.2
       lucide-vue-next:
         specifier: ^0.503.0
         version: 0.503.0(vue@3.5.18(typescript@5.7.3))
@@ -313,6 +309,12 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.1.11)
+      tree-kill:
+        specifier: 1.2.2
+        version: 1.2.2
+      vue:
+        specifier: ^3.5.13
+        version: 3.5.18(typescript@5.7.3)
       vue-loader:
         specifier: ^17.4.2
         version: 17.4.2(vue@3.5.18(typescript@5.7.3))(webpack@5.101.0)
