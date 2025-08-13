@@ -6,6 +6,7 @@ import { useScripts } from '~/composables/useScripts';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { Button } from '~/components/ui/button';
 import { Icon } from '@iconify/vue';
+import { findIcon } from '~/utils/icons';
 
 const appConfig = await useVaxlaConfig();
 
@@ -48,12 +49,12 @@ const activeScript = computed(() => {
 							activeScript[id]?.status === ScriptStatus.Opened ? killScript(activeScript[id]?.id) : runScript({ packageId: props.packageId, commandId: id })
 						"
 					>
-						<Icon :icon="script.icon || 'lucide:circle-dashed'" />
+						<Icon :icon="findIcon(script.icon, script.label)" />
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent class="flex flex-col">
 					<div class="flex items-center gap-2">
-						<Icon :icon="script.icon || 'lucide:circle-dashed'" />
+						<Icon :icon="findIcon(script.icon, script.label)" />
 						<h1 class="text-base font-bold">{{ getCommandDisplayName({ script }) }}</h1>
 					</div>
 					<code class="bg-muted text-muted-foreground w-fit rounded px-2 py-1 font-mono text-xs font-semibold">

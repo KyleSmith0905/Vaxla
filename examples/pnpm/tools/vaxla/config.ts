@@ -77,6 +77,14 @@ export default defineVaxlaConfig({
           },
           icon: "lucide:hard-drive-download",
         },
+        test: {
+          label: "test",
+          command: {
+            fn: async () => {
+              console.log("Test not implemented.");
+            },
+          },
+        },
       },
     },
   },
