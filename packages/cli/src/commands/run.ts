@@ -26,17 +26,22 @@ export default defineCommand({
 			description: 'The path to the vaxla files, such as the configuration file.',
 			alias: 'd',
 		},
+		'force-configless': {
+			type: 'boolean',
+			description: 'Ignores all configuration and generates one based on what Vaxla can infer about your environment.',
+			default: false,
+		},
 	},
 	async run({ args }) {
 		try {
-			const { dir, package: packageIdArg, command: commandArg } = args;
+			const { dir, package: packageIdArg, command: commandArg, 'force-configless': forceConfigless } = args;
 			const packageId = packageIdArg ?? (args._[0] as string);
 			const command = commandArg ?? (args._[1] as string);
 
 			const cliVersion = await getVaxlaVersion();
 			consola.info(`Version: ${colors.yellow(cliVersion)}.`);
 
-			const { config, path } = await inferVaxlaConfig({ configPath: dir });
+			const { config, path } = await inferVaxlaConfig({ configPath: dir, forceGeneration: forceConfigless });
 
 			const configDirectory = resolve(path, '..');
 			process.env.VAXLA_CONFIG = configDirectory;

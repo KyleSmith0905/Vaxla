@@ -5,6 +5,7 @@ import { dirname, relative, resolve } from 'path';
 import consola from 'consola';
 import { globSync } from 'glob';
 import { findUpSync, findUpMultipleSync } from 'find-up';
+import { generateConfig } from './generator';
 
 export const defineVaxlaConfig = (config: VaxlaConfig) => {
 	return config;
@@ -54,43 +55,7 @@ export const inferVaxlaConfig = async (options?: { configPath?: string; forceGen
 		}
 	}
 
-	// 4. We generate a default configuration graph.
-	const config = {
-		packages: {},
-	} as VaxlaConfig;
-
-	const globResult = globSync('**/package.json', { ignore: ['**/node_modules/**'], absolute: true });
-	globResult.map((packageJsonPath) => {
-		const relativePath = normalizePath(dirname(relative(process.cwd(), packageJsonPath)));
-		const packageJsonString = readFileSync(packageJsonPath, { encoding: 'utf-8' });
-		const packageJson = JSON.parse(packageJsonString);
-
-		const scripts = Object.entries(packageJson.scripts).map(([key, value]) => {
-			return [
-				key,
-				{
-					label: key,
-					command: { npm: value },
-				},
-			];
-		});
-
-		config.packages[relativePath === '.' ? 'root' : relativePath] = {
-			name: packageJson.name ?? (relativePath === '.' ? 'root' : relativePath),
-			path: relativePath,
-			scripts: Object.fromEntries(scripts),
-		};
-	});
-
-	let configString = JSON.stringify(config, null, '\t');
-	writeFileRecursive('./.vaxla/configless/config.json', configString);
-
-	try {
-		const gitIgnore = readFileSync('./.gitignore', { encoding: 'utf-8' });
-		if (!gitIgnore.includes('\n/.vaxla/*')) writeFileSync('./.gitignore', `${gitIgnore}\n# Vaxla Internals\n/.vaxla/*`);
-	} catch {
-		consola.info('Suggestion: Add /.vaxla/* to .gitignore to prevent committing the configless information.');
-	}
+	const config = generateConfig();
 
 	return { config: config, path: './.vaxla/configless/config.json' };
 };

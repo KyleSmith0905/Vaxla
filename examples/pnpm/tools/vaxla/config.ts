@@ -19,6 +19,62 @@ export default defineVaxlaConfig({
     },
   },
   packages: {
+    laravel: {
+      name: "Laravel",
+      path: "./apps/laravel",
+      color: colors.blue,
+      link: {
+        dev: {
+          port: 5174,
+          name: "Development Server",
+        },
+        logs: {
+          port: 5175,
+          name: "Logs",
+        },
+        queue: {
+          port: 8000,
+          name: "Queue",
+        },
+      },
+      scripts: {
+        dev: {
+          command: {
+            package: true,
+            shell: "composer dev",
+          },
+          icon: "lucide:code-xml",
+        },
+        web: {
+          command: {
+            package: true,
+            shell: "pnpm run web",
+          },
+          icon: "lucide:app-window",
+        },
+        queue: {
+          command: {
+            package: true,
+            shell: "composer queue",
+          },
+          icon: "lucide:list-ordered",
+        },
+        server: {
+          command: {
+            package: true,
+            shell: "composer server",
+          },
+          icon: "lucide:server",
+        },
+        test: {
+          command: {
+            package: true,
+            shell: "composer test",
+          },
+          icon: "lucide:test-tube",
+        },
+      },
+    },
     viteVanillaTs: {
       name: "Vite Vanilla TS",
       path: "./apps/vite-vanilla-ts",

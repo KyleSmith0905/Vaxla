@@ -23,7 +23,7 @@
   "exports": {
     ".": "./dist/index.mjs",
     "./cli": "./bin/vaxla.mjs",
-    "./utilities/config": "./dist/utilities/config.mjs"
+    "./utilities/config": "./dist/utilities/config/index.mjs"
   },
   "bin": {
     "@vaxla/cli": "./bin/vaxla.mjs",

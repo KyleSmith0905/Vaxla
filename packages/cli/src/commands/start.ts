@@ -34,15 +34,20 @@ export default defineCommand({
 			default: true,
 			alias: 'o',
 		},
+		'force-configless': {
+			type: 'boolean',
+			description: 'Ignores all configuration and generates one based on what Vaxla can infer about your environment.',
+			default: false,
+		},
 	},
 	async run({ args }) {
 		try {
-			const { port, dir, debug, open } = args;
+			const { port, dir, debug, open, 'force-configless': forceConfigless } = args;
 
 			const cliVersion = await getVaxlaVersion();
 			consola.info(`Version: ${colors.yellow(cliVersion)}.`);
 
-			const { config, path } = await inferVaxlaConfig({ configPath: dir });
+			const { config, path } = await inferVaxlaConfig({ configPath: dir, forceGeneration: forceConfigless });
 			consola.info(`Config Path: ${colors.yellow(path)}.`);
 			const finalPort = port ?? config.port ?? 3000;
 
