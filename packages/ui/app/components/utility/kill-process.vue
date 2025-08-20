@@ -3,7 +3,6 @@ import { toast } from 'vue-sonner';
 import type { ButtonVariants } from '../ui/button';
 import { Tooltip, TooltipTrigger, TooltipContent } from '~/components/ui/tooltip';
 import { Button } from '../ui/button';
-import { Icon } from '@iconify/vue';
 
 const props = defineProps<
 	(

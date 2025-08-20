@@ -1,0 +1,7 @@
+{
+  "name": "admin",
+  "scripts": {
+    "test": "phpunit"
+  },
+  "private": true
+}

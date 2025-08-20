@@ -4,3 +4,4 @@ dist/
 
 # Vaxla Internals
 /.vaxla/*
+.vaxla

@@ -6,11 +6,11 @@ import { Button } from '~/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '~/components/ui/dialog';
 import KillProcess from '~/components/utility/kill-process.vue';
-import { Icon } from '@iconify/vue';
 import QrCode from 'qrcode-vue3';
 import ProjectsButtonTableRow from './button-row.vue';
 
 const appConfig = await useVaxlaConfig();
+const { value: homeMode } = useSettings('homeDisplay');
 
 const props = defineProps<{
 	package: (typeof appConfig.value.packages)[string];
@@ -34,7 +34,7 @@ const { sites } = useActiveUrl({
 });
 </script>
 <template>
-	<div class="flex items-start justify-between gap-2 px-2">
+	<div class="flex items-start justify-between gap-2 px-2" :class="{'flex-col': homeMode === 'detailed'}">
 		<UtilityPackageName :package="package" />
 		<div class="flex flex-wrap justify-end gap-2">
 			<template v-for="link of links ?? []">

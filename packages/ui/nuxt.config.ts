@@ -43,11 +43,6 @@ export default defineNuxtConfig({
 		optimizeDeps: {
 			include: ['entities/lib/decode.js'],
 		},
-		build: {
-			commonjsOptions: {
-				include: [/node_modules/, /entities/],
-			},
-		},
 
 		ssr: {
 			noExternal: ['entities'],
@@ -58,16 +53,12 @@ export default defineNuxtConfig({
 		dirs: ['~/components'],
 	},
 
-	imports: {
-		autoImport: true,
-	},
-
 	nitro: {
 		noExternals: true,
 	},
 
-	ssr: false,
 	css: ['./assets/css/tailwind.css'],
+
 	modules: ['@nuxtjs/mdc', 'dayjs-nuxt', '@nuxt/devtools'],
 
 	dayjs: {

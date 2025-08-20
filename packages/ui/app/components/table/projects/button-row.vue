@@ -5,10 +5,10 @@ import { useVaxlaConfig } from '~/composables/useVaxlaConfig';
 import { useScripts } from '~/composables/useScripts';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import { Button } from '~/components/ui/button';
-import { Icon } from '@iconify/vue';
 import { findIcon } from '~/utils/icons';
 
 const appConfig = await useVaxlaConfig();
+const { value: homeMode } = useSettings('homeDisplay');
 
 const props = defineProps<{
 	package: (typeof appConfig.value.packages)[string];
@@ -35,7 +35,7 @@ const activeScript = computed(() => {
 });
 </script>
 <template>
-	<div class="flex gap-1 px-2">
+	<div class="flex gap-1 px-2" :class="{'flex-col': homeMode === 'detailed'}">
 		<div v-for="(script, id) in props.package.scripts">
 			<Tooltip>
 				<TooltipTrigger as-child>
@@ -44,12 +44,19 @@ const activeScript = computed(() => {
 						:variant="activeScript[id]?.status === ScriptStatus.Opened ? 'success' : 'outline'"
 						:class="{
 							'size-7': true,
+							'justify-between w-full px-4 py-8': homeMode === 'detailed',
 						}"
 						@click="
 							activeScript[id]?.status === ScriptStatus.Opened ? killScript(activeScript[id]?.id) : runScript({ packageId: props.packageId, commandId: id })
 						"
 					>
-						<Icon :icon="findIcon(script.icon, script.label)" />
+						<span v-if="homeMode === 'detailed'" class='flex flex-col items-start gap-2'>
+							<span>{{ getCommandDisplayName({ script }).trim() || 'No Name Provided' }}</span>
+							<UtilityInlineCode class='bg-secondary/50'>
+								{{ getCommandShellScript({ script }, props.package.path ?? '') }}
+							</UtilityInlineCode>
+						</span>
+						<Icon :icon="findIcon(script.icon, script.label)" :class='{"!size-6": homeMode === "detailed"}' />
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent class="flex flex-col">
@@ -57,9 +64,9 @@ const activeScript = computed(() => {
 						<Icon :icon="findIcon(script.icon, script.label)" />
 						<h1 class="text-base font-bold">{{ getCommandDisplayName({ script }) }}</h1>
 					</div>
-					<code class="bg-muted text-muted-foreground w-fit rounded px-2 py-1 font-mono text-xs font-semibold">
+					<UtilityInlineCode>
 						{{ getCommandShellScript({ script }, props.package.path ?? '') }}
-					</code>
+					</UtilityInlineCode>
 					<div class="flex gap-1 pt-2">
 						<template v-if="activeScript[id]?.status === ScriptStatus.Opened">
 							<Button @click="killScript(activeScript[id]?.id)" size="xs" variant="destructive">

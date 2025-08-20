@@ -75,7 +75,7 @@ test("Default configuration generation", async () => {
         build: {
           label: "build",
           command: {
-            npm: "vite build",
+            npm: "build",
           },
         },
       },
@@ -87,13 +87,25 @@ test("Default configuration generation", async () => {
         start: {
           label: "start",
           command: {
-            npm: "vite",
+            npm: "start",
           },
         },
         build: {
           label: "build",
           command: {
-            npm: "vite build",
+            npm: "build",
+          },
+        },
+      },
+    },
+    "apps/admin": {
+      name: "admin",
+      path: "apps/admin",
+      scripts: {
+        test: {
+          label: "test",
+          command: {
+            shell: "composer test",
           },
         },
       },

@@ -4,7 +4,6 @@ import { ScrollArea } from '~/components/ui/scroll-area';
 import { Table, TableBody, TableRow, TableCell, TableHeader, TableHead } from '~/components/ui/table';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
-import { Icon } from '@iconify/vue';
 
 const port = ref('');
 

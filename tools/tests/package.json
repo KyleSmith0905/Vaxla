@@ -23,7 +23,8 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:run": "vitest run"
   },
   "dependencies": {
     "@vaxla/cli": "workspace:*",
@@ -33,6 +34,7 @@
     "@vaxla/ui": "workspace:*"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
     "vitest": "^3.2.4"
   }

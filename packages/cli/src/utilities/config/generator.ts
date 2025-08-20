@@ -14,7 +14,7 @@ export const generateConfig = () => {
 
 	const globResult = globSync(['**/package.json', '**/composer.json'], { ignore: ['**/node_modules/**'], absolute: true });
 	globResult.map((filePath) => {
-		const filePathSplit = filePath.split('/');
+		const filePathSplit = normalizePath(filePath).split('/');
 		const relativePath = normalizePath(dirname(relative(process.cwd(), filePath)));
 		const fileContent = readFileSync(filePath, { encoding: 'utf-8' });
 

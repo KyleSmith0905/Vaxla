@@ -1,7 +1,7 @@
 {
   "name": "vaxla",
   "description": "Development tool to easily manage multiple dev environments and run commands.",
-  "version": "1.1.8",
+  "version": "1.1.11-next.1",
   "keywords": [
     "developer-tools",
     "devops",
@@ -37,12 +37,15 @@
     "doc:build": "cd packages/doc && pnpm run build",
     "doc:preview": "cd packages/doc && pnpm run preview",
     "doc:deploy": "cd packages/doc && pnpm run deploy",
-    "test": "cd tools/tests && pnpm run test"
+    "test": "cd tools/tests && pnpm run test",
+    "test:run": "cd tools/tests && pnpm run test:run",
+    "test:coverage": "cd tools/tests && pnpm run test:coverage"
   },
   "devDependencies": {
-    "tsx": "^4.19.3",
     "@vaxla/cli": "^1.1.8",
     "consola": "^3.4.2",
-    "glob": "^11.0.2"
+    "glob": "^11.0.2",
+    "tsx": "^4.19.3",
+    "vitest": "^3.2.4"
   }
 }

@@ -1,9 +1,9 @@
 import { prepack } from "./prepack";
-import { version } from "../package.json";
 import { readFileSync, writeFileSync } from "fs";
 import consola from "consola";
-import { bumpVersion, runCommand } from "./_shared";
+import { bumpVersion, runCommand } from "./utility/shared";
 import { getVersions } from "fast-npm-meta";
+import { runTest } from "./utility/test";
 
 /**
  * I'm experimenting with this command for a little, eventually I'll add a way to publish to production.
@@ -21,7 +21,17 @@ const optionPrompts = async () => {
     options: ["next", "patch", "minor", "major"],
   })) as "next" | "patch" | "minor" | "major";
 
-  nextVersion = bumpVersion(latestVersion.distTags.latest, answer);
+  const latest =
+    Object.entries(latestVersion.time)
+      .filter(([name]) => name !== "modified" && name !== "created")
+      .sort(([, aTime], [, bTime]) => {
+        return (
+          new Date(bTime as string).getTime() -
+          new Date(aTime as string).getTime()
+        );
+      })[0]?.[0] ?? "0.0.0";
+
+  nextVersion = bumpVersion(latest, answer);
 
   if (answer !== "next") {
     const confirmation = await consola.prompt(
@@ -71,6 +81,7 @@ const publish = async () => {
   propagateVersion();
   await build();
   prepack();
+  await runTest();
   await npmUpload();
   consola.success("Publish successful.");
 };

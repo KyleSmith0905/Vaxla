@@ -4,7 +4,6 @@ import GridCollection from '~/components/utility/grid-collection/index.vue';
 import UtilityGridCollectionItem from '~/components/utility/grid-collection/item.vue';
 import { Badge } from '~/components/ui/badge';
 import DateBadge from '~/components/utility/date-badge.vue';
-import { Icon } from '@iconify/vue';
 
 const { data: articles } = await useFetch('/api/articles/list');
 

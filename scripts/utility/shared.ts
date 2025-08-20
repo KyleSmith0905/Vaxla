@@ -48,7 +48,12 @@ export const runCommand = (
       reject(error);
     });
 
-    child.on("close", () => {
+    child.on("close", (code) => {
+      if (code !== 0) {
+        reject(new Error(`Command failed with exit code ${code}`));
+        return;
+      }
+
       if (debug) log(colors.yellow(`╰────${command}─────`));
       resolve();
     });
@@ -68,13 +73,14 @@ export const bumpVersion = (
   } else if (type === "minor") {
     newVersion = `${major}.${parseInt(minor ?? "0") + 1}.0`;
   } else if (type === "patch") {
-    newVersion = `${major}.${minor}.${parseInt(patch ?? "0") + 1}`;
+    if (preRelease) newVersion = `${major}.${minor}.${parseInt(patch ?? "0")}`;
+    else newVersion = `${major}.${minor}.${parseInt(patch ?? "0") + 1}`;
   } else if (type === "next") {
     const newPreRelease = preRelease
-      ? `${preRelease.split(".")[0]}.${parseInt(preRelease.split(".")[1] ?? "0") + 1}`
+      ? `next.${parseInt(preRelease.split(".")[1] ?? "0") + 1}`
       : "next.1";
 
-    newVersion = `${major}.${minor}.${patch}-${newPreRelease}`;
+    newVersion = `${major}.${minor}.${parseInt(patch ?? "0") + (preRelease ? 0 : 1)}-${newPreRelease}`;
   }
 
   return newVersion;

@@ -11,7 +11,6 @@ import {
 	SidebarGroupLabel,
 	SidebarTrigger,
 } from '~/components/ui/sidebar';
-import { Icon } from '@iconify/vue';
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbSeparator, BreadcrumbPage } from '~/components/ui/breadcrumb';
 import { useVaxlaConfig } from '~/composables/useVaxlaConfig';
 import { SidebarProvider } from '~/components/ui/sidebar';

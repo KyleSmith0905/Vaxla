@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ButtonVariants } from '~/components/ui/button';
-import { Icon } from '@iconify/vue';
 
 defineProps<{
   variant?: ButtonVariants['variant'];

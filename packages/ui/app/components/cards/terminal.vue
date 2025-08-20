@@ -6,7 +6,6 @@ import { useScripts } from '~/composables/useScripts';
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card';
 import { Badge } from '~/components/ui/badge';
 import UtilityTerminal from '~/components/utility/terminal.vue';
-import { Icon } from '@iconify/vue';
 
 const props = defineProps<{ id?: string }>();
 const { getScript, killScript, restartScript } = useScripts();

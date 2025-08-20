@@ -4,7 +4,6 @@ import { useScripts } from '~/composables/useScripts';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { Icon } from '@iconify/vue';
 
 const command = ref('');
 const props = defineProps<{ id?: string }>();

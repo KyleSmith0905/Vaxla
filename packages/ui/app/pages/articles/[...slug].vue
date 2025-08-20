@@ -4,7 +4,6 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '~/com
 import { Separator } from '~/components/ui/separator';
 import { Badge } from '~/components/ui/badge';
 import DateBadge from '~/components/utility/date-badge.vue';
-import { Icon } from '@iconify/vue';
 
 const route = useRoute();
 

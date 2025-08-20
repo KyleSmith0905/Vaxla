@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { BadgeVariants } from '../ui/badge';
-import { Icon } from '@iconify/vue';
 import { Badge } from '../ui/badge';
 import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip';
 
