@@ -94,20 +94,20 @@ export const useScripts = () => {
 
 		if (!command) return;
 
-		scripts.value = scripts.value
-			.concat({
-				package: 'packageId' in options ? vaxlaConfig.value.packages[options.packageId!] || null : null,
-				packageId: 'packageId' in options ? (options.packageId ?? null) : null,
-				commandId: 'commandId' in options ? options.commandId : null,
-				command: command,
-				createdAt: new Date(),
-				id: options.id,
-				logs: [],
-				status: ScriptStatus.Opened,
-			})
-			.slice(-10);
-
-		toast.success(`Running script ${getCommandDisplayName({ dynamic: command })}.`);
+		scripts.value = scripts.value.concat({
+			package: 'packageId' in options ? vaxlaConfig.value.packages[options.packageId!] || null : null,
+			packageId: 'packageId' in options ? (options.packageId ?? null) : null,
+			commandId: 'commandId' in options ? options.commandId : null,
+			command: command,
+			createdAt: new Date(),
+			id: options.id,
+			logs: [],
+			status: ScriptStatus.Opened,
+		});
+		// Attempt to keep 10 scripts at most, but don't remove opened scripts
+		const openedScripts = scripts.value.filter((e) => e.status === ScriptStatus.Opened);
+		const closedScripts = scripts.value.filter((e) => e.status !== ScriptStatus.Opened);
+		scripts.value = [...openedScripts, ...closedScripts.slice(-10 + openedScripts.length)];
 
 		await $fetch('/api/run-script', {
 			method: 'POST',
